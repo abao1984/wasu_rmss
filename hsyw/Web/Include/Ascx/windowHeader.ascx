@@ -45,17 +45,14 @@
          if (btnName != "undefined" && btnName !="")
          {
              var ele = document.getElementById(btnName);
-             
-             if (ele.value == " 检 索 ")
-             {
-                
                 ele.click();
-             }
-             
          }
      }
      function SetLabelHead(name) {
          document.getElementById("<%=LabelHead.ClientID %>").innerText = name;
+     }
+     function windowDismiss(){
+        document.getElementById("<%=PropertyDiv.ClientID %>").style.display = "none";
      }
  </script>
     <div id="PropertyDiv" runat="server"  style="display:none;border: 2px solid #5b9ed1;  position: absolute; z-index: inherit; width: 100%; height: 100%;top:0px;left:0px;">
@@ -66,7 +63,7 @@
 		<td style="background-image: url('../images/WindowXPHead.gif')" width="100%">
 			<asp:Label id="LabelHead" runat="server" ForeColor="White" Font-Bold="True"></asp:Label> <asp:TextBox ID="Btn_Name" runat="server" style="display:none;"></asp:TextBox></td>
 		<td style="background-image: url('../images/WindowXPHead.gif')" align="right" valign="middle">
-			<img alt="" id="XPMin" src="../images/WindowXPMin.gif" border="0" title="最小化" onclick="MinWindow();"><img alt="" src="../images/WindowXPMax.gif" border="0" id="XPMax" title="最大化" onclick="MaxWinodw();"><img alt="" src="../images/WindowXPClose.gif" border="0" id="XPColse" title="关闭退出"	onclick="WindowClose();"></td>
+			<img alt="" id="XPMin" src="../images/WindowXPMin.gif" border="0" title="最小化" onclick="MinWindow();"><img alt="" src="../images/WindowXPMax.gif" border="0" id="XPMax" title="最大化" onclick="MaxWinodw();"><img alt="" src="../images/WindowXPClose.gif" border="0" id="XPColse" title="关闭退出"	onclick="windowDismiss();"></td>
 	</tr>
     <tr id="PropertyTR" runat="server">
     <td colspan="3">

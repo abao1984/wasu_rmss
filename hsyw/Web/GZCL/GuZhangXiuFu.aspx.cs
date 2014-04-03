@@ -148,7 +148,7 @@ public partial class Web_GZCL_GuZhangXiuFu : System.Web.UI.Page
         setValue(dr, YWZT, "YWZT");
         setValue(dr, GZCC, "GZCC");
         setGZLWValue(dr, "GZLX", GZLX);
-
+        //caoguangyao2014-04-03
         if (YWZT.SelectedValue == "华数传媒" && GZLX_YW.SelectedValue.Length == 0)
         {
             string msg = "当业务主体是 华数传媒 时,故障类型不允许为空!";
