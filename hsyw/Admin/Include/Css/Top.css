@@ -1,0 +1,22 @@
+﻿/*----------------------------------*/
+/*网页基本样式开始*/
+/*----------------------------------*/
+*{
+	margin:0;
+	padding:0;
+}
+/*用于是否显示是否有水平滚动条*/
+html{
+	overflow:hidden;
+}
+
+body {
+	font-family: Tahoma, Verdana,snas-serif;
+	font-size:11px;
+	color:#666;
+	/*margin:0 20px;*/
+	margin:0px 0px 0px 0px;
+	padding:0px;
+	text-align:center;
+	background-color: #FFFFFF;
+}

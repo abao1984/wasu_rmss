@@ -1,0 +1,57 @@
+﻿.textBase
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    border-width: 1px; 
+	border-color: #DDD; 
+	font-size: 12px;
+	padding: 0.3em;
+}
+.textBaseFocus
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    border-width: 1px; 
+	border-color: #DDD; 
+	font-size: 12px;
+	border:1px solid #0000ff; 
+	padding: 0.3em;
+}
+
+
+/*
+.textBase
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    border-width: 1px; 
+	border-color: #DDD; 
+	font-size: 12px;
+	padding: 0.4em;
+}
+.textBaseFocus
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    border-width: 1px; 
+	border-color: #DDD; 
+	font-size: 12px;
+	border:1px solid #0000ff; 
+	padding: 0.4em;
+}
+
+
+.textArea 
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    font-size: 12px; 
+    background: #F9F9F9 url(Images/input_bg.gif) no-repeat; 
+    border:1px solid #A1A1A1; 
+    padding: 0.4em;
+}
+.textAreaFocus
+{
+    font-family: Arial, Helvetica, sans-serif, "宋体"; 
+    font-size: 12px; 
+    background: #F9F9F9 url(Images/input_bg.gif) no-repeat; 
+    border:1px solid #0000ff; 
+    padding: 0.4em;
+}
+*/		
+		

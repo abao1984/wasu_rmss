@@ -1,0 +1,150 @@
+﻿.buttonSubmit{
+    margin-right: 0.4em; 
+	font-size:12px;
+	height: 28px;
+	padding: 0 4px; 
+	margin-bottom: 0px;
+}
+.buttonCancel
+{
+    margin-right: 0.4em; 
+	font-size:12px;
+	height: 28px;
+	padding: 0 4px; 
+	margin-bottom: 0px;
+}
+.buttonSmall{
+	margin-right: 0em; 
+	font-size:12px;
+	height: 22px;
+	padding: 0 0px; 
+	margin-bottom: 1px;
+}
+.buttonUpload{
+	margin-right: 1em; 
+	font-size:12px;
+	height: 26px;
+	margin-bottom: 0px;
+}
+
+
+.btn {
+ BORDER-RIGHT: #7b9ebd 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7b9ebd 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#cecfde); BORDER-LEFT: #7b9ebd 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7b9ebd 1px solid
+}
+.btn1_mouseout {
+ BORDER-RIGHT: #7EBF4F 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7EBF4F 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#B3D997); BORDER-LEFT: #7EBF4F 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7EBF4F 1px solid
+} 
+.btn1_mouseover {
+ BORDER-RIGHT: #7EBF4F 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #7EBF4F 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#CAE4B6); BORDER-LEFT: #7EBF4F 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #7EBF4F 1px solid
+} 
+.btn2 {padding: 2 4 0 4;font-size:14px;height:23;background-color:#ece9d8;border-width:1;}
+.btn3_mouseout {
+ BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+} 
+.btn3_mouseover {
+ BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#D7E7FA); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+}
+.btn3_mousedown
+{
+ BORDER-RIGHT: #FFE400 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #FFE400 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #FFE400 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #FFE400 1px solid
+} 
+.btn3_mouseup {
+ BORDER-RIGHT: #2C59AA 1px solid; PADDING-RIGHT: 2px; BORDER-TOP: #2C59AA 1px solid; PADDING-LEFT: 2px; FONT-SIZE: 14px; FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#ffffff, EndColorStr=#C3DAF5); BORDER-LEFT: #2C59AA 1px solid; CURSOR: hand; COLOR: black; PADDING-TOP: 2px; BORDER-BOTTOM: #2C59AA 1px solid
+} 
+.btn_2k3 {
+ border: 1px solid #40AFD7;
+    PADDING-RIGHT: 2px;     PADDING-LEFT: 2px;     FONT-SIZE: 14px;     FILTER: progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr=#FFFFFF, EndColorStr=#87D5F1);     CURSOR: hand;     COLOR: black;     PADDING-TOP: 2px;
+    height: 26px;
+}
+
+
+/*
+.buttonBase{
+	margin-right: 0.2em; 
+	font-size:12px;
+	height: 28px;
+	padding: 0 4px; 
+	margin-bottom: 1px;
+}
+.buttonSmall{
+	margin-right: 0em; 
+	font-size:12px;
+	height: 22px;
+	padding: 0 0px; 
+	margin-bottom: 1px;
+}
+.buttonUpload{
+	margin-right: 1em; 
+	font-size:12px;
+	height: 26px;
+	margin-bottom: 0px;
+}
+
+
+.buttonSubmit{ 
+	margin-right: 1em; 
+	border: 1px solid;
+	font-size:12px;
+	height: 26px;
+	border-color: #FFFDEE #FDB939 #FDB939 #FFFDEE; 
+	font-weight:bold;
+	background: #FFF8C5; 
+	color: #090; 
+	padding: 0 10px; 
+	margin-bottom: 1px;
+}
+.buttonBlue
+{
+    margin-left: 8px;
+	margin-top: 5px;
+	width:77px;
+	height:27px;
+	background: url(Images/button-bg3.gif) no-repeat left top;
+	color:#fff;
+	border:none;
+	font-weight:bold;
+	margin-bottom: 3px;
+}
+.buttonLight
+{
+    font-family:Arial, Helvetica, sans-serif;
+	font-size:12px;
+	color: #003366;
+	font-weight: normal;
+	background-color: #F5FAFE;
+	border: 1px solid #95D2F0;
+	height: 25px;
+	margin-top:6px;
+	padding: 0 10px; 
+	margin-bottom: 1px;
+}
+
+
+.buttonOk
+{
+    padding: 5px 5px 2px; 
+    color: #6774A8; 
+    font-size:12px;
+    background: #C3D9FF; 
+    border: solid #86B9D6; 
+    border-width: 1px 1px 4px; 
+    height:32px;
+    cursor: pointer; 
+    font-weight:bold;
+    width: auto; 
+    overflow: visible; 
+}
+.buttonCancel
+{
+    padding: 5px 5px 2px; 
+    color: #6774A8; 
+    font-size:12px;
+    background: #F9F9F9; 
+    border: solid #CBCBCB; 
+    border-width: 1px 1px 4px; 
+    height:32px;
+    cursor: pointer; 
+    width: auto; 
+    overflow: visible; 
+}
+*/

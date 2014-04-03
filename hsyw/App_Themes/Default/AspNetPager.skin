@@ -1,0 +1,14 @@
+﻿<webdiyer:AspNetPager SkinID="AspNetPager1" runat="server" Height="30px"
+                            BorderStyle="None" FirstPageText="首页" LastPageText="尾页"
+                                NextPageText="后页"
+                            PrevPageText="前页" Font-Size="12px"  ForeColor="Black" 
+                            Font-Overline="False" Font-Underline="False"  HorizontalAlign="Right" 
+                            PageIndexOutOfRangeErrorMessage="不存在该页，是否输入有错！" BorderColor="#404040" 
+                            Font-Italic="False" PageSize="10" AlwaysShow="True" 
+                            Font-Strikeout="False" 
+                            PageIndexBoxType="DropDownList" 
+                            NumericButtonCount="5" 
+                            CustomInfoHTML="%CurrentPageIndex%页/%PageCount%页，%PageSize%条/%RecordCount%条" 
+                            ShowPageIndexBox="Never" SubmitButtonText="Go" TextAfterPageIndexBox="" 
+                            TextBeforePageIndexBox="" ShowCustomInfoSection="Left" >
+                            </webdiyer:AspNetPager>

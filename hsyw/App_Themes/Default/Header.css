@@ -1,0 +1,117 @@
+﻿#header {
+	height: 94px;
+	background:url(images/top.gif) no-repeat left center;
+	background-color: #fff; 
+	padding-left:5px;
+}
+	#logo {
+		float:left;
+	background:url(Images/clogo.gif) no-repeat left center;
+	width:220px;
+	height:94px;
+	}
+		#header h2 span {
+			display: none;
+		}
+	#ad{
+		float:right;
+		text-align:right;
+	}
+		#ad img{
+			margin-top:14px;
+		}
+/*----------------------------------*/
+/*头部样式结束*/
+/*----------------------------------*/
+
+/*----------------------------------*/
+/*菜单栏样式开始*/
+/*----------------------------------*/
+#menu-nav{ 
+	border: 0px solid #000000;
+	padding-left: 0px;
+	padding-top:1px;
+}
+	#menu-bar-nobg{
+		height: 29px;
+		line-height: 29px;
+	}
+	#menu-bar{
+		background: url(Images/top_bag.gif) repeat-x 1px 0px;
+		height: 29px;
+		line-height: 29px;
+	}
+	    #menu-welcome-text{
+			float:left;
+			padding-top:0px;
+			padding-left:10px;
+			color:#000000;
+			vertical-align:middle;
+		}
+		
+		#menu-welcome{
+			float:left;
+			padding-top:0px;
+			padding-left: 6px;
+			color:#000000;
+			vertical-align:middle;
+		}
+			#menu-welcome a{
+				background:url(Images/dhl.gif) no-repeat left center;
+				padding-left:12px;
+				padding-right:0px;
+				color: #000000;
+			}
+	
+		
+	#navlist {
+		float: right;
+		list-style: none;
+		white-space: nowrap;
+	}
+	#navlist li {
+		float: left;
+		width: 50px;
+		text-align: center;
+	}
+		#navlist li a, #navlist li a:link {
+			display: block;
+			color: #000000;
+			height: 24px;
+			background: url(Images/menu_line.gif) no-repeat right center;
+			text-decoration:none;
+		}
+		
+		#navlist li a:hover {
+			display: block;
+			color: #000000;
+			height: 24px;
+			text-decoration:underline;
+		}
+			#navlist .headerMore{
+				width: 68px;
+			}
+			#navlist .headerMore2{
+				width: 68px;
+				background: url(Images/jsmenu.gif) no-repeat right center;
+				text-align:center;
+			}
+			#navlist .headerLast a{
+				background: none;
+				font-weight:normal;
+				height:24px;
+			}
+			#navlist .last a:link,#navlist .last a:visited{
+				background: none;
+				height:24px;
+			}
+			#navlist .last a:hover,#navlist .last a:active{
+				background: none;
+				height:24px;
+			}
+	#navlist span{
+		padding:0 6px;
+		color:#000000;
+		font-weight:bold;
+	}
+	

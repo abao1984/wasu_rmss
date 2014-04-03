@@ -1,0 +1,64 @@
+﻿#LeftRight
+{
+    width: 100%;
+    height: auto;
+}
+#Left
+{
+    vertical-align:middle;
+    text-align:left;
+    margin-left: 1em;
+}
+#Right
+{
+    vertical-align:middle;
+    text-align:right;
+    margin-right: 1em;
+}
+html
+{
+
+}
+body 
+{
+    font-family: Tahoma, Verdana,snas-serif;
+	font-size:11px;
+	margin:0px 4px 0px 4px;
+	padding:0px;
+	text-align:center;
+	background-color: #FFFFFF;
+	margin-bottom:0px;
+	margin-left:0px;
+	margin-right:0px;
+	margin-top:0px;
+	overflow:auto;
+}
+form {
+	margin: 0px;
+	padding: 0px;
+}
+a {
+	color: #000000;
+	text-decoration: none;
+}
+a:hover {
+	color: #000000;
+	text-decoration: underline;
+}
+img{
+	border-style: none;
+    border-color: inherit;
+    border-width: 0;
+    height: 17px;
+}
+.divWindow
+{
+    font-family: Tahoma, Verdana,snas-serif;
+	font-size:11px;
+	margin:0px 4px 0px 0px;
+	padding:0px;
+	text-align:center;
+	background-color: #ffffff;
+	height:1000px;
+}
+

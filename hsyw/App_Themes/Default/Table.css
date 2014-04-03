@@ -1,0 +1,198 @@
+﻿table 
+{	
+	font: 12px Tahoma, Verdana;
+	color: #000000;
+	border-collapse:collapse;
+}
+.table 
+{
+	width:99.5%;
+	font: 12px Tahoma, Verdana;
+	color: #000000 ;
+	border-collapse:collapse;
+
+}
+.tableCategory {
+	text-align:left;
+	padding-left:5px;
+	color: #666;
+	height: 31px;
+	line-height: 30px;
+	background-image:url(Images/title_bg.jpg);
+	font-weight:bold;
+	border-bottom: 1px solid #f3f3f3;
+}
+.tableHead 
+{
+	font: 12px Tahoma, Verdana;
+	color: #ffffff;
+	font-weight: bold;
+	text-align: left;
+	background-image: url("Images/nav2_bg1.gif");
+	height: 31px;
+	padding-top:0px;
+	padding-left:10px;
+	padding-bottom:0px;
+}
+.tableTitle {
+	background-image: url("Images/TD_bg.jpg");
+	background-repeat:repeat-x;
+	background-position: 0,0;
+	color: #003797;
+	font-family: "宋体";
+	font-size: 16px;
+	font-weight: bold;
+	line-height:26px;
+}
+
+.tableTitle1 {
+	background-image: url("Images/TD_bg.jpg");
+	background-repeat:repeat-x;
+	background-position: 0,0;
+	color: #003797;
+	font-family: "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	line-height:26px;	
+}
+
+.tableBg1	{
+	background: #f5fbff;
+	font: 12px Tahoma, Verdana;
+	height: 32px;
+	padding-left:6px;
+	vertical-align:middle;
+	border-bottom: 1px solid #f3f3f3;
+	text-align:left;
+}
+.tableBg2 {
+	background: #ffffff;
+	height: 32px;
+	padding-left:6px;
+	vertical-align:middle;
+	font: 12px Tahoma, Verdana;
+	border-bottom: 1px solid #f3f3f3;
+	text-align:left;
+}
+.tableBg {
+	height: 32px;
+	padding-left:6px;
+	vertical-align:middle;
+	font: 12px Tahoma, Verdana;
+	text-align:left;
+}
+.tableBgLine {
+	height: 32px;
+	padding-left:6px;
+	vertical-align:middle;
+	font: 12px Tahoma, Verdana;
+	text-align:left;
+	border-bottom: 1px solid #CDCDCD;
+}
+.tableMain{
+	width:99.5%;
+	font: 11px Tahoma, Verdana;
+	margin:auto;
+	clear:both;
+}
+.tableSpaceBorder {
+	border: 1px solid #eeeeee;
+	padding: 1px;
+}
+
+.tdHead{
+	background-image: url('Images/nav2_bg1.gif');
+	background-repeat: repeat-x;
+	font-weight: bold;
+	height: 31px;
+}
+.tdHead:link {
+	font-size: 11px;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.tdBak {
+	background:#e6f3fc;
+	background-repeat:repeat-x;
+	background-position: 0,0;
+	color: #003797;
+	font-family: "宋体";
+	font-size: 12px;
+	/*font-weight: bold;*/
+	line-height:26px;
+}
+
+.GridViewHead {
+	text-align: center;
+	height: 22px;
+	line-height: 22px;
+	background-image: url(Images/tr_top.jpg);
+	color: #323234;
+	font-weight: normal;
+	font-size: 12px;
+	font-weight: bold;
+	font-family: "宋体";
+	/*POSITION: relative; 
+	TOP: expression(this.offsetParent.scrollTop); */
+}
+
+.nav01{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #323234;
+	height:30px;
+	width:121px;
+	text-align:center;
+	background-image: url(Images/nav11.gif);
+	font-weight: bold;
+}
+
+
+.nav01:link {
+	font-size: 12px;
+	color: #323234;
+	text-decoration: none;
+	font-weight: bold;
+	
+}
+.nav01:visited {
+	font-size: 12px;
+	color: #323234;
+	text-decoration:none ;
+	
+}
+.nav01:hover {
+    font-size: 12px;
+	color: #323234;
+}
+
+.nav02{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #003055;
+	height:30px;
+	width:121px;
+	text-align:center;
+	background-image: url(Images/nav12.gif);
+	font-weight: bold;
+}
+.nav02:link {
+	font-size: 12px;
+	color: #003055;
+	text-decoration: none;
+	
+}
+.nav02:visited {
+	font-size: 12px;
+	color: #003055;
+	text-decoration:none ;
+	
+}
+.nav02:hover {
+    font-size: 12px;
+	color: #323234;
+	background-image: url(Images/nav11.gif);
+	
+}
+

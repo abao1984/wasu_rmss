@@ -1,0 +1,22 @@
+﻿<asp:GridView runat="server" BackColor="White" SkinID="GridView1"
+           
+            CellPadding="3" CellSpacing="0" AutoGenerateColumns="False" width="100%"
+            ForeColor="Black">
+            <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+            <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right"  />
+            <SelectedRowStyle BackColor="#CCFFFF" Font-Bold="True"   />
+            <HeaderStyle cssclass="GridViewHead"  />
+            <PagerSettings Visible="False" />
+        </asp:GridView>
+             
+             
+            <asp:GridView runat="server" BackColor="White" SkinID="GridView2"
+           
+            CellPadding="3" CellSpacing="0" AutoGenerateColumns="False" 
+            ForeColor="Black">
+            <FooterStyle BackColor="#CCCC99" ForeColor="Black" />
+            <PagerStyle BackColor="White" ForeColor="Black" HorizontalAlign="Right"  />
+            <SelectedRowStyle BackColor="#CCFFFF" Font-Bold="True" ForeColor="White"  />
+            <HeaderStyle cssclass="GridViewHead"  />
+            <PagerSettings Visible="False" />
+        </asp:GridView>

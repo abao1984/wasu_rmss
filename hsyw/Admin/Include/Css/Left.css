@@ -1,0 +1,25 @@
+/*	全局定义　*/
+html{
+	overflow-x:hidden;
+}
+a	{
+	color:			#000000;
+	text-decoration:none;
+}
+a:hover	{
+	color:			#000000;
+	text-decoration:underline;
+}
+body	{
+	font-size: 12px;
+	font-family: Tahoma, Verdana, 宋体;
+	margin: 2px;
+	text-align:	left;
+	padding: 1px;
+	background: url(../../Images/Left/bg.gif);
+}
+form {
+	margin:0;
+	padding:0;
+}
+

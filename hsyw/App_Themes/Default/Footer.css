@@ -1,0 +1,52 @@
+﻿#footer {
+	margin-top: 6px;
+	border-top: 1px solid #CCCCCC;
+	height: 61px !important; height: 62px;
+	
+}
+.footerNav{
+    color: #333; 
+	height: 54px;
+	background: url(Images/copyright-bg.gif) repeat-x left top;
+	padding-left: 10px;
+		
+	}
+.footerFleft{
+	float: left;
+	padding-left:51px;
+	margin-top:15px;
+	margin-left:6px;
+	line-height: 14px;
+	text-align:left;
+	background: url(Images/copyright-dot.gif) no-repeat left center;
+	}
+.footerFleftCopy{
+	color:#ccc;
+	font-size:11px;
+}
+.footerFleftSpan{
+	color:#666;
+	font-size:11px;
+}
+.footerFleftImg{
+	padding: 6px;
+}
+.footerFleft a
+{
+	color:#666;
+}
+.footerFright{
+	float: right;
+	margin-right: 20px;
+}
+.footerGotop
+{
+    background: url(Images/gototop2.gif) no-repeat left center;
+	position:relative;
+	left:0px!important;left:46px;
+	top:0px;
+	margin-top:-1px;
+	margin-right:20px;
+	text-align:right;
+	margin-bottom:8px;
+}
