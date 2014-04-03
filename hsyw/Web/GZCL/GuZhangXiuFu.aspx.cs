@@ -148,6 +148,15 @@ public partial class Web_GZCL_GuZhangXiuFu : System.Web.UI.Page
         setValue(dr, YWZT, "YWZT");
         setValue(dr, GZCC, "GZCC");
         setGZLWValue(dr, "GZLX", GZLX);
+
+        if (YWZT.SelectedValue == "华数传媒" && GZLX_YW.SelectedValue.Length == 0)
+        {
+            string msg = "当业务主体是 华数传媒 时,故障类型不允许为空!";
+            ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), "<script>alert('" + msg + "')</script>");
+            
+            return;
+        }
+
         setGZLWValue(dr, "GZLX_YW", GZLX_YW);
         //setValue(dr, GZYY, "GZYY");
         DataFunction.SaveData(dr.Table.DataSet, "T_FAU_ZB");
