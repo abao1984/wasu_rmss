@@ -24,6 +24,7 @@
                     <asp:ListItem Text="业务主体"  Value="YWZT"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="业务类型"  Value="YWLB"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="故障层次"  Value="GZCC"  Selected="True"></asp:ListItem>
+                    <asp:ListItem Text="故障类型"  Value="GZLX_YW"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="故障级别"  Value="GZDJ"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="创建人"  Value="GZCJRNAME" Selected="True"></asp:ListItem>
                     <asp:ListItem Text="拥有人"  Value="YYR"  Selected="True"></asp:ListItem>
