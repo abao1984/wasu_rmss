@@ -9,6 +9,10 @@
     <script language="javascript" type="text/javascript" src="../../calendar.js"></script>
 
     <script language="javascript" type="text/javascript">
+        window.onload = function(){
+            //var dropDownList = document.getElementById("YWZT");
+            //dropDownList.options.selectedIndex = 3;
+        }
 
         function windowOpenEqu(txt_fl, txt_name, p_txt_name, linkage_code) {
             var unit_id = document.getElementById(txt_fl).value;
