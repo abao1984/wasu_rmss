@@ -110,6 +110,11 @@ public partial class Web_GZCL_GuZhangQuery : System.Web.UI.Page
         {
             sql += " and ywzt like '%" + YWZT.SelectedValue + "%'";
         }
+        else
+        {
+            //默认显示华数传媒
+            sql += "and ywzt like '%华数传媒%'";
+        }
         if(YWLB.SelectedValue!="")
         {
             sql += " and ywlb  like '%" + YWLB.SelectedValue + "%'";
