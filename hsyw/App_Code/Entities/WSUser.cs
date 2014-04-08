@@ -22,6 +22,7 @@ public class WSUser
 		//
 	}
     //select username,userrealname,branchcode,isuse,isvisible from t_sys_user
+    public string id { get; set; }
     public string name { get;set; }
     public string realName { get;set; }
     public string code { get; set; }

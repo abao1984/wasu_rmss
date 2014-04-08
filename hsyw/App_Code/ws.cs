@@ -65,7 +65,11 @@ public class ws : System.Web.Services.WebService {
         {
             string key = u.code;
             string path = string.Format(@"{0}/{1}", areaDictionary[key], u.realName);
-            pathList.Add(path);
+            Dictionary<string,string> dict = new Dictionary<string,string>();
+            dict.Add("label",path);
+            dict.Add("value",path);
+            dict.Add("id", u.id);
+            pathList.Add(dict);
            
         }
 
@@ -74,13 +78,14 @@ public class ws : System.Web.Services.WebService {
 
     private ArrayList getUserInDB()
     {
-        string sql = "select username,userrealname,branchcode,isuse,isvisible from t_sys_user";
+        string sql = "select id,username,userrealname,branchcode,isuse,isvisible from t_sys_user";
         DataSet ds = DataFunction.FillDataSet(sql);
         ArrayList list = new ArrayList();
         foreach (DataRow dr in ds.Tables[0].Rows)
         {
             WSUser user = new WSUser
             {
+                id = dr["id"].ToString(),
                 name = dr["username"].ToString(),
                 realName = dr["userrealname"].ToString(),
                 code = dr["branchcode"].ToString(),
@@ -146,7 +151,11 @@ public class ws : System.Web.Services.WebService {
 
         foreach (Area a in list)
         {
-            pathList.Add(a.path);
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("label", a.path);
+            dict.Add("value", a.path);
+            dict.Add("code", a.code);
+            pathList.Add(dict);
         }
 
         writeJSONResponse(pathList);    

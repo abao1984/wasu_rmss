@@ -8,7 +8,10 @@ $(function() {
 		var areaList = JSON.parse(data);
 		
 		$("#KHQY").autocomplete({
-			source:areaList
+			source:areaList,
+			select:function(event, ui){
+				$("#KHQYID").val(ui.item.code);
+			}
 		});
 	});
 	
@@ -16,11 +19,18 @@ $(function() {
 		var departments = JSON.parse(data);
 		
 		$("#txtCJBM").autocomplete({
-			source:departments
+			source:departments,
+			select:function(event, ui){
+				$("#txtCJBMCODE").val(ui.item.code);
+			}
 		});
 		
 		$("#txtYRBM").autocomplete({
-			source:departments
+			source:departments,
+			select:function(event, ui){
+				$("#txtYRBM").val(ui.item.code);
+				
+			}
 		});
 	});
 	
@@ -28,11 +38,17 @@ $(function() {
 		var users = JSON.parse(data);
 		
 		$("#txtCJRY").autocomplete({
-			source:users
+			source:users,
+			select:function(event,ui){
+				$("#txtCJRYID").val(ui.item.id);
+			}
 		});
 		
 		$("#txtYRR").autocomplete({
-			source:users
+			source:users,
+			select:function(event,ui){
+				$("#txtYRRID").val(ui.item.id);
+			}
 		});
 	});
 	
