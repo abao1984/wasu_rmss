@@ -18,10 +18,10 @@ public partial class Web_GZCL_GuZhangQuery : System.Web.UI.Page
             TSSJ1.Text = DateTime.Now.ToString("yyyy-MM-dd");
             TSSJ2.Text = TSSJ1.Text;
             TYPE.Text = Request.QueryString["TYPE"].ToString();
-            txtYRBM.Attributes.Add("ReadOnly", "true");
-            txtYRR.Attributes.Add("ReadOnly", "true");
-            txtCJRY.Attributes.Add("ReadOnly", "true");
-            txtCJBM.Attributes.Add("ReadOnly", "true");
+            //txtYRBM.Attributes.Add("ReadOnly", "true");
+            //txtYRR.Attributes.Add("ReadOnly", "true");
+            //txtCJRY.Attributes.Add("ReadOnly", "true");
+            //txtCJBM.Attributes.Add("ReadOnly", "true");
             BindDrop();
             BindGridPage(BindGrid());
         }

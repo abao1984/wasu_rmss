@@ -3,66 +3,22 @@
 <%@ Register Src="../Include/Ascx/windowHeader.ascx" TagName="windowHeader" TagPrefix="uc1" %>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <meta charset="utf-8" content="" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" type="text/css" />
-    <script src="//code.jquery.com/jquery-1.9.1.js" type="text/javascript"></script>
-    <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="/hsyw/jquery-ui/jquery-ui.css" type="text/css" />
+    <script src="/hsyw/jquery-ui/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/hsyw/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+	<script src="rmss_autocomplete.js" type="text/javascript" />
     <style type="text/css">
     .ui-autocomplete
     {
         width:300px;
         text-align:left;	
     }
+	.ui-menu-item{
+		max-width:400px;
+		text-align:left;
+	}
     </style>
-    <script type="text/javascript">
-    $(function() {
-	var areaList = JSON.parse($.post("/hsyw/ws.asmx/get_area",{isArea:1}, function(data){
-		//alert (typeof(JSON.parse(data)));
-	}));
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
-	
-	$("#KHQY").autocomplete({
-		source:function(request,response){
-			$.post("/hsyw/ws.asmx/get_area",{isArea:1}, function(data){
-				response($.map(data.items, function(item){
-					return {label:item,value:item}
-				}))
-			})
-		},
-	})
-    $( "#KHQY" ).autocomplete({
-      source:function(request, response){
-		
-			
-		});
-	  },
-    });
-  });
-    </script>
     <script src="../../calendar.js" language="javascript" type="text/javascript"></script>
 
     <title></title>
