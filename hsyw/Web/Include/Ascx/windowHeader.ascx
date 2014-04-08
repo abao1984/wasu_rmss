@@ -1,4 +1,5 @@
 ﻿<%@ Control Language="C#" AutoEventWireup="true" CodeFile="windowHeader.ascx.cs" Inherits="App_Ascx_windowHeader" %>
+
  <script language="javascript" type="text/javascript">
 
      function windowOpenPage(url,name,btnName) {

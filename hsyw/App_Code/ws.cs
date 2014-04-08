@@ -7,6 +7,7 @@ using System.Web.Services.Protocols;
 using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Data;
+using System.Collections.Generic;
 
 /// <summary>
 ///ws 的摘要说明
@@ -38,16 +39,69 @@ public class ws : System.Web.Services.WebService {
         
     }
 
-    //获得区域列表的json
+    private void writeJSONResponse(Object o)
+    {
+        string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented);
+        Context.Response.Write(jsonData);
+        Context.Response.End();
+    }
+
     [WebMethod]
-    public void get_area(string isArea)
+    public void get_user()
+    {
+        ArrayList areaList = getArea("");
+        Dictionary<string,string> areaDictionary = new Dictionary<string,string>();
+
+        foreach(Area a in areaList)
+        {
+            areaDictionary.Add(a.code, a.path);
+        }
+
+
+        ArrayList userList = getUserInDB();
+
+        ArrayList pathList = new ArrayList();
+        foreach (WSUser u in userList)
+        {
+            string key = u.code;
+            string path = string.Format(@"{0}/{1}", areaDictionary[key], u.realName);
+            pathList.Add(path);
+           
+        }
+
+        writeJSONResponse(pathList);
+    }
+
+    private ArrayList getUserInDB()
+    {
+        string sql = "select username,userrealname,branchcode,isuse,isvisible from t_sys_user";
+        DataSet ds = DataFunction.FillDataSet(sql);
+        ArrayList list = new ArrayList();
+        foreach (DataRow dr in ds.Tables[0].Rows)
+        {
+            WSUser user = new WSUser
+            {
+                name = dr["username"].ToString(),
+                realName = dr["userrealname"].ToString(),
+                code = dr["branchcode"].ToString(),
+                isUse = dr["isuse"].ToString(),
+                isVisible = dr["isvisible"].ToString()
+            };
+            list.Add(user);
+        }
+
+        return list;
+    }
+
+    private ArrayList getArea(string isArea)
     {
         string sql;
         if (isArea.Length > 0)
         {
             sql = "select * from t_sys_branch b where b.ISUSE='1' and ISQY='1' order by DISPLAYORDER";
         }
-        else {
+        else
+        {
             sql = "select * from t_sys_branch b where b.ISUSE='1'  order by DISPLAYORDER";
         }
 
@@ -55,16 +109,16 @@ public class ws : System.Web.Services.WebService {
         ArrayList list = new ArrayList();
         foreach (DataRow dr in ds.Tables[0].Rows)
         {
-            Area a = new Area{
-                        name = dr["branchname"].ToString(),
-                        code = dr["branchcode"].ToString(),
-                        parentCode = dr["pbranchcode"].ToString(),
-                        type = dr["jglx_datadm"].ToString(),
-                        order =dr["displayorder"].ToString(),
-                        //isUse = dr["isuse"].ToString(),
-                        //isVisible = dr["isvisible"].ToString(),
-                        isArea = dr["isqy"].ToString(),
-                        path = dr["path"].ToString()};
+            Area a = new Area{name = dr["branchname"].ToString(),
+                            code = dr["branchcode"].ToString(),
+                            parentCode = dr["pbranchcode"].ToString(),
+                            type = dr["jglx_datadm"].ToString(),
+                            order = dr["displayorder"].ToString(),
+                            //isUse = dr["isuse"].ToString(),
+                            //isVisible = dr["isvisible"].ToString(),
+                            isArea = dr["isqy"].ToString(),
+                            path = dr["path"].ToString()
+                            };
             list.Add(a);
         }
 
@@ -73,19 +127,29 @@ public class ws : System.Web.Services.WebService {
         {
             if (a.path.Length == 0)
             {
-                a.path =string.Format(@"{0}/{1}", getParentPath(a.parentCode, list),a.name);
+                a.path = string.Format(@"{0}/{1}", getParentPath(a.parentCode, list), a.name);
             }
 
-            tmpList.Add(a.path);
+            tmpList.Add(a);
         }
 
         list = tmpList;
 
+        return list;
+    }
 
-        string jsonData = JsonConvert.SerializeObject(list, Formatting.Indented);
-        Context.Response.Write(jsonData);
-        Context.Response.End();
-    
+    [WebMethod]
+    public void get_area(string isArea)
+    {
+        ArrayList list = getArea(isArea);
+        ArrayList pathList = new ArrayList();
+
+        foreach (Area a in list)
+        {
+            pathList.Add(a.path);
+        }
+
+        writeJSONResponse(pathList);    
     }
 
     private string getParentPath(string parentCode,ArrayList list)

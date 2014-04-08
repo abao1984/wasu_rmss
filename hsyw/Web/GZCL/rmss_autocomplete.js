@@ -11,29 +11,30 @@ $(function() {
 			source:areaList
 		});
 	});
-    var availableTags = [
-      "ActionScript",
-      "AppleScript",
-      "Asp",
-      "BASIC",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
-    ];
+	
+	$.post("/hsyw/ws.asmx/get_area",{isArea:""},function(data){
+		var departments = JSON.parse(data);
+		
+		$("#txtCJBM").autocomplete({
+			source:departments
+		});
+		
+		$("#txtYRBM").autocomplete({
+			source:departments
+		});
+	});
+	
+	$.post("/hsyw/ws.asmx/get_user",function(data){
+		var users = JSON.parse(data);
+		
+		$("#txtCJRY").autocomplete({
+			source:users
+		});
+		
+		$("#txtYRR").autocomplete({
+			source:users
+		});
+	});
+	
 });
  
