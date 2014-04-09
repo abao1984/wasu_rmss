@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="/hsyw/jquery-ui/jquery-ui.css" type="text/css" />
     <script src="/hsyw/jquery-ui/jquery-1.10.2.js" type="text/javascript"></script>
     <script src="/hsyw/jquery-ui/jquery-ui.js" type="text/javascript"></script>
-	<script src="rmss_autocomplete.js" type="text/javascript" />
-   <%-- <style type="text/css">
+	<script src="rmss_autocomplete.js" type="text/javascript" ></script>
+    <style type="text/css">
     .ui-autocomplete
     {
         width:300px;
@@ -18,7 +18,7 @@
 		max-width:400px;
 		text-align:left;
 	}
-    </style>--%>
+    </style>
     <script src="../../calendar.js" language="javascript" type="text/javascript"></script>
 
     <title></title>
