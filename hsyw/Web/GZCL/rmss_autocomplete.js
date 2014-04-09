@@ -1,9 +1,9 @@
-$(function() {
-	if (typeof (JSON) == 'undefined') {
-     //如果浏览器不支持JSON，则载入json2.js
-     $.getScript('json2.js');
-	}
+if (typeof (JSON) == 'undefined') {
+    //如果浏览器不支持JSON，则载入json2.js
+    $.getScript('json2.js');
+}
 
+$(function() {
 	$.post("/hsyw/ws.asmx/get_area",{isArea:1}, function(data){
 		var areaList = JSON.parse(data);
 		
