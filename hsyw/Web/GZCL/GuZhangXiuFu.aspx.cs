@@ -149,13 +149,13 @@ public partial class Web_GZCL_GuZhangXiuFu : System.Web.UI.Page
         setValue(dr, GZCC, "GZCC");
         setGZLWValue(dr, "GZLX", GZLX);
         //caoguangyao2014-04-03
-        if (YWZT.SelectedValue == "华数传媒" && GZLX_YW.SelectedValue.Length == 0)
-        {
-            string msg = "故障类型不允许为空!";
-            ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), "<script>alert('" + msg + "')</script>");
+        //if (YWZT.SelectedValue == "华数传媒" && GZLX_YW.SelectedValue.Length == 0)
+        //{
+        //    string msg = "故障类型不允许为空!";
+        //    ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), "<script>alert('" + msg + "')</script>");
             
-            return;
-        }
+        //    return;
+        //}
 
         setGZLWValue(dr, "GZLX_YW", GZLX_YW);
         //setValue(dr, GZYY, "GZYY");

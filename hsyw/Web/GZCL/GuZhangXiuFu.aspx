@@ -117,7 +117,7 @@
         </tr>
          <tr runat="server" id="tdGZLX_YW">
             <td width="30%" class="tdBak" align="center">
-                *故障类型（运维专用）
+                故障类型（运维专用）
             </td>
             <td>
                 <asp:UpdatePanel ID="UpdatePanel4" runat="server">
