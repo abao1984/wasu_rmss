@@ -175,7 +175,7 @@
                                         <asp:TextBox ID="KHQY" runat="server" BorderStyle="None" Width="100%"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <img onclick="OpenBranch('KHQY','KHQYID');" src="../Images/Small/bb_table.gif" />
+                                        <img alt="" onclick="OpenBranch('KHQY','KHQYID');" src="../Images/Small/bb_table.gif" />
                                     </td>
                                 </tr>
                             </table>
@@ -203,7 +203,7 @@
                                         <asp:TextBox ID="txtCJBM" runat="server" BorderStyle="None" Width="100%"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <img onclick="OpenBranchs('txtCJBM','txtCJBMCODE');" src="../Images/Small/bb_table.gif" />
+                                        <img alt="" onclick="OpenBranchs('txtCJBM','txtCJBMCODE');" src="../Images/Small/bb_table.gif" />
                                     </td>
                                 </tr>
                             </table>

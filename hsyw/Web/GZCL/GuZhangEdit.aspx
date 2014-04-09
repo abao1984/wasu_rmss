@@ -169,7 +169,7 @@
                                                         <asp:TextBox ID="KHQY" runat="server" Width="100%" BorderStyle="None"></asp:TextBox>
                                                     </td>
                                                     <td>
-                                                        <img src="../Images/Small/bb_table.gif" onclick="OpenBranch('KHQY','KHQYID');" />
+                                                        <img alt="" src="../Images/Small/bb_table.gif" onclick="OpenBranch('KHQY','KHQYID');" />
                                                     </td>
                                                 </tr>
                                             </table>
@@ -178,7 +178,7 @@
                                     </tr>
                                     <tr>
                                         <td width="15%" class="tdBak" align="center">
-                                            故障名称
+                                            *故障名称
                                         </td>
                                         <td width="18%" colspan="1">
                                             <table border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -207,7 +207,7 @@
                                                         <asp:ImageButton ID="TQ" ImageUrl="../Images/Small/gif-0403.gif" runat="server" OnClick="TQ_Click"
                                                             ToolTip="提取用户信息" />
                                                     </td>
-                                                    <td>
+                                                    
                                                         <td>
                                                             <asp:ImageButton ID="SelectBOSS" runat="server" ToolTip="选择用户信息" OnClientClick="windowOpenRmssSelect()"
                                                                 src="../Images/Small/bb_table.gif" />
@@ -670,7 +670,7 @@
                                             BackColor="#F0F0F0"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <img src="../Images/Small/bb_table.gif" onclick="windowOpenPhyResourceSelect('d86fbb8d-87c4-44f8-abfd-8ca14744299d','JF','','','1','')" />
+                                        <img alt="" src="../Images/Small/bb_table.gif" onclick="windowOpenPhyResourceSelect('d86fbb8d-87c4-44f8-abfd-8ca14744299d','JF','','','1','')" />
                                     </td>
                                 </tr>
                             </table>
@@ -686,7 +686,7 @@
                                             BackColor="#F0F0F0"></asp:TextBox>
                                     </td>
                                     <td>
-                                        <img src="../Images/Small/bb_table.gif" onclick="windowOpenEqu('SBLX','SB','JF','HOUSE_NAME','1')" />
+                                        <img alt="" src="../Images/Small/bb_table.gif" onclick="windowOpenEqu('SBLX','SB','JF','HOUSE_NAME','1')" />
                                     </td>
                                 </tr>
                             </table></td>

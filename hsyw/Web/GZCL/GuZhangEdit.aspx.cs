@@ -24,6 +24,8 @@ public partial class Web_GZCL_GuZhangEdit : System.Web.UI.Page
             BindFileGrid();
             BindGridViewYxyh();
 
+            //YWZT.SelectedValue = "华数传媒";
+            //YWZT_SelectedIndexChanged(YWZT, null);
            
         }
     }
@@ -332,6 +334,10 @@ public partial class Web_GZCL_GuZhangEdit : System.Web.UI.Page
     protected void SaveButton_Click(object sender, EventArgs e)
     {
         string strMessge = "";
+        if (GZMC.Text.Length == 0)
+        {
+            strMessge += "故障名称、";
+        }
         if (GZLY.SelectedValue == "")
         {
             strMessge += "故障来源、";
