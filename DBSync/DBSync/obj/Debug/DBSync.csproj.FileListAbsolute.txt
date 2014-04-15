@@ -1,0 +1,5 @@
+D:\wasu_rmss\DBSync\DBSync\obj\Debug\ResolveAssemblyReference.cache
+D:\wasu_rmss\DBSync\DBSync\bin\Debug\DBSync.exe
+D:\wasu_rmss\DBSync\DBSync\bin\Debug\DBSync.pdb
+D:\wasu_rmss\DBSync\DBSync\obj\Debug\DBSync.exe
+D:\wasu_rmss\DBSync\DBSync\obj\Debug\DBSync.pdb

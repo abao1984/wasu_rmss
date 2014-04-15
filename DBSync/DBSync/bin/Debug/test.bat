@@ -1,0 +1,1 @@
+DBSync.exe 218.108.255.183 RMSS sa hzcncrmss 218.108.255.183 rmsstest sa hzcncrmss >log.txt
