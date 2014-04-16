@@ -97,9 +97,9 @@ public partial class Web_GZCL_PuChongEdit : System.Web.UI.Page
 
     protected void BtnCL_Click(object sender, EventArgs e)
     {
-        if (YWZT.SelectedValue == "" || YWLB.SelectedValue == "" || GZCC.SelectedValue == "" || GZLX.SelectedValue == "" || GZYY.Text == "" )
+        if (YWZT.SelectedValue == "" || YWLB.SelectedValue == "" || GZCC.SelectedValue == "" || GZLX.SelectedValue == "" )//|| GZYY.Text == "" )
         {
-            ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), @"<script>alert('业务主体、业务类型、故障层次、故障类型、故障原因不能为空，请检查！');</script>");
+            ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), @"<script>alert('业务主体、业务类型、故障层次、故障类型不能为空，请检查！');</script>");
             return;
         }
         string zbguid = Request.QueryString["ZBGUID"];
