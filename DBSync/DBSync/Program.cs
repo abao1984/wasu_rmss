@@ -24,6 +24,8 @@ namespace DBSync
         protected static string origin_conn_string;
         protected static string target_conn_string;
 
+        static StreamWriter log_writer = File.AppendText("error_log.txt");
+
 
         public static void getParams(ref List<string> param_list)
         {
@@ -98,17 +100,12 @@ namespace DBSync
 
             getParams(ref param_list);
 
-
             int args_len = args.Length;
-            if (args_len < 6)
-            { 
-            
-            }
 
             string connectString = origin_conn_string;
 
             string connectString_new = target_conn_string;
-            
+
             List<string> table_list = getTableList(connectString);
 
             DateTime now = DateTime.Now;
@@ -118,35 +115,98 @@ namespace DBSync
             doLocalBackup("RMSS", app_path, connectString);
             Console.WriteLine("Backup database ok");
 
+            string procedure_name = "P_UPDATE_CUSTOMER";
+            string procedure_name1 = "P_UPDATE_CUSTOMER_new";
+
+            SqlConnection my_sql_connection = new SqlConnection(connectString_new);
+            my_sql_connection.Open();
+            SqlCommand my_sql_command = new SqlCommand();
+            my_sql_command.Connection = my_sql_connection;
+            my_sql_command.CommandText = procedure_name;
+            my_sql_command.CommandType = CommandType.StoredProcedure;
+            my_sql_command.CommandTimeout = 60 * 10;
+            SqlDataReader reader =  my_sql_command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                Console.WriteLine(reader[0].ToString());
+            }
+            my_sql_connection.Close();
+            /*
+            my_sql_command.CommandText = procedure_name1;
+            reader = my_sql_command.ExecuteReader();
+            while (reader.Read())
+            {
+                Console.WriteLine(reader[0].ToString());
+            }
+            */
+            return;
+
             foreach (string table_name in table_list)
             {
                 string pk_column_name = GetprimaryKey(table_name, connectString);
+                List<string> fields = getFields(table_name, connectString);
+
 
                 if (pk_column_name.Length > 0)
                 {
                     Console.WriteLine(String.Format("Get table {0},  PK name is {1}", table_name, pk_column_name));
                     
-                    List<string> fields = getFields(table_name, connectString);
+                    //List<string> fields = getFields(table_name, connectString);
+                                       
+                    
                     List<string> pk_list = selectTableAllPrimaryKey(pk_column_name, table_name, connectString);
+                    bool tableExists = tableIsInDB(table_name, connectString_new);
+                    if (!tableExists)
+                    {
+                        string message = String.Format(@"Error=>Table with table name=>{0} is not exist in database",table_name);
+                        Console.WriteLine(message);
+                        log(message, log_writer);
+                        continue;
+                    }
+
                     List<string> pk_list_new = selectTableAllPrimaryKey(pk_column_name, table_name, connectString_new);
 
                     var differenceQuery = pk_list.Except(pk_list_new).ToList();
-
-                    foreach (string pk in differenceQuery)
+                    int i = 0;
+                    try
                     {
-                        string data = selectTableByPrimaryKey(pk_column_name, pk, table_name, connectString);
-                        insertDataToTable(fields, data, table_name, connectString_new);
+                        foreach (string pk in differenceQuery)
+                        {
+                            i++;
+                            string data = selectTableByPrimaryKey(pk_column_name, pk, table_name, connectString);
+                            insertDataToTable(fields, data, table_name, connectString_new);
+                            Console.Write(String.Format("\rFinished {0}/{1}",i,differenceQuery.Count));
+                            if (i > 100)
+                            {
+                                //for test not wait too much time
+                                break;
+                            }
+                            
+                        }
                     }
+                    catch(Exception ex)
+                    {
+                        string message = String.Format("Error=>{0}.\nTable=>{1}",ex.Message,table_name);
+                        Console.WriteLine(message);
+                        log(message, log_writer);
+                        continue;
+                    }
+                    
 
                     TimeSpan usedTime = DateTime.Now - now;
                     int usedTimeMin = usedTime.Minutes;
                     Console.WriteLine(String.Format("used {0} minutes", usedTimeMin));
-                    break;
-
+                    
+                    
                 }
-                else
-                {
-                    Console.WriteLine(String.Format("Table {0} not set primary key,Skip it", table_name));
+               else
+               {
+                    
+                    string message = String.Format("Error=>Table {0} not set primary key,Skip it", table_name);
+                    Console.WriteLine(message);
+                    log(message, log_writer);
+                     
                 }
 
             }
@@ -154,9 +214,40 @@ namespace DBSync
             TimeSpan span = DateTime.Now - now;
             int used = span.Minutes;
             Console.WriteLine("Fin,Use {0} minutes.Thanks.", used);
-            Console.Read();
+            //Console.Read();
             
 
+        }
+
+        private static bool tableIsInDB(string table_name, string conn_string)
+        {
+            string sql = String.Format(@"SELECT count(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = '{0}'", table_name);
+            SqlConnection mSqlConnection = new SqlConnection(conn_string);
+            mSqlConnection.Open();
+            SqlCommand mSqlCommand = new SqlCommand(sql, mSqlConnection);
+            SqlDataReader reader = mSqlCommand.ExecuteReader();
+            int result = 0;
+            while (reader.Read())
+            {
+                result = (int)reader[0];
+            }
+
+            if (result == 0)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public static void log(string logMessage, TextWriter w)
+        {
+            w.Write("\r\nLog Entry : ");
+            w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),
+                DateTime.Now.ToLongDateString());
+            w.WriteLine("  :");
+            w.WriteLine("  :{0}", logMessage);
+            w.WriteLine("-------------------------------");
         }
 
         public static void doLocalBackup(string dbName, string backupPath, string connString)
@@ -183,21 +274,45 @@ namespace DBSync
         public static void insertDataToTable(List<string> fields, string data, string table_name, string cnn_string)
         {
             string sql = "";
-            
-            string strFields = listToString(fields);
+            int has_identity = 1;
 
-            sql = String.Format(@"set identity_insert {0} on;
-insert into {0} ({1}) values ({2});
-set identity_insert {0} off", 
-                                table_name, strFields, data);
-            
-            Console.WriteLine(sql);
-            Console.WriteLine("============================================================");
-            
             SqlConnection mSqlConnection = new SqlConnection(cnn_string);
             mSqlConnection.Open();
+
+            sql = String.Format("Select OBJECTPROPERTY(OBJECT_ID('{0}'),'TableHasIdentity')",table_name);
+
             SqlCommand mSqlCommand = new SqlCommand(sql, mSqlConnection);
-            mSqlCommand.ExecuteNonQuery();
+
+            SqlDataReader reader = mSqlCommand.ExecuteReader();
+
+            while (reader.Read())
+            {
+                has_identity = (int)reader[0];
+            }
+            mSqlConnection.Close();
+
+            string strFields = listToString(fields);
+            
+            if (has_identity == 1)
+            {
+                sql = String.Format(@"set identity_insert {0} on;
+insert into {0} ({1}) values ({2});
+set identity_insert {0} off", table_name, strFields, data);
+            }
+            else
+            {
+                sql = String.Format(@"insert into {0} ({1}) values ({2})",table_name,strFields,data);
+            }
+            
+            //Console.WriteLine(sql);
+            //Console.WriteLine("============================================================");
+            
+            mSqlConnection = new SqlConnection(cnn_string);
+            mSqlConnection.Open();
+            mSqlCommand = new SqlCommand(sql, mSqlConnection);
+                mSqlCommand.ExecuteNonQuery();
+            
+                        
             mSqlConnection.Close();
         }
 
@@ -233,7 +348,7 @@ set identity_insert {0} off",
                 List<string> values = new List<string>();
                 for (int i = 0; i < record.FieldCount; i++)
                 {
-                    values.Add(record[i].ToString());
+                    values.Add(record[i].ToString().Replace("'","''"));
                 }
                 data = listValueToString(values);
 
@@ -245,7 +360,7 @@ set identity_insert {0} off",
         public static List<string> selectTableAllPrimaryKey(string primary_key, string table_name, string cnn_string)
         {
             List<string> pk_list = new List<string>();
-            string sql = String.Format(@"select {0} from {1}", primary_key, table_name);
+            string sql = String.Format(@"select {0} from [{1}]", primary_key, table_name);
             SqlConnection mSqlConnection = new SqlConnection(cnn_string);
             mSqlConnection.Open();
             SqlCommand mSqlCommand = new SqlCommand(sql, mSqlConnection);
