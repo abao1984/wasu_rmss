@@ -1,1 +1,0 @@
-DB backup path:D:\wasu_rmss\DBSync\DBSync\bin\Debug\BACKUP_RMSS.bak
