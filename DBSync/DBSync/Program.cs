@@ -132,14 +132,16 @@ namespace DBSync
                 Console.WriteLine(reader[0].ToString());
             }
             my_sql_connection.Close();
-            /*
+
+            my_sql_connection.Open();
             my_sql_command.CommandText = procedure_name1;
             reader = my_sql_command.ExecuteReader();
             while (reader.Read())
             {
                 Console.WriteLine(reader[0].ToString());
             }
-            */
+
+            my_sql_connection.Close();
             return;
 
             foreach (string table_name in table_list)
