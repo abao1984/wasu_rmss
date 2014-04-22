@@ -143,6 +143,24 @@ public class ws : System.Web.Services.WebService {
         return list;
     }
 
+    private ArrayList getIdByCode(string code)
+    {
+        ArrayList list = new ArrayList();
+        string sql = String.Format("select id from t_sys_user where branchcode like '{0}%'",code);
+        DataSet ds = DataFunction.FillDataSet(sql);
+        foreach (DataRow dr in ds.Tables[0].Rows)
+        {
+            list.Add(dr[0].ToString());
+        }
+        return list;
+    }
+
+    private string listToString(ArrayList list)
+    {
+        string s = string.Join(",", (string[])list.ToArray(typeof(string)));
+        return s;
+    }
+
     [WebMethod]
     public void get_area(string isArea)
     {
@@ -155,6 +173,8 @@ public class ws : System.Web.Services.WebService {
             dict.Add("label", a.path);
             dict.Add("value", a.path);
             dict.Add("code", a.code);
+            string ids = listToString(getIdByCode(a.code));
+            dict.Add("id",ids);
             pathList.Add(dict);
         }
 
