@@ -14,7 +14,7 @@ $(function(){
 			var content = announcement.content;
 			
 			$("#mywindows").html("<div class=\"announcement\">"+
-			"<h5>"+title+"</h5>"+
+			"<h2>"+title+"</h2>"+
 			"<div>"+content+"</div>"+
 			"</div>");
 		}
