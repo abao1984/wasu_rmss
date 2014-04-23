@@ -25,6 +25,29 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void get_announcement(string user_id)
+    {
+        string sql = String.Format("select * from announcements where post_owner like '%{0}%' order by post_time desc",user_id);
+        DataSet ds = DataFunction.FillDataSet(sql);
+        ArrayList announce_list = new ArrayList();
+        foreach (DataRow row in ds.Tables[0].Rows)
+        {
+            WSAnnouncement a = new WSAnnouncement
+            {
+                id = int.Parse(row["id"].ToString()),
+                title = row["post_title"].ToString(),
+                content = row["post_content"].ToString(),
+                time = row["post_time"].ToString(),
+                owner = row["post_owner"].ToString(),
+                comment = row["post_comment"].ToString()
+            };
+            announce_list.Add(a);
+        }
+
+        writeJSONResponse(announce_list);
+    }
+
+    [WebMethod]
     public void HelloWorld() {
         string hello = "hello";
         string world = "world";
