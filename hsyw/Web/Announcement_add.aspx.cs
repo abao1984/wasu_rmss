@@ -27,7 +27,7 @@ public partial class Announcement_add : System.Web.UI.Page
             sql = String.Format(@"create table ANNOUNCEMENTS
 (id number(10) constraint pk_id primary key,
 post_time date,
-post_owner varchar2(200) not null,
+post_owner clob not null,
 post_title varchar2(200) not null,
 post_content clob not null,
 post_comment varchar2(200) default ''
@@ -55,7 +55,7 @@ post_comment varchar2(200) default ''
     protected void post_to_new_Click(object sender, EventArgs e)
     {
         title = Request.Form["post_title"];
-        owner = Request.Form["post_owner"];
+        owner = Request.Form["post_owner_ids"];
         content = Request.Form["post_content"];
         if (title.Length == 0 || owner.Length == 0 || content.Length == 0)
         {

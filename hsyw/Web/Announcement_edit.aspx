@@ -9,9 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+    <link rel="stylesheet" href="/hsyw/jquery-ui/jquery-ui.css" type="text/css" />
+        <script src="/hsyw/jquery-ui/jquery-1.10.2.js" type="text/javascript"></script>
+    <script src="/hsyw/jquery-ui/jquery-ui.js" type="text/javascript"></script>
+	<script src="/hsyw/web/rmss_announcement_object_autocomplete.js" type="text/javascript" ></script>
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap.min.css">
 <link rel="stylesheet" href="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/css/bootstrap-theme.min.css">
-<script src="http://cdn.bootcss.com/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/twitter-bootstrap/3.0.3/js/bootstrap.min.js"></script>
     <style type="text/css">
     .error{
@@ -40,7 +43,8 @@
              <div class="form-group">
     <label for="post_owner" class="col-sm-2 control-label">发布人：</label>
     <div class="col-sm-8"">
-    <input type="text" class="form-control" name="post_owner" value="<%=owner %>" />
+    <input type="text" class="form-control" name="post_owner" value="<%=owner_list %>" id="post_owner" />
+    <input type="hidden" class="form-control" name="post_owner_ids" value="<%=owner %>" id="post_owner_ids"/>
         <div class="error">
     <% if (owner.Length == 0 && Request.HttpMethod.Equals("POST")){ Response.Write(showErrorMessage("发布人")); }  %>
     </div>

@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using System.Collections.Generic;
 
 public partial class Announcement_edit : System.Web.UI.Page
 {
@@ -18,6 +19,7 @@ public partial class Announcement_edit : System.Web.UI.Page
     public string owner;
     public string content;
     public int create_message;
+    public string owner_list;
     protected void  Page_Load(object sender, EventArgs e)
     {
         if (Request.HttpMethod.Equals("GET"))
@@ -28,10 +30,30 @@ public partial class Announcement_edit : System.Web.UI.Page
             title = row["post_title"].ToString();
             owner = row["post_owner"].ToString();
             content = row["post_content"].ToString();
+
+            List<string> owners = owner.Split(',').ToList<string>();
+            List<string> tmp = new List<string>();
+            foreach (string s in owners)
+            {
+                string str_id = String.Format("'{0}'",s);
+                tmp.Add(str_id);
+            }
+
+            string owner_ids = string.Join(",", tmp.ToArray());
+
+            sql = String.Format("select * from t_sys_user where id in ({0})", owner_ids);
+            DataSet ds = DataFunction.FillDataSet(sql);
+            List<string> names = new List<string>();
+
+            foreach (DataRow dr in ds.Tables[0].Rows)
+            { 
+                names.Add(dr["userrealname"].ToString());
+            }
+            owner_list = string.Join(",",names.ToArray());
         }
         else {
             string post_title = Request.Form["post_title"];
-            string post_owner = Request.Form["post_owner"];
+            string post_owner = Request.Form["post_owner_ids"];
             string post_content = Request.Form["post_content"];
             id = int.Parse(Request.Form["post_id"]);
 
