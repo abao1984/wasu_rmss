@@ -57,7 +57,7 @@
                         <td valign="top" width="100%">
                             <iframe id="fraMain" style="z-index: 2; visibility: inherit; width: 100%" name="fraMain"
                                 frameborder="0" marginwidth="0" marginheight="0" scrolling="yes" height="100%"
-                                src="Web/main.htm"></iframe>
+                                src="Web/main.aspx"></iframe>
                         </td>
                     </tr>
                 </table>
