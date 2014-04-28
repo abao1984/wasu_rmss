@@ -25,9 +25,36 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void get_everyday_total_report()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        string sql = @"select count(zbguid)  from T_FAU_ZB where trunc(gzsdsj)=trunc(sysdate)
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='结单'
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='调度发单'
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='电话处理'
+UNION all
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单'
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗单'";
+        DataSet ds = DataFunction.FillDataSet(sql);
+        
+        dict.Add("今日工单",   ds.Tables[0].Rows[0][0].ToString());
+        dict.Add("结单",       ds.Tables[0].Rows[1][0].ToString());
+        dict.Add("调度发单",   ds.Tables[0].Rows[2][0].ToString());
+        dict.Add("电话处理",   ds.Tables[0].Rows[3][0].ToString());
+        dict.Add("维修返单",   ds.Tables[0].Rows[4][0].ToString());
+        dict.Add("遗单",       ds.Tables[0].Rows[5][0].ToString());
+       
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
     public void get_announcement(string user_id)
     {
-        string sql = String.Format("select * from announcements where post_owner like '%{0}%' order by post_time desc",user_id);
+        string sql = String.Format("select * from (select * from announcements where post_owner like '%{0}%' order by post_time desc) where rownum <= 100",user_id);
         DataSet ds = DataFunction.FillDataSet(sql);
         ArrayList announce_list = new ArrayList();
         foreach (DataRow row in ds.Tables[0].Rows)
