@@ -27,7 +27,7 @@ public class ws : System.Web.Services.WebService {
     [WebMethod]
     public void get_everyday_total_report()
     {
-        Dictionary<string, string> dict = new Dictionary<string, string>();
+        Dictionary<string, object> dict = new Dictionary<string, object>();
         /*
         string sql = @"select count(zbguid)  from T_FAU_ZB where trunc(gzsdsj)=trunc(sysdate)
 UNION ALL
@@ -58,15 +58,19 @@ select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt=
         }
 
         List<string> user_list = new List<string>();
-        
-        
+
+        List<Dictionary<string, string>> department_list = new List<Dictionary<string, string>>();
         
         foreach (string key in branch_dict.Keys)
         {
             string str = String.Format("select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and DDFDR in (select userrealname from t_sys_user where branchcode like '{0}%')", key);
             DataRow dr = DataFunction.GetSingleRow(str);
-            dict.Add(branch_dict[key], dr[0].ToString());
+            //dict.Add(branch_dict[key], dr[0].ToString());
+            Dictionary<string, string> dic = new Dictionary<string, string>();
+            dic.Add("key",branch_dict[key]);
+            dic.Add("value", dr[0].ToString());
 
+            department_list.Add(dic);
             //key_list.Add(String.Format("'{0}'", key));
 
             str = String.Format("select userrealname from t_sys_user where branchcode like '{0}%'", key);
@@ -76,7 +80,7 @@ select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt=
                 user_list.Add(String.Format("'{0}'", row[0].ToString()));
             }
         }
-
+        dict.Add("list", department_list);
         string users = string.Join(",", user_list.ToArray());
         sql = String.Format(@"select count(zbguid)  from T_FAU_ZB where trunc(gzsdsj)=trunc(sysdate) and ddfdr in ({0})
 UNION ALL
