@@ -28,6 +28,7 @@ public class ws : System.Web.Services.WebService {
     public void get_everyday_total_report()
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
+        /*
         string sql = @"select count(zbguid)  from T_FAU_ZB where trunc(gzsdsj)=trunc(sysdate)
 UNION ALL
 select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='结单'
@@ -47,6 +48,56 @@ select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt=
         dict.Add("电话处理",   ds.Tables[0].Rows[3][0].ToString());
         dict.Add("维修返单",   ds.Tables[0].Rows[4][0].ToString());
         dict.Add("遗单",       ds.Tables[0].Rows[5][0].ToString());
+        */
+
+        string sql = "select BRANCHCODE,BRANCHNAME from t_sys_branch where PBRANCHCODE='10010103'";
+        DataSet ds1 = DataFunction.FillDataSet(sql);
+        Dictionary<string, string> branch_dict = new Dictionary<string, string>();
+         foreach (DataRow dr in ds1.Tables[0].Rows) {
+            branch_dict.Add(dr["branchcode"].ToString(),dr["branchname"].ToString());
+        }
+
+        List<string> user_list = new List<string>();
+        
+        
+        
+        foreach (string key in branch_dict.Keys)
+        {
+            string str = String.Format("select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and DDFDR in (select userrealname from t_sys_user where branchcode like '{0}%')", key);
+            DataRow dr = DataFunction.GetSingleRow(str);
+            dict.Add(branch_dict[key], dr[0].ToString());
+
+            //key_list.Add(String.Format("'{0}'", key));
+
+            str = String.Format("select userrealname from t_sys_user where branchcode like '{0}%'", key);
+            DataSet ds = DataFunction.FillDataSet(str);
+            foreach (DataRow row in ds.Tables[0].Rows)
+            {
+                user_list.Add(String.Format("'{0}'", row[0].ToString()));
+            }
+        }
+
+        string users = string.Join(",", user_list.ToArray());
+        sql = String.Format(@"select count(zbguid)  from T_FAU_ZB where trunc(gzsdsj)=trunc(sysdate) and ddfdr in ({0})
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='结单' and ddfdr in ({0})
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='调度发单' and ddfdr in ({0})
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='电话处理' and ddfdr in ({0})
+UNION all
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ddfdr in ({0})
+UNION ALL
+select count(zbguid) from t_fau_zb where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗单' and ddfdr in ({0})", users);
+        DataSet data_set = DataFunction.FillDataSet(sql);
+
+        dict.Add("今日工单", data_set.Tables[0].Rows[0][0].ToString());
+        dict.Add("结单", data_set.Tables[0].Rows[1][0].ToString());
+        dict.Add("调度发单", data_set.Tables[0].Rows[2][0].ToString());
+        dict.Add("电话处理", data_set.Tables[0].Rows[3][0].ToString());
+        dict.Add("维修返单", data_set.Tables[0].Rows[4][0].ToString());
+        dict.Add("遗单", data_set.Tables[0].Rows[5][0].ToString());
+        
        
         writeJSONResponse(dict);
     }
