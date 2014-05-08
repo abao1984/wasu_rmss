@@ -71,7 +71,7 @@ public class ws : System.Web.Services.WebService {
             string names = string.Join(",",name_list.ToArray());
 
             string condition = String.Format("ddfdr in ({0}) or SUBSTR(ddfdr, 0, INSTR(ddfdr, ',')-1) in ({0})",names);
-            string str = String.Format("select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and ({0})", condition);
+            string str = String.Format("select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ({0})", condition);
             DataRow dr = DataFunction.GetSingleRow(str);
             
             dic.Add("key",branch_dict[key]);
