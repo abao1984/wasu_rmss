@@ -8,6 +8,7 @@ using System.Xml.Linq;
 using Newtonsoft.Json;
 using System.Data;
 using System.Collections.Generic;
+using System.Text;
 
 /// <summary>
 ///ws 的摘要说明
@@ -17,11 +18,25 @@ using System.Collections.Generic;
 //若要允许使用 ASP.NET AJAX 从脚本中调用此 Web 服务，请取消对下行的注释。 
 // [System.Web.Script.Services.ScriptService]
 public class ws : System.Web.Services.WebService {
+    private static Random random = new Random((int)DateTime.Now.Ticks);
 
     public ws () {
 
         //如果使用设计的组件，请取消注释以下行 
         //InitializeComponent(); 
+    }
+
+    private string RandomString(int size)
+    {
+        StringBuilder builder = new StringBuilder();
+        char ch;
+        for (int i = 0; i < size; i++)
+        {
+            ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+            builder.Append(ch);
+        }
+
+        return builder.ToString();
     }
 
     [WebMethod(CacheDuration=60*60)]
@@ -41,7 +56,12 @@ public class ws : System.Web.Services.WebService {
         List<Dictionary<string, string>> department_list = new List<Dictionary<string, string>>();
 
         //create tmp table to store current data
-        sql = "create global temporary table t_fau_zb_tmp on commit preserve rows as select * from t_fau_zb where trunc(gzsdsj)=trunc(sysdate)";
+        string random_str = RandomString(10);
+        string temp_table_name = String.Format("t_fau_zb_tmp_{0}",random_str);
+        
+        Console.WriteLine(temp_table_name);
+
+        sql = String.Format("create global temporary table {0} on commit preserve rows as select * from t_fau_zb where trunc(gzsdsj)=trunc(sysdate)",temp_table_name);
         int result = DataFunction.ExecuteNonQuery(sql);
         
         foreach (string key in branch_dict.Keys)
@@ -71,7 +91,7 @@ public class ws : System.Web.Services.WebService {
             string names = string.Join(",",name_list.ToArray());
 
             string condition = String.Format("ddfdr in ({0}) or SUBSTR(ddfdr, 0, INSTR(ddfdr, ',')-1) in ({0})",names);
-            string str = String.Format("select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ({0})", condition);
+            string str = String.Format("select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ({0})", condition,temp_table_name);
             DataRow dr = DataFunction.GetSingleRow(str);
             
             dic.Add("key",branch_dict[key]);
@@ -84,17 +104,17 @@ public class ws : System.Web.Services.WebService {
         dict.Add("list", department_list);
         string users = string.Join(",", user_list.ToArray());
         string substring = String.Format("SUBSTR(ddfdr, 0, INSTR(ddfdr, ',')-1) in ({0}) or ddfdr in ({0})", users);
-        sql = String.Format(@"select count(zbguid)  from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and ({0})
+        sql = String.Format(@"select count(zbguid)  from {1} where trunc(gzsdsj)=trunc(sysdate) and ({0})
 UNION ALL
-select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='结单' and ({0})
+select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='结单' and ({0})
 UNION ALL
-select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='调度发单' and ({0})
+select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='调度发单' and ({0})
 UNION ALL
-select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='电话处理' and ({0})
+select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='电话处理' and ({0})
 UNION all
-select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ({0})
+select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='维修返单' and ({0})
 UNION ALL
-select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗单' and ({0})", substring);
+select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗单' and ({0})", substring,temp_table_name);
         
         DataSet data_set = DataFunction.FillDataSet(sql);
 
@@ -106,18 +126,23 @@ select count(zbguid) from t_fau_zb_tmp where trunc(gzsdsj)=trunc(sysdate) and fd
         dict.Add("遗单", data_set.Tables[0].Rows[5][0].ToString());
         
         //drop the tmp table
-        sql = "truncate table t_fau_zb_tmp";
+        sql = String.Format("truncate table {0}", temp_table_name);
         result = DataFunction.ExecuteNonQuery(sql);
-        sql = "drop table t_fau_zb_tmp";
+        sql = String.Format("drop table {0}", temp_table_name);
         result = DataFunction.ExecuteNonQuery(sql);
        
         writeJSONResponse(dict);
     }
 
     [WebMethod]
-    public void get_announcement(string user_id)
+    public void get_announcement(string user_id,string page)
     {
-        string sql = String.Format("select * from (select * from announcements where post_owner like '%{0}%' order by post_time desc) where rownum <= 100",user_id);
+        if (page.Length == 0)
+        {
+            page = "1";
+        }
+        
+        string sql = String.Format("select * from (select a.*,rownum rn from (select * from announcements where post_owner like '%{0}%' order by post_time desc) a where rownum <= (({1}*100)+1) ) where rn>=((({1}-1)*100)+1)",user_id,page);
         DataSet ds = DataFunction.FillDataSet(sql);
         ArrayList announce_list = new ArrayList();
         foreach (DataRow row in ds.Tables[0].Rows)
