@@ -464,6 +464,7 @@ public partial class Web_GZCL_GZBB_LiShiJiLuChaXun : System.Web.UI.Page
                     workbook.Worksheets[0].Cells[2 + num, 20].PutValue(dr["GZFFMS"].ToString());
                     workbook.Worksheets[0].Cells[2 + num, 21].PutValue(dr["XFRY"].ToString());
                     workbook.Worksheets[0].Cells[2 + num, 22].PutValue(dr["GZMS"].ToString());
+                    workbook.Worksheets[0].Cells[2 + num, 23].PutValue(dr["CUSTOMER_LEVEL"].ToString());
 
 
                     workbook.Worksheets[0].Cells.Merge(2 + num, 0, count, 1);

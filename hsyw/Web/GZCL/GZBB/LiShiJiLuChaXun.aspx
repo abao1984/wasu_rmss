@@ -248,8 +248,10 @@
                                 <ItemStyle Width="4%" HorizontalAlign="Center" />
                             </asp:BoundField>
                             <asp:BoundField HeaderText="故障描述" DataField="GZMS" SortExpression="GZMS">
-                                <ItemStyle Width="8%" HorizontalAlign="Center" />
+                                <ItemStyle Width="6%" HorizontalAlign="Center" />
                             </asp:BoundField>
+                            <asp:BoundField DataField="CUSTOMER_LEVEL" HeaderText="客户等级" ReadOnly="True" 
+                                SortExpression="CUSTOMER_LEVEL" />
                         </Columns>
                     </asp:GridView>
                 </div>
