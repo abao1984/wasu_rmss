@@ -485,6 +485,7 @@ public partial class Web_GZCL_GZBB_LiShiJiLuChaXun : System.Web.UI.Page
                     workbook.Worksheets[0].Cells.Merge(2 + num, 20, count, 1);
                     workbook.Worksheets[0].Cells.Merge(2 + num, 21, count, 1);
                     workbook.Worksheets[0].Cells.Merge(2 + num, 22, count, 1);
+                    workbook.Worksheets[0].Cells.Merge(2 + num, 23, count, 1);
 
                     num = num + count;
                 }
@@ -528,6 +529,7 @@ public partial class Web_GZCL_GZBB_LiShiJiLuChaXun : System.Web.UI.Page
                     workbook.Worksheets[0].Cells[1 + i, 19].PutValue(dr["GZFFMS"].ToString());
                     workbook.Worksheets[0].Cells[1 + i, 20].PutValue(dr["XFRY"].ToString());
                     workbook.Worksheets[0].Cells[1 + i, 21].PutValue(dr["GZMS"].ToString());
+                    workbook.Worksheets[0].Cells[1 + i, 22].PutValue(dr["CUSTOMER_LEVEL"].ToString());
 
                 }
                 designer1.Save(System.Web.HttpUtility.UrlEncode("历史记录查询1.xls"), Aspose.Cells.SaveType.OpenInExcel, FileFormatType.Default, Response);
