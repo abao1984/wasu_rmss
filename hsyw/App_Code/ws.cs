@@ -9,7 +9,8 @@ using Newtonsoft.Json;
 using System.Data;
 using System.Collections.Generic;
 using System.Text;
-
+using System.IO;
+using LinqToExcel;
 /// <summary>
 ///ws 的摘要说明
 /// </summary>
@@ -37,6 +38,173 @@ public class ws : System.Web.Services.WebService {
         }
 
         return builder.ToString();
+    }
+
+    [WebMethod]
+    public void pppoe_excel_upload()
+    {
+        HttpContext post = HttpContext.Current;
+        HttpFileCollection files = post.Request.Files;
+        if (files.Count == 0)
+        {
+            return;
+        }
+        HttpPostedFile targetFile = files[0];
+        string fileName = targetFile.FileName;
+        if (targetFile.ContentLength == 0)
+        {
+            return;
+        }
+      
+
+        byte[] binaryArray = new byte[targetFile.InputStream.Length];
+        targetFile.InputStream.Read(binaryArray, 0, (int)targetFile.InputStream.Length);
+            
+        var appData = Server.MapPath("~");
+        var file = Path.Combine(appData, Path.GetFileName(fileName));
+        
+        FileStream fs = new FileStream(file,FileMode.Create,FileAccess.ReadWrite);
+        fs.Write(binaryArray,0,binaryArray.Length);
+        fs.Close();
+
+
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        dict.Add("message", "");
+        try
+        {
+            string result = selectExcel(file);
+            dict["message"] = "ok";
+            if (result.Length > 0)
+            {
+                dict["message"] = result;
+            }
+            
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+            dict["message"] = e.Message;
+        }
+
+        writeJSONResponse(dict);
+        
+    }
+
+    private string selectExcel(string filename) 
+    {
+        string result = "";
+        var excel = new ExcelQueryFactory(filename);
+        var sheet = excel.Worksheet(0);
+        var query = from d in sheet
+                    select d;
+
+        DataClassesDataContext dc = new DataClassesDataContext();
+
+        var PPPOEBussiness = from a in dc.IP_Bussiness
+                                where a.Bussiness_code.StartsWith("Z_P_") orderby a.Bussiness_code descending
+                                select a;
+
+        long count = long.Parse(PPPOEBussiness.First().Bussiness_code.Replace("Z_P_", ""));
+        foreach (var item in query)
+        {   
+            var bussinessType = (from a in dc.Jrlx_List
+                                 where a.nodename == item["业务类型"]//ywlx
+                                 select a).FirstOrDefault();
+            var type = bussinessType.nodeid;
+
+            //业务编码生成
+            count += 1;
+
+            string bussinessCode = String.Format("Z_P_{0:D9}",count);
+
+            var q = (from b in dc.TS_ZD_Info
+                       where b.mc == item["带宽"]
+                       select b).FirstOrDefault();
+            string bandWidthCode = "";
+            if (q!=null)
+            {
+
+                bandWidthCode = q.lsh;
+            }
+
+            var machineRoomId = item["机房编号"].ToString().Replace("'","");
+
+
+            string configDate = "";
+            if (item["配置时间"].ToString().Length > 0)
+            {
+                string cellDate = item["配置时间"].ToString();
+                configDate = cellDate.Split(' ')[0];
+            
+            }
+
+            string deviceInfo = item["设备配置信息"];
+            string[] deviceInfoArray = deviceInfo.Split('.');
+
+            string devicePort = "";
+
+            for (int i = 0; i < 3; i++)
+            {
+                if (i != 2)
+                {
+                    devicePort += String.Format("{0}.",deviceInfoArray[i]);
+                }
+                else{
+                    devicePort += deviceInfoArray[i];
+                }
+            }
+
+            var port = from p in dc.IP_Bussiness
+                       where p.sbpzxx.StartsWith(devicePort)
+                       select p;
+
+            if (port.Count() > 0)
+            {
+                result += port.FirstOrDefault().ID+",";
+                continue;
+            }
+             
+            var bussiness = new IP_Bussiness
+            {   
+                ywlx           = type,
+                macid          = machineRoomId,
+                sbpzxx         = item["设备配置信息"],
+                Bussiness_code = bussinessCode,//item["业务编码"],
+                Line_code      = item["线路编码"],
+                xqjrwg         = item["小区接入网关"],
+                brandwidth     = bandWidthCode,    
+                sbbh           = item["设备名称"],
+                sfqxh          = item["收发器型号"],
+                gsfq           = item["光收发器"],
+                gcjx           = item["光交接箱"],
+                gqtx           = item["光纤跳线"],
+                maconu         = item["MAC地址ONU"],
+                fgqdk          = item["分光器端口号"],
+                gsfqdk         = item["光纤收发器端口"],
+                khmc           = item["接入单位"],
+                khlxr          = item["用户负责人"],
+                lxdh           = item["用户电话"],
+                //xxx          = item["用户手机"],
+                khdz           = item["用户地址"],
+                remark         = item["备注"],
+                pzr            = item["配置人"],
+                pzsj           = configDate,
+                VLAN           = item["VLAN"],
+                by1            = "import by PPPOE excel file",
+                
+            };
+            dc.IP_Bussiness.InsertOnSubmit(bussiness);        
+        }
+
+        dc.SubmitChanges();
+
+        if (result.Length > 0)
+        {
+            result = String.Format("excel中的数据与数据库中ID编号为‘{0}’的资料端口冲突", result); 
+                
+        }
+
+        return result;
     }
 
     [WebMethod(CacheDuration=60*60)]

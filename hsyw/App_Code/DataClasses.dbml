@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="RMSS" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSSConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.IP_Bussiness" Member="IP_Bussiness">
+    <Type Name="IP_Bussiness">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Bussiness_code" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Line_code" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrsb" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sbbh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sbmc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="xqjrwg" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ywlx" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="khbh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="khmc" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="khlxr" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="lxdh" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="khlx" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="fgqdk" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="VPN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gcjx" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gqtx" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="gsfq" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gsfqdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sfqxh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ht_VPN" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="VLAN" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="brandwidth" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="by1" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="state" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="pzr" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="pzsj" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="khdz" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="jrlyq" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrjhj" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrjhjdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrdmc" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="yhzyipwg" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="yhlywd" Type="System.String" DbType="VarChar(225)" CanBeNull="true" />
+      <Column Name="VLAN_name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dksl" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gqsfqdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrlyqdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="yhlyqdz" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VPN_Name" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jrdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="maconu" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dldw" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="jfipdz" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="voipgw" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="pvcid" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bdjfvlan" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ddjfvlan" Type="System.String" DbType="VarChar(200)" CanBeNull="true" />
+      <Column Name="ddsbbh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="ddsbmc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="ddsbdk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="macid" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="dd_macid" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="sbpzxx" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="Sbdkhid" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="ddsbdkhid" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="gjsj" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="gjremark" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="LjjfID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DdLjjfID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Csts" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="Cjr" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Cjrq" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="Cssj" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="issend" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="OUNdk_Dd" Type="System.String" DbType="NVarChar(1000)" CanBeNull="true" />
+      <Column Name="glYwONULsh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TS_ZD_Info" Member="TS_ZD_Info">
+    <Type Name="TS_ZD_Info">
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="lsh" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="mc" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="code" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="czj" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="czrq" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="tag" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="flag" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="YwlbLsh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Sfxs" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Color" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="xh" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Jrlx_List" Member="Jrlx_List">
+    <Type Name="Jrlx_List">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="nodeid" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="parentid" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="nodename" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="form" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="showorder" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="bmgzID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
