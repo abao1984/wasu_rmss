@@ -1,15 +1,28 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-cn">
 <head>
-<script src="jquery-ui/jquery-1.10.2.js"></script>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
+<script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(function(){
+	if(typeof(JSON)=='undefined'){
+		$.getScript('/hsyw/Web/GZCL/json2.js');
+	}
+
 	var showLoading = function(){
 		$('div.message').html('数据上传中，请稍后..<img src="loading.gif" />');
 	};
 	
 	var showResult = function(data){
-		var obj = eval('('+ data +')');
+		var obj = JSON.parse(data);
 		$('#file').val('');
 		var result = '';
 		if (obj.message ==='ok'){
@@ -28,25 +41,39 @@ $(function(){
 	$("#myform").ajaxForm(options);
 });
 </script>
+<style>
+body {
+  padding-top: 50px;
+}
+.starter-template {
+  padding: 40px 15px;
+  text-align: center;
+}
+</style>
 </head>
 <body>
-<div class="message">
-
-</div>
-<div>
-<form id="myform" method="post" action="http://localhost:24052/hsyw/ws.asmx/pppoe_excel_upload" enctype="multipart/form-data">
-<fieldset>
-<legend>
-PPPOE  数据导入
-</legend>
-<div>
-<input type="file" id="file" name="file">
-</div>
-<div>
-<input type="submit" name="submit">
-</div>
-</fieldset>
-</form>
-</div>
+	</div class="container">
+	<div class="well row-fluid">
+		<div class="message">
+		</div>
+		<div>
+			<form role="form" id="myform" method="post" action="http://localhost:24052/hsyw/ws.asmx/pppoe_excel_upload" enctype="multipart/form-data">
+			<fieldset>
+			<legend>
+			PPPOE  数据导入
+			</legend>
+			<div class="form-group">
+				<label for="file">上传文件</label>
+				<input type="file" id="file" name="file">
+				<p class="help-block">请上传能够导入PPPOE资料的excel文件</p>
+			</div>
+			<div class="form-group">
+				<input class="btn btn-default" type="submit" name="submit">
+			</div>
+			</fieldset>
+			</form>
+		</div>
+	</div>
+	</div>
 </body>
 </html>

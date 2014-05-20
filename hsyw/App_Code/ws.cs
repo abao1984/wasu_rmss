@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using LinqToExcel;
+using System.Web.Script.Services;
 /// <summary>
 ///ws 的摘要说明
 /// </summary>
@@ -41,6 +42,7 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    [ScriptMethod(ResponseFormat=ResponseFormat.Json)]
     public void pppoe_excel_upload()
     {
         HttpContext post = HttpContext.Current;
@@ -200,7 +202,7 @@ public class ws : System.Web.Services.WebService {
 
         if (result.Length > 0)
         {
-            result = String.Format("excel中的数据与数据库中ID编号为‘{0}’的资料端口冲突", result); 
+            result = String.Format(@"导入excel中的数据与数据库中ID编号为‘{0}’的资料端口冲突", result); 
                 
         }
 
@@ -347,7 +349,9 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
 
     private void writeJSONResponse(Object o)
     {
+        Encoding encode = System.Text.Encoding.GetEncoding("Unicode"); 
         string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented);
+        Context.Response.AddHeader("Content-type", "text/html;charset=UTF-8");
         Context.Response.Write(jsonData);
         Context.Response.End();
     }
