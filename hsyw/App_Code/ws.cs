@@ -62,7 +62,7 @@ public class ws : System.Web.Services.WebService {
         byte[] binaryArray = new byte[targetFile.InputStream.Length];
         targetFile.InputStream.Read(binaryArray, 0, (int)targetFile.InputStream.Length);
             
-        var appData = Server.MapPath("~");
+        var appData = Server.MapPath("~/upload_temp");
         var file = Path.Combine(appData, Path.GetFileName(fileName));
         
         FileStream fs = new FileStream(file,FileMode.Create,FileAccess.ReadWrite);
