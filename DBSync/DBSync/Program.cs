@@ -124,7 +124,7 @@ namespace DBSync
             my_sql_command.Connection = my_sql_connection;
             my_sql_command.CommandText = procedure_name;
             my_sql_command.CommandType = CommandType.StoredProcedure;
-            my_sql_command.CommandTimeout = 60 * 10;
+            my_sql_command.CommandTimeout = 60 * 10*10;
             SqlDataReader reader =  my_sql_command.ExecuteReader();
 
             while (reader.Read())

@@ -162,7 +162,7 @@ public class ws : System.Web.Services.WebService {
 
             if (port.Count() > 0)
             {
-                result += port.FirstOrDefault().ID+",";
+                result += "<br/>"+port.FirstOrDefault().sbpzxx+",";
                 continue;
             }
              
@@ -202,7 +202,7 @@ public class ws : System.Web.Services.WebService {
 
         if (result.Length > 0)
         {
-            result = String.Format(@"导入excel中的数据与数据库中ID编号为‘{0}’的资料端口冲突", result); 
+            result = String.Format(@"导入excel中的数据与数据库中设备配置信息为‘{0}’的资料端口冲突", result); 
                 
         }
 
