@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Database Name="RMSS" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSSConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSSConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.IP_Bussiness" Member="IP_Bussiness">
     <Type Name="IP_Bussiness">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -101,6 +101,119 @@
       <Column Name="showorder" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="bz" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
       <Column Name="bmgzID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssemblyPortSource_Master" Member="AssemblyPortSource_Master">
+    <Type Name="AssemblyPortSource_Master">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="sbbh" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="sbmc" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="sbxh" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="zcbh" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="mac_id" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="mac_name" Type="System.String" DbType="VarChar(1000)" CanBeNull="true" />
+      <Column Name="sccj" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="sbdj" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sbfl" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="sbzt" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="xlh" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="nzxx" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="dymks" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="rjxx" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="yzcw" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="kycw" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="sfxb" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="bxqsrq" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="bxjzrq" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="RMAjl" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="xmbh" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="cghth" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="cgf" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="zddks" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sbgldz" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sljfbh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="sljfmc" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bk" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="macdzonu" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="gsjbh" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="jfxh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="gjsj" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="gjremark" Type="System.String" DbType="NVarChar(4000)" CanBeNull="true" />
+      <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AssemblyPortSource_Details" Member="AssemblyPortSource_Details">
+    <Type Name="AssemblyPortSource_Details">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="MID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="port" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="sssbbh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dksl" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="dkll" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="dkzt" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="sfky" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Cw" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ccjb" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="bklx" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="xh" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ONU_Dk" Member="ONU_Dk">
+    <Type Name="ONU_Dk">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Lsh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Gldkid" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Dkh" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Dklx" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Dksl" Type="System.String" DbType="NVarChar(25)" CanBeNull="true" />
+      <Column Name="Sfkfy" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Dkzt" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.YwONU_glb" Member="YwONU_glb">
+    <Type Name="YwONU_glb">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="Lsh" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ywid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="ONULsh" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="type" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Vlan_Distribute" Member="Vlan_Distribute">
+    <Type Name="Vlan_Distribute">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="VlanID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Ywid" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="RelField" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="jfID" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ts_kh" Member="ts_kh">
+    <Type Name="ts_kh">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="ywbm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="khbh" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="khmc" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="khdz" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="khlx" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="czhm" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="khlxr" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="lxdh" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="ydsj" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Email" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="jslxr" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="jsrdh" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="jsrsj" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="jsrEmail" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Column Name="cjr" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="cjrq" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="yb" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="Zylx" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="Khjb" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
+      <Column Name="Xsy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

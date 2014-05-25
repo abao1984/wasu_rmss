@@ -92,6 +92,10 @@ public class ws : System.Web.Services.WebService {
         
     }
 
+    private string makeTimeString() {
+        return DateTime.Now.ToString("yyyyMMddHHmmssffff");
+    }
+
     private string selectExcel(string filename) 
     {
         string result = "";
@@ -108,7 +112,11 @@ public class ws : System.Web.Services.WebService {
 
         long count = long.Parse(PPPOEBussiness.First().Bussiness_code.Replace("Z_P_", ""));
         foreach (var item in query)
-        {   
+        {
+            if (item["设备配置信息"].ToString().Length == 0)
+            {
+                break;
+            }
             var bussinessType = (from a in dc.Jrlx_List
                                  where a.nodename == item["业务类型"]//ywlx
                                  select a).FirstOrDefault();
@@ -156,6 +164,28 @@ public class ws : System.Web.Services.WebService {
                 }
             }
 
+            string deviceCode = deviceInfoArray[0];
+
+            var masterID = (from c in dc.AssemblyPortSource_Master
+                     where c.sbbh == deviceCode
+                     select c).FirstOrDefault().ID;
+
+            string accessPort = (deviceInfoArray.Length>2) ? deviceInfoArray[2] :"";
+            string accessPortID = "";
+
+            if (accessPort.Length > 0)
+            {
+                var port_query = (from c in dc.AssemblyPortSource_Details
+                                  where c.port == accessPort && c.MID == masterID
+                                  select c).FirstOrDefault();
+
+                accessPortID = port_query.ID.ToString();
+
+               
+
+            }
+            
+
             var port = from p in dc.IP_Bussiness
                        where p.sbpzxx.StartsWith(devicePort)
                        select p;
@@ -165,6 +195,8 @@ public class ws : System.Web.Services.WebService {
                 result += "<br/>"+port.FirstOrDefault().sbpzxx+",";
                 continue;
             }
+
+
              
             var bussiness = new IP_Bussiness
             {   
@@ -193,12 +225,62 @@ public class ws : System.Web.Services.WebService {
                 pzsj           = configDate,
                 VLAN           = item["VLAN"],
                 by1            = "import by PPPOE excel file",
+                jrdk           = accessPort,
+                Sbdkhid        = accessPortID,
                 
             };
-            dc.IP_Bussiness.InsertOnSubmit(bussiness);        
+            dc.IP_Bussiness.InsertOnSubmit(bussiness);
+
+            var client = new ts_kh
+            {
+                ywbm = bussiness.Bussiness_code,
+                khmc = bussiness.khmc,
+                khdz = bussiness.khdz,
+                khlxr = item["用户负责人"],
+                lxdh = item["用户电话"],
+                ydsj = item["用户手机"],
+            };
+            dc.ts_kh.InsertOnSubmit(client);
+
+            dc.SubmitChanges();
+
+            var ports = deviceInfoArray.Where((value, index) => index > 2).ToArray();
+            //update onu_dk
+            foreach(string p in ports)
+            //for (int i=0;i<4;i++)
+            {
+                var onu_port_query = (from c in dc.ONU_Dk
+                                      where c.Gldkid.ToString() == accessPortID && c.Dkh == p
+                                      select c).FirstOrDefault();
+                
+                //set port state used
+                onu_port_query.Dkzt = 1;
+                //insert new record in ywonu_gbl
+                var instance = new YwONU_glb
+                {
+                    Lsh = makeTimeString(),
+                    Ywid = bussiness.ID,
+                    ONULsh = onu_port_query.Lsh,
+                    type = 0,
+                };
+                dc.YwONU_glb.InsertOnSubmit(instance);
+                //dc.SubmitChanges();
+            }
+
+            var vlan = new Vlan_Distribute
+            {
+                VlanID = item["VLAN"],
+                Ywid = bussiness.ID,
+                RelField = "bdjfvlan",
+                jfID = machineRoomId
+            };
+            dc.Vlan_Distribute.InsertOnSubmit(vlan);
+            dc.SubmitChanges();
+
+            
         }
 
-        dc.SubmitChanges();
+        
 
         if (result.Length > 0)
         {

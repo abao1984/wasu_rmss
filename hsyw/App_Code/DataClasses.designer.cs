@@ -35,6 +35,21 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void InsertJrlx_List(Jrlx_List instance);
   partial void UpdateJrlx_List(Jrlx_List instance);
   partial void DeleteJrlx_List(Jrlx_List instance);
+  partial void InsertAssemblyPortSource_Details(AssemblyPortSource_Details instance);
+  partial void UpdateAssemblyPortSource_Details(AssemblyPortSource_Details instance);
+  partial void DeleteAssemblyPortSource_Details(AssemblyPortSource_Details instance);
+  partial void InsertONU_Dk(ONU_Dk instance);
+  partial void UpdateONU_Dk(ONU_Dk instance);
+  partial void DeleteONU_Dk(ONU_Dk instance);
+  partial void InsertYwONU_glb(YwONU_glb instance);
+  partial void UpdateYwONU_glb(YwONU_glb instance);
+  partial void DeleteYwONU_glb(YwONU_glb instance);
+  partial void InsertVlan_Distribute(Vlan_Distribute instance);
+  partial void UpdateVlan_Distribute(Vlan_Distribute instance);
+  partial void DeleteVlan_Distribute(Vlan_Distribute instance);
+  partial void Insertts_kh(ts_kh instance);
+  partial void Updatets_kh(ts_kh instance);
+  partial void Deletets_kh(ts_kh instance);
   #endregion
 	
 	public DataClassesDataContext() : 
@@ -88,6 +103,54 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<Jrlx_List>();
+		}
+	}
+	
+	public System.Data.Linq.Table<AssemblyPortSource_Master> AssemblyPortSource_Master
+	{
+		get
+		{
+			return this.GetTable<AssemblyPortSource_Master>();
+		}
+	}
+	
+	public System.Data.Linq.Table<AssemblyPortSource_Details> AssemblyPortSource_Details
+	{
+		get
+		{
+			return this.GetTable<AssemblyPortSource_Details>();
+		}
+	}
+	
+	public System.Data.Linq.Table<ONU_Dk> ONU_Dk
+	{
+		get
+		{
+			return this.GetTable<ONU_Dk>();
+		}
+	}
+	
+	public System.Data.Linq.Table<YwONU_glb> YwONU_glb
+	{
+		get
+		{
+			return this.GetTable<YwONU_glb>();
+		}
+	}
+	
+	public System.Data.Linq.Table<Vlan_Distribute> Vlan_Distribute
+	{
+		get
+		{
+			return this.GetTable<Vlan_Distribute>();
+		}
+	}
+	
+	public System.Data.Linq.Table<ts_kh> ts_kh
+	{
+		get
+		{
+			return this.GetTable<ts_kh>();
 		}
 	}
 }
@@ -2234,6 +2297,2125 @@ public partial class Jrlx_List : INotifyPropertyChanging, INotifyPropertyChanged
 				this._bmgzID = value;
 				this.SendPropertyChanged("bmgzID");
 				this.OnbmgzIDChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.AssemblyPortSource_Master")]
+public partial class AssemblyPortSource_Master
+{
+	
+	private int _ID;
+	
+	private string _sbbh;
+	
+	private string _sbmc;
+	
+	private string _sbxh;
+	
+	private string _zcbh;
+	
+	private string _mac_id;
+	
+	private string _mac_name;
+	
+	private string _sccj;
+	
+	private string _sbdj;
+	
+	private string _sbfl;
+	
+	private string _sbzt;
+	
+	private string _xlh;
+	
+	private string _nzxx;
+	
+	private System.Nullable<int> _dymks;
+	
+	private string _rjxx;
+	
+	private string _yzcw;
+	
+	private string _kycw;
+	
+	private string _sfxb;
+	
+	private string _bxqsrq;
+	
+	private string _bxjzrq;
+	
+	private string _RMAjl;
+	
+	private string _xmbh;
+	
+	private string _cghth;
+	
+	private string _cgf;
+	
+	private string _bz;
+	
+	private string _zddks;
+	
+	private string _sbgldz;
+	
+	private string _sljfbh;
+	
+	private string _sljfmc;
+	
+	private string _bk;
+	
+	private string _macdzonu;
+	
+	private string _gsjbh;
+	
+	private string _jfxh;
+	
+	private string _gjsj;
+	
+	private string _gjremark;
+	
+	private string _Ssqy;
+	
+	public AssemblyPortSource_Master()
+	{
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this._ID = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbbh", DbType="VarChar(30)")]
+	public string sbbh
+	{
+		get
+		{
+			return this._sbbh;
+		}
+		set
+		{
+			if ((this._sbbh != value))
+			{
+				this._sbbh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbmc", DbType="NVarChar(50)")]
+	public string sbmc
+	{
+		get
+		{
+			return this._sbmc;
+		}
+		set
+		{
+			if ((this._sbmc != value))
+			{
+				this._sbmc = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbxh", DbType="VarChar(30)")]
+	public string sbxh
+	{
+		get
+		{
+			return this._sbxh;
+		}
+		set
+		{
+			if ((this._sbxh != value))
+			{
+				this._sbxh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_zcbh", DbType="VarChar(15)")]
+	public string zcbh
+	{
+		get
+		{
+			return this._zcbh;
+		}
+		set
+		{
+			if ((this._zcbh != value))
+			{
+				this._zcbh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_mac_id", DbType="VarChar(30)")]
+	public string mac_id
+	{
+		get
+		{
+			return this._mac_id;
+		}
+		set
+		{
+			if ((this._mac_id != value))
+			{
+				this._mac_id = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_mac_name", DbType="VarChar(1000)")]
+	public string mac_name
+	{
+		get
+		{
+			return this._mac_name;
+		}
+		set
+		{
+			if ((this._mac_name != value))
+			{
+				this._mac_name = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sccj", DbType="NVarChar(200)")]
+	public string sccj
+	{
+		get
+		{
+			return this._sccj;
+		}
+		set
+		{
+			if ((this._sccj != value))
+			{
+				this._sccj = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbdj", DbType="VarChar(50)")]
+	public string sbdj
+	{
+		get
+		{
+			return this._sbdj;
+		}
+		set
+		{
+			if ((this._sbdj != value))
+			{
+				this._sbdj = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbfl", DbType="VarChar(20)")]
+	public string sbfl
+	{
+		get
+		{
+			return this._sbfl;
+		}
+		set
+		{
+			if ((this._sbfl != value))
+			{
+				this._sbfl = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbzt", DbType="VarChar(20)")]
+	public string sbzt
+	{
+		get
+		{
+			return this._sbzt;
+		}
+		set
+		{
+			if ((this._sbzt != value))
+			{
+				this._sbzt = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_xlh", DbType="VarChar(20)")]
+	public string xlh
+	{
+		get
+		{
+			return this._xlh;
+		}
+		set
+		{
+			if ((this._xlh != value))
+			{
+				this._xlh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_nzxx", DbType="VarChar(50)")]
+	public string nzxx
+	{
+		get
+		{
+			return this._nzxx;
+		}
+		set
+		{
+			if ((this._nzxx != value))
+			{
+				this._nzxx = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_dymks", DbType="Int")]
+	public System.Nullable<int> dymks
+	{
+		get
+		{
+			return this._dymks;
+		}
+		set
+		{
+			if ((this._dymks != value))
+			{
+				this._dymks = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_rjxx", DbType="VarChar(100)")]
+	public string rjxx
+	{
+		get
+		{
+			return this._rjxx;
+		}
+		set
+		{
+			if ((this._rjxx != value))
+			{
+				this._rjxx = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_yzcw", DbType="VarChar(20)")]
+	public string yzcw
+	{
+		get
+		{
+			return this._yzcw;
+		}
+		set
+		{
+			if ((this._yzcw != value))
+			{
+				this._yzcw = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_kycw", DbType="VarChar(20)")]
+	public string kycw
+	{
+		get
+		{
+			return this._kycw;
+		}
+		set
+		{
+			if ((this._kycw != value))
+			{
+				this._kycw = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sfxb", DbType="VarChar(20)")]
+	public string sfxb
+	{
+		get
+		{
+			return this._sfxb;
+		}
+		set
+		{
+			if ((this._sfxb != value))
+			{
+				this._sfxb = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_bxqsrq", DbType="VarChar(20)")]
+	public string bxqsrq
+	{
+		get
+		{
+			return this._bxqsrq;
+		}
+		set
+		{
+			if ((this._bxqsrq != value))
+			{
+				this._bxqsrq = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_bxjzrq", DbType="VarChar(20)")]
+	public string bxjzrq
+	{
+		get
+		{
+			return this._bxjzrq;
+		}
+		set
+		{
+			if ((this._bxjzrq != value))
+			{
+				this._bxjzrq = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_RMAjl", DbType="VarChar(100)")]
+	public string RMAjl
+	{
+		get
+		{
+			return this._RMAjl;
+		}
+		set
+		{
+			if ((this._RMAjl != value))
+			{
+				this._RMAjl = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_xmbh", DbType="VarChar(20)")]
+	public string xmbh
+	{
+		get
+		{
+			return this._xmbh;
+		}
+		set
+		{
+			if ((this._xmbh != value))
+			{
+				this._xmbh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_cghth", DbType="VarChar(20)")]
+	public string cghth
+	{
+		get
+		{
+			return this._cghth;
+		}
+		set
+		{
+			if ((this._cghth != value))
+			{
+				this._cghth = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_cgf", DbType="VarChar(50)")]
+	public string cgf
+	{
+		get
+		{
+			return this._cgf;
+		}
+		set
+		{
+			if ((this._cgf != value))
+			{
+				this._cgf = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_bz", DbType="VarChar(8000)")]
+	public string bz
+	{
+		get
+		{
+			return this._bz;
+		}
+		set
+		{
+			if ((this._bz != value))
+			{
+				this._bz = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_zddks", DbType="VarChar(50)")]
+	public string zddks
+	{
+		get
+		{
+			return this._zddks;
+		}
+		set
+		{
+			if ((this._zddks != value))
+			{
+				this._zddks = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sbgldz", DbType="VarChar(50)")]
+	public string sbgldz
+	{
+		get
+		{
+			return this._sbgldz;
+		}
+		set
+		{
+			if ((this._sbgldz != value))
+			{
+				this._sbgldz = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sljfbh", DbType="VarChar(50)")]
+	public string sljfbh
+	{
+		get
+		{
+			return this._sljfbh;
+		}
+		set
+		{
+			if ((this._sljfbh != value))
+			{
+				this._sljfbh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_sljfmc", DbType="VarChar(50)")]
+	public string sljfmc
+	{
+		get
+		{
+			return this._sljfmc;
+		}
+		set
+		{
+			if ((this._sljfmc != value))
+			{
+				this._sljfmc = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_bk", DbType="VarChar(50)")]
+	public string bk
+	{
+		get
+		{
+			return this._bk;
+		}
+		set
+		{
+			if ((this._bk != value))
+			{
+				this._bk = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_macdzonu", DbType="VarChar(100)")]
+	public string macdzonu
+	{
+		get
+		{
+			return this._macdzonu;
+		}
+		set
+		{
+			if ((this._macdzonu != value))
+			{
+				this._macdzonu = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_gsjbh", DbType="VarChar(100)")]
+	public string gsjbh
+	{
+		get
+		{
+			return this._gsjbh;
+		}
+		set
+		{
+			if ((this._gsjbh != value))
+			{
+				this._gsjbh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_jfxh", DbType="VarChar(50)")]
+	public string jfxh
+	{
+		get
+		{
+			return this._jfxh;
+		}
+		set
+		{
+			if ((this._jfxh != value))
+			{
+				this._jfxh = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_gjsj", DbType="VarChar(10)")]
+	public string gjsj
+	{
+		get
+		{
+			return this._gjsj;
+		}
+		set
+		{
+			if ((this._gjsj != value))
+			{
+				this._gjsj = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_gjremark", DbType="NVarChar(4000)")]
+	public string gjremark
+	{
+		get
+		{
+			return this._gjremark;
+		}
+		set
+		{
+			if ((this._gjremark != value))
+			{
+				this._gjremark = value;
+			}
+		}
+	}
+	
+	[Column(Storage="_Ssqy", DbType="NVarChar(50)")]
+	public string Ssqy
+	{
+		get
+		{
+			return this._Ssqy;
+		}
+		set
+		{
+			if ((this._Ssqy != value))
+			{
+				this._Ssqy = value;
+			}
+		}
+	}
+}
+
+[Table(Name="dbo.AssemblyPortSource_Details")]
+public partial class AssemblyPortSource_Details : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private System.Nullable<int> _MID;
+	
+	private string _port;
+	
+	private string _sssbbh;
+	
+	private string _dksl;
+	
+	private string _dkll;
+	
+	private string _dkzt;
+	
+	private string _sfky;
+	
+	private string _Cw;
+	
+	private string _Ccjb;
+	
+	private string _bklx;
+	
+	private System.Nullable<long> _xh;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnMIDChanging(System.Nullable<int> value);
+    partial void OnMIDChanged();
+    partial void OnportChanging(string value);
+    partial void OnportChanged();
+    partial void OnsssbbhChanging(string value);
+    partial void OnsssbbhChanged();
+    partial void OndkslChanging(string value);
+    partial void OndkslChanged();
+    partial void OndkllChanging(string value);
+    partial void OndkllChanged();
+    partial void OndkztChanging(string value);
+    partial void OndkztChanged();
+    partial void OnsfkyChanging(string value);
+    partial void OnsfkyChanged();
+    partial void OnCwChanging(string value);
+    partial void OnCwChanged();
+    partial void OnCcjbChanging(string value);
+    partial void OnCcjbChanged();
+    partial void OnbklxChanging(string value);
+    partial void OnbklxChanged();
+    partial void OnxhChanging(System.Nullable<long> value);
+    partial void OnxhChanged();
+    #endregion
+	
+	public AssemblyPortSource_Details()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_MID", DbType="Int")]
+	public System.Nullable<int> MID
+	{
+		get
+		{
+			return this._MID;
+		}
+		set
+		{
+			if ((this._MID != value))
+			{
+				this.OnMIDChanging(value);
+				this.SendPropertyChanging();
+				this._MID = value;
+				this.SendPropertyChanged("MID");
+				this.OnMIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_port", DbType="VarChar(20)")]
+	public string port
+	{
+		get
+		{
+			return this._port;
+		}
+		set
+		{
+			if ((this._port != value))
+			{
+				this.OnportChanging(value);
+				this.SendPropertyChanging();
+				this._port = value;
+				this.SendPropertyChanged("port");
+				this.OnportChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_sssbbh", DbType="NVarChar(50)")]
+	public string sssbbh
+	{
+		get
+		{
+			return this._sssbbh;
+		}
+		set
+		{
+			if ((this._sssbbh != value))
+			{
+				this.OnsssbbhChanging(value);
+				this.SendPropertyChanging();
+				this._sssbbh = value;
+				this.SendPropertyChanged("sssbbh");
+				this.OnsssbbhChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_dksl", DbType="VarChar(30)")]
+	public string dksl
+	{
+		get
+		{
+			return this._dksl;
+		}
+		set
+		{
+			if ((this._dksl != value))
+			{
+				this.OndkslChanging(value);
+				this.SendPropertyChanging();
+				this._dksl = value;
+				this.SendPropertyChanged("dksl");
+				this.OndkslChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_dkll", DbType="NVarChar(50)")]
+	public string dkll
+	{
+		get
+		{
+			return this._dkll;
+		}
+		set
+		{
+			if ((this._dkll != value))
+			{
+				this.OndkllChanging(value);
+				this.SendPropertyChanging();
+				this._dkll = value;
+				this.SendPropertyChanged("dkll");
+				this.OndkllChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_dkzt", DbType="VarChar(30)")]
+	public string dkzt
+	{
+		get
+		{
+			return this._dkzt;
+		}
+		set
+		{
+			if ((this._dkzt != value))
+			{
+				this.OndkztChanging(value);
+				this.SendPropertyChanging();
+				this._dkzt = value;
+				this.SendPropertyChanged("dkzt");
+				this.OndkztChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_sfky", DbType="VarChar(50)")]
+	public string sfky
+	{
+		get
+		{
+			return this._sfky;
+		}
+		set
+		{
+			if ((this._sfky != value))
+			{
+				this.OnsfkyChanging(value);
+				this.SendPropertyChanging();
+				this._sfky = value;
+				this.SendPropertyChanged("sfky");
+				this.OnsfkyChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Cw", DbType="NVarChar(50)")]
+	public string Cw
+	{
+		get
+		{
+			return this._Cw;
+		}
+		set
+		{
+			if ((this._Cw != value))
+			{
+				this.OnCwChanging(value);
+				this.SendPropertyChanging();
+				this._Cw = value;
+				this.SendPropertyChanged("Cw");
+				this.OnCwChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Ccjb", DbType="NVarChar(25)")]
+	public string Ccjb
+	{
+		get
+		{
+			return this._Ccjb;
+		}
+		set
+		{
+			if ((this._Ccjb != value))
+			{
+				this.OnCcjbChanging(value);
+				this.SendPropertyChanging();
+				this._Ccjb = value;
+				this.SendPropertyChanged("Ccjb");
+				this.OnCcjbChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_bklx", DbType="NVarChar(25)")]
+	public string bklx
+	{
+		get
+		{
+			return this._bklx;
+		}
+		set
+		{
+			if ((this._bklx != value))
+			{
+				this.OnbklxChanging(value);
+				this.SendPropertyChanging();
+				this._bklx = value;
+				this.SendPropertyChanged("bklx");
+				this.OnbklxChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_xh", DbType="BigInt")]
+	public System.Nullable<long> xh
+	{
+		get
+		{
+			return this._xh;
+		}
+		set
+		{
+			if ((this._xh != value))
+			{
+				this.OnxhChanging(value);
+				this.SendPropertyChanging();
+				this._xh = value;
+				this.SendPropertyChanged("xh");
+				this.OnxhChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.ONU_Dk")]
+public partial class ONU_Dk : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private long _ID;
+	
+	private string _Lsh;
+	
+	private System.Nullable<int> _Gldkid;
+	
+	private System.Nullable<int> _MID;
+	
+	private string _Dkh;
+	
+	private string _Dklx;
+	
+	private string _Dksl;
+	
+	private System.Nullable<int> _Sfkfy;
+	
+	private System.Nullable<int> _Dkzt;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLshChanging(string value);
+    partial void OnLshChanged();
+    partial void OnGldkidChanging(System.Nullable<int> value);
+    partial void OnGldkidChanged();
+    partial void OnMIDChanging(System.Nullable<int> value);
+    partial void OnMIDChanged();
+    partial void OnDkhChanging(string value);
+    partial void OnDkhChanged();
+    partial void OnDklxChanging(string value);
+    partial void OnDklxChanged();
+    partial void OnDkslChanging(string value);
+    partial void OnDkslChanged();
+    partial void OnSfkfyChanging(System.Nullable<int> value);
+    partial void OnSfkfyChanged();
+    partial void OnDkztChanging(System.Nullable<int> value);
+    partial void OnDkztChanged();
+    #endregion
+	
+	public ONU_Dk()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public long ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Lsh", DbType="NVarChar(50)")]
+	public string Lsh
+	{
+		get
+		{
+			return this._Lsh;
+		}
+		set
+		{
+			if ((this._Lsh != value))
+			{
+				this.OnLshChanging(value);
+				this.SendPropertyChanging();
+				this._Lsh = value;
+				this.SendPropertyChanged("Lsh");
+				this.OnLshChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Gldkid", DbType="Int")]
+	public System.Nullable<int> Gldkid
+	{
+		get
+		{
+			return this._Gldkid;
+		}
+		set
+		{
+			if ((this._Gldkid != value))
+			{
+				this.OnGldkidChanging(value);
+				this.SendPropertyChanging();
+				this._Gldkid = value;
+				this.SendPropertyChanged("Gldkid");
+				this.OnGldkidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_MID", DbType="Int")]
+	public System.Nullable<int> MID
+	{
+		get
+		{
+			return this._MID;
+		}
+		set
+		{
+			if ((this._MID != value))
+			{
+				this.OnMIDChanging(value);
+				this.SendPropertyChanging();
+				this._MID = value;
+				this.SendPropertyChanged("MID");
+				this.OnMIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Dkh", DbType="NVarChar(25)")]
+	public string Dkh
+	{
+		get
+		{
+			return this._Dkh;
+		}
+		set
+		{
+			if ((this._Dkh != value))
+			{
+				this.OnDkhChanging(value);
+				this.SendPropertyChanging();
+				this._Dkh = value;
+				this.SendPropertyChanged("Dkh");
+				this.OnDkhChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Dklx", DbType="NVarChar(25)")]
+	public string Dklx
+	{
+		get
+		{
+			return this._Dklx;
+		}
+		set
+		{
+			if ((this._Dklx != value))
+			{
+				this.OnDklxChanging(value);
+				this.SendPropertyChanging();
+				this._Dklx = value;
+				this.SendPropertyChanged("Dklx");
+				this.OnDklxChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Dksl", DbType="NVarChar(25)")]
+	public string Dksl
+	{
+		get
+		{
+			return this._Dksl;
+		}
+		set
+		{
+			if ((this._Dksl != value))
+			{
+				this.OnDkslChanging(value);
+				this.SendPropertyChanging();
+				this._Dksl = value;
+				this.SendPropertyChanged("Dksl");
+				this.OnDkslChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Sfkfy", DbType="Int")]
+	public System.Nullable<int> Sfkfy
+	{
+		get
+		{
+			return this._Sfkfy;
+		}
+		set
+		{
+			if ((this._Sfkfy != value))
+			{
+				this.OnSfkfyChanging(value);
+				this.SendPropertyChanging();
+				this._Sfkfy = value;
+				this.SendPropertyChanged("Sfkfy");
+				this.OnSfkfyChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Dkzt", DbType="Int")]
+	public System.Nullable<int> Dkzt
+	{
+		get
+		{
+			return this._Dkzt;
+		}
+		set
+		{
+			if ((this._Dkzt != value))
+			{
+				this.OnDkztChanging(value);
+				this.SendPropertyChanging();
+				this._Dkzt = value;
+				this.SendPropertyChanged("Dkzt");
+				this.OnDkztChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.YwONU_glb")]
+public partial class YwONU_glb : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private long _ID;
+	
+	private string _Lsh;
+	
+	private System.Nullable<long> _Ywid;
+	
+	private string _ONULsh;
+	
+	private System.Nullable<long> _type;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnLshChanging(string value);
+    partial void OnLshChanged();
+    partial void OnYwidChanging(System.Nullable<long> value);
+    partial void OnYwidChanged();
+    partial void OnONULshChanging(string value);
+    partial void OnONULshChanged();
+    partial void OntypeChanging(System.Nullable<long> value);
+    partial void OntypeChanged();
+    #endregion
+	
+	public YwONU_glb()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public long ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Lsh", DbType="NVarChar(50)")]
+	public string Lsh
+	{
+		get
+		{
+			return this._Lsh;
+		}
+		set
+		{
+			if ((this._Lsh != value))
+			{
+				this.OnLshChanging(value);
+				this.SendPropertyChanging();
+				this._Lsh = value;
+				this.SendPropertyChanged("Lsh");
+				this.OnLshChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Ywid", DbType="BigInt")]
+	public System.Nullable<long> Ywid
+	{
+		get
+		{
+			return this._Ywid;
+		}
+		set
+		{
+			if ((this._Ywid != value))
+			{
+				this.OnYwidChanging(value);
+				this.SendPropertyChanging();
+				this._Ywid = value;
+				this.SendPropertyChanged("Ywid");
+				this.OnYwidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_ONULsh", DbType="VarChar(50)")]
+	public string ONULsh
+	{
+		get
+		{
+			return this._ONULsh;
+		}
+		set
+		{
+			if ((this._ONULsh != value))
+			{
+				this.OnONULshChanging(value);
+				this.SendPropertyChanging();
+				this._ONULsh = value;
+				this.SendPropertyChanged("ONULsh");
+				this.OnONULshChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_type", DbType="BigInt")]
+	public System.Nullable<long> type
+	{
+		get
+		{
+			return this._type;
+		}
+		set
+		{
+			if ((this._type != value))
+			{
+				this.OntypeChanging(value);
+				this.SendPropertyChanging();
+				this._type = value;
+				this.SendPropertyChanged("type");
+				this.OntypeChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.Vlan_Distribute")]
+public partial class Vlan_Distribute : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private long _ID;
+	
+	private string _VlanID;
+	
+	private System.Nullable<long> _Ywid;
+	
+	private string _RelField;
+	
+	private string _jfID;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnVlanIDChanging(string value);
+    partial void OnVlanIDChanged();
+    partial void OnYwidChanging(System.Nullable<long> value);
+    partial void OnYwidChanged();
+    partial void OnRelFieldChanging(string value);
+    partial void OnRelFieldChanged();
+    partial void OnjfIDChanging(string value);
+    partial void OnjfIDChanged();
+    #endregion
+	
+	public Vlan_Distribute()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public long ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_VlanID", DbType="NVarChar(50)")]
+	public string VlanID
+	{
+		get
+		{
+			return this._VlanID;
+		}
+		set
+		{
+			if ((this._VlanID != value))
+			{
+				this.OnVlanIDChanging(value);
+				this.SendPropertyChanging();
+				this._VlanID = value;
+				this.SendPropertyChanged("VlanID");
+				this.OnVlanIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Ywid", DbType="BigInt")]
+	public System.Nullable<long> Ywid
+	{
+		get
+		{
+			return this._Ywid;
+		}
+		set
+		{
+			if ((this._Ywid != value))
+			{
+				this.OnYwidChanging(value);
+				this.SendPropertyChanging();
+				this._Ywid = value;
+				this.SendPropertyChanged("Ywid");
+				this.OnYwidChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_RelField", DbType="VarChar(20)")]
+	public string RelField
+	{
+		get
+		{
+			return this._RelField;
+		}
+		set
+		{
+			if ((this._RelField != value))
+			{
+				this.OnRelFieldChanging(value);
+				this.SendPropertyChanging();
+				this._RelField = value;
+				this.SendPropertyChanged("RelField");
+				this.OnRelFieldChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_jfID", DbType="NVarChar(50)")]
+	public string jfID
+	{
+		get
+		{
+			return this._jfID;
+		}
+		set
+		{
+			if ((this._jfID != value))
+			{
+				this.OnjfIDChanging(value);
+				this.SendPropertyChanging();
+				this._jfID = value;
+				this.SendPropertyChanged("jfID");
+				this.OnjfIDChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[Table(Name="dbo.ts_kh")]
+public partial class ts_kh : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private int _ID;
+	
+	private string _ywbm;
+	
+	private string _khbh;
+	
+	private string _khmc;
+	
+	private string _khdz;
+	
+	private string _khlx;
+	
+	private string _czhm;
+	
+	private string _khlxr;
+	
+	private string _lxdh;
+	
+	private string _ydsj;
+	
+	private string _Email;
+	
+	private string _jslxr;
+	
+	private string _jsrdh;
+	
+	private string _jsrsj;
+	
+	private string _jsrEmail;
+	
+	private string _bz;
+	
+	private string _cjr;
+	
+	private string _cjrq;
+	
+	private string _yb;
+	
+	private string _Zylx;
+	
+	private string _Khjb;
+	
+	private string _Xsy;
+	
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(int value);
+    partial void OnIDChanged();
+    partial void OnywbmChanging(string value);
+    partial void OnywbmChanged();
+    partial void OnkhbhChanging(string value);
+    partial void OnkhbhChanged();
+    partial void OnkhmcChanging(string value);
+    partial void OnkhmcChanged();
+    partial void OnkhdzChanging(string value);
+    partial void OnkhdzChanged();
+    partial void OnkhlxChanging(string value);
+    partial void OnkhlxChanged();
+    partial void OnczhmChanging(string value);
+    partial void OnczhmChanged();
+    partial void OnkhlxrChanging(string value);
+    partial void OnkhlxrChanged();
+    partial void OnlxdhChanging(string value);
+    partial void OnlxdhChanged();
+    partial void OnydsjChanging(string value);
+    partial void OnydsjChanged();
+    partial void OnEmailChanging(string value);
+    partial void OnEmailChanged();
+    partial void OnjslxrChanging(string value);
+    partial void OnjslxrChanged();
+    partial void OnjsrdhChanging(string value);
+    partial void OnjsrdhChanged();
+    partial void OnjsrsjChanging(string value);
+    partial void OnjsrsjChanged();
+    partial void OnjsrEmailChanging(string value);
+    partial void OnjsrEmailChanged();
+    partial void OnbzChanging(string value);
+    partial void OnbzChanged();
+    partial void OncjrChanging(string value);
+    partial void OncjrChanged();
+    partial void OncjrqChanging(string value);
+    partial void OncjrqChanged();
+    partial void OnybChanging(string value);
+    partial void OnybChanged();
+    partial void OnZylxChanging(string value);
+    partial void OnZylxChanged();
+    partial void OnKhjbChanging(string value);
+    partial void OnKhjbChanged();
+    partial void OnXsyChanging(string value);
+    partial void OnXsyChanged();
+    #endregion
+	
+	public ts_kh()
+	{
+		OnCreated();
+	}
+	
+	[Column(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public int ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_ywbm", DbType="VarChar(100)")]
+	public string ywbm
+	{
+		get
+		{
+			return this._ywbm;
+		}
+		set
+		{
+			if ((this._ywbm != value))
+			{
+				this.OnywbmChanging(value);
+				this.SendPropertyChanging();
+				this._ywbm = value;
+				this.SendPropertyChanged("ywbm");
+				this.OnywbmChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_khbh", DbType="VarChar(15)")]
+	public string khbh
+	{
+		get
+		{
+			return this._khbh;
+		}
+		set
+		{
+			if ((this._khbh != value))
+			{
+				this.OnkhbhChanging(value);
+				this.SendPropertyChanging();
+				this._khbh = value;
+				this.SendPropertyChanged("khbh");
+				this.OnkhbhChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_khmc", DbType="NVarChar(100)")]
+	public string khmc
+	{
+		get
+		{
+			return this._khmc;
+		}
+		set
+		{
+			if ((this._khmc != value))
+			{
+				this.OnkhmcChanging(value);
+				this.SendPropertyChanging();
+				this._khmc = value;
+				this.SendPropertyChanged("khmc");
+				this.OnkhmcChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_khdz", DbType="NVarChar(200)")]
+	public string khdz
+	{
+		get
+		{
+			return this._khdz;
+		}
+		set
+		{
+			if ((this._khdz != value))
+			{
+				this.OnkhdzChanging(value);
+				this.SendPropertyChanging();
+				this._khdz = value;
+				this.SendPropertyChanged("khdz");
+				this.OnkhdzChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_khlx", DbType="NVarChar(30)")]
+	public string khlx
+	{
+		get
+		{
+			return this._khlx;
+		}
+		set
+		{
+			if ((this._khlx != value))
+			{
+				this.OnkhlxChanging(value);
+				this.SendPropertyChanging();
+				this._khlx = value;
+				this.SendPropertyChanged("khlx");
+				this.OnkhlxChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_czhm", DbType="VarChar(100)")]
+	public string czhm
+	{
+		get
+		{
+			return this._czhm;
+		}
+		set
+		{
+			if ((this._czhm != value))
+			{
+				this.OnczhmChanging(value);
+				this.SendPropertyChanging();
+				this._czhm = value;
+				this.SendPropertyChanged("czhm");
+				this.OnczhmChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_khlxr", DbType="NVarChar(100)")]
+	public string khlxr
+	{
+		get
+		{
+			return this._khlxr;
+		}
+		set
+		{
+			if ((this._khlxr != value))
+			{
+				this.OnkhlxrChanging(value);
+				this.SendPropertyChanging();
+				this._khlxr = value;
+				this.SendPropertyChanged("khlxr");
+				this.OnkhlxrChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_lxdh", DbType="VarChar(100)")]
+	public string lxdh
+	{
+		get
+		{
+			return this._lxdh;
+		}
+		set
+		{
+			if ((this._lxdh != value))
+			{
+				this.OnlxdhChanging(value);
+				this.SendPropertyChanging();
+				this._lxdh = value;
+				this.SendPropertyChanged("lxdh");
+				this.OnlxdhChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_ydsj", DbType="VarChar(100)")]
+	public string ydsj
+	{
+		get
+		{
+			return this._ydsj;
+		}
+		set
+		{
+			if ((this._ydsj != value))
+			{
+				this.OnydsjChanging(value);
+				this.SendPropertyChanging();
+				this._ydsj = value;
+				this.SendPropertyChanged("ydsj");
+				this.OnydsjChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Email", DbType="VarChar(50)")]
+	public string Email
+	{
+		get
+		{
+			return this._Email;
+		}
+		set
+		{
+			if ((this._Email != value))
+			{
+				this.OnEmailChanging(value);
+				this.SendPropertyChanging();
+				this._Email = value;
+				this.SendPropertyChanged("Email");
+				this.OnEmailChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_jslxr", DbType="NVarChar(100)")]
+	public string jslxr
+	{
+		get
+		{
+			return this._jslxr;
+		}
+		set
+		{
+			if ((this._jslxr != value))
+			{
+				this.OnjslxrChanging(value);
+				this.SendPropertyChanging();
+				this._jslxr = value;
+				this.SendPropertyChanged("jslxr");
+				this.OnjslxrChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_jsrdh", DbType="VarChar(100)")]
+	public string jsrdh
+	{
+		get
+		{
+			return this._jsrdh;
+		}
+		set
+		{
+			if ((this._jsrdh != value))
+			{
+				this.OnjsrdhChanging(value);
+				this.SendPropertyChanging();
+				this._jsrdh = value;
+				this.SendPropertyChanged("jsrdh");
+				this.OnjsrdhChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_jsrsj", DbType="VarChar(15)")]
+	public string jsrsj
+	{
+		get
+		{
+			return this._jsrsj;
+		}
+		set
+		{
+			if ((this._jsrsj != value))
+			{
+				this.OnjsrsjChanging(value);
+				this.SendPropertyChanging();
+				this._jsrsj = value;
+				this.SendPropertyChanged("jsrsj");
+				this.OnjsrsjChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_jsrEmail", DbType="VarChar(50)")]
+	public string jsrEmail
+	{
+		get
+		{
+			return this._jsrEmail;
+		}
+		set
+		{
+			if ((this._jsrEmail != value))
+			{
+				this.OnjsrEmailChanging(value);
+				this.SendPropertyChanging();
+				this._jsrEmail = value;
+				this.SendPropertyChanged("jsrEmail");
+				this.OnjsrEmailChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_bz", DbType="NVarChar(200)")]
+	public string bz
+	{
+		get
+		{
+			return this._bz;
+		}
+		set
+		{
+			if ((this._bz != value))
+			{
+				this.OnbzChanging(value);
+				this.SendPropertyChanging();
+				this._bz = value;
+				this.SendPropertyChanged("bz");
+				this.OnbzChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_cjr", DbType="NVarChar(20)")]
+	public string cjr
+	{
+		get
+		{
+			return this._cjr;
+		}
+		set
+		{
+			if ((this._cjr != value))
+			{
+				this.OncjrChanging(value);
+				this.SendPropertyChanging();
+				this._cjr = value;
+				this.SendPropertyChanged("cjr");
+				this.OncjrChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_cjrq", DbType="NVarChar(50)")]
+	public string cjrq
+	{
+		get
+		{
+			return this._cjrq;
+		}
+		set
+		{
+			if ((this._cjrq != value))
+			{
+				this.OncjrqChanging(value);
+				this.SendPropertyChanging();
+				this._cjrq = value;
+				this.SendPropertyChanged("cjrq");
+				this.OncjrqChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_yb", DbType="NVarChar(50)")]
+	public string yb
+	{
+		get
+		{
+			return this._yb;
+		}
+		set
+		{
+			if ((this._yb != value))
+			{
+				this.OnybChanging(value);
+				this.SendPropertyChanging();
+				this._yb = value;
+				this.SendPropertyChanged("yb");
+				this.OnybChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Zylx", DbType="VarChar(500)")]
+	public string Zylx
+	{
+		get
+		{
+			return this._Zylx;
+		}
+		set
+		{
+			if ((this._Zylx != value))
+			{
+				this.OnZylxChanging(value);
+				this.SendPropertyChanging();
+				this._Zylx = value;
+				this.SendPropertyChanged("Zylx");
+				this.OnZylxChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Khjb", DbType="NVarChar(30)")]
+	public string Khjb
+	{
+		get
+		{
+			return this._Khjb;
+		}
+		set
+		{
+			if ((this._Khjb != value))
+			{
+				this.OnKhjbChanging(value);
+				this.SendPropertyChanging();
+				this._Khjb = value;
+				this.SendPropertyChanged("Khjb");
+				this.OnKhjbChanged();
+			}
+		}
+	}
+	
+	[Column(Storage="_Xsy", DbType="NVarChar(100)")]
+	public string Xsy
+	{
+		get
+		{
+			return this._Xsy;
+		}
+		set
+		{
+			if ((this._Xsy != value))
+			{
+				this.OnXsyChanging(value);
+				this.SendPropertyChanging();
+				this._Xsy = value;
+				this.SendPropertyChanged("Xsy");
+				this.OnXsyChanged();
 			}
 		}
 	}
