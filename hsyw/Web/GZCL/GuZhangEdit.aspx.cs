@@ -364,6 +364,18 @@ public partial class Web_GZCL_GuZhangEdit : System.Web.UI.Page
             ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), "<script>alert('" + strMessge + "不能为空！')</script>");
             return;
         }
+        //caoguangyao 2014-5-28
+        if (YWZT.SelectedValue.Equals("紫荆公司"))
+        {
+            //Console.WriteLine(YWZT.SelectedValue);
+            //Console.WriteLine(KHQY.Text);
+            //Console.WriteLine(KHQYID.Text);
+            if (!KHQYID.Text.StartsWith("100101"))
+            {
+                ClientScript.RegisterStartupScript(GetType(),Guid.NewGuid().ToString(),String.Format("<script>alert('{0}')</script>","业务主体为：紫荆公司，区域必须为：杭州市区下面的"));
+                return;
+            }
+        }
 
         string sql = "select * from T_FAU_ZB where zbguid='" + ZBGUID.Text + "'";
         DataSet ds = DataFunction.FillDataSet(sql);
