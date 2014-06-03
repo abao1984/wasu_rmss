@@ -12,6 +12,8 @@ using System.Text;
 using System.IO;
 using LinqToExcel;
 using System.Web.Script.Services;
+using Devart.Data.Linq;
+using HSYWContext;
 /// <summary>
 ///ws 的摘要说明
 /// </summary>
@@ -384,6 +386,28 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
         result = DataFunction.ExecuteNonQuery(sql);
        
         writeJSONResponse(dict);
+    }
+
+    [WebMethod]
+    public void get_announcement_v2(string uid, string page)
+    {
+        if (page.Length == 0)
+        {
+            page = "1";
+        }
+        HSYWDataContext ctx = new HSYWDataContext();
+        var query = from c in ctx.ANNOUNCEMENTs
+                    where c.POSTOWNER.Contains(uid)
+                    select c;
+        query = query.Skip((int.Parse(page) - 1) * 100).Take(100);
+
+        var q = from c in ctx.ANNOUNCEMENTRECORDs
+                where c.USERID == uid
+                select c;
+
+        q = q.Skip((int.Parse(page) - 1) * 100).Take(100);
+
+        writeJSONResponse(q);
     }
 
     [WebMethod]

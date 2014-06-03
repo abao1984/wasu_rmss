@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Database Name="HSYW" EntityNamespace="HSYWContext" ContextNamespace="HSYWContext" Class="HSYWDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="cf8e70c2-c9d6-4279-945f-1130b061c263" Provider="Devart.Data.Oracle.Linq.Provider.OracleDataProvider, Devart.Data.Oracle.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
+  <Connection Mode="ConnectionString" ConnectionString="User Id=hsyw;Password=hsyw;Server=125.210.208.56/rmss;Persist Security Info=True" Provider="Devart.Data.Oracle" />
+  <Table Name="HSYW.T_SYS_USER" Member="TSYSUSERs">
+    <Type Name="TSYSUSER" ed:Guid="13b89f2e-994e-41b1-95d0-d5f6b5089999">
+      <Documentation>
+        <Summary>?????</Summary>
+      </Documentation>
+      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="e3f48449-609d-486f-a8c7-072e097fb329">
+        <Documentation>
+          <Summary>??ID</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERNAME" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="5f98ad15-fb15-4538-b4ee-10bca1a00290">
+        <Documentation>
+          <Summary>???</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERID" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="9e36d759-e902-4247-baf9-3096bcdf5b0f">
+        <Documentation>
+          <Summary>?????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREALNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="5f44e162-ea3c-430b-a565-7d4dad662334">
+        <Documentation>
+          <Summary>??????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERPASS" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="b20063ac-3924-43b3-ab04-02866c002292">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="2d86b758-b81f-47da-991b-5a5ae5f977ae">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERPHONE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="6f8d9315-9ec2-4cec-97ec-59a48ac34c4f">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREGIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="d9e2a634-a5f0-4214-a529-7e2bf9796af1">
+        <Documentation>
+          <Summary>????IP</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREGDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="f3ccf07e-80aa-47d4-8da4-f2ef713f4cd3">
+        <Documentation>
+          <Summary>??????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERLOGINIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="888fa883-ed14-4757-9dee-5f33e841fe82">
+        <Documentation>
+          <Summary>??????IP</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERLOGINDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="d538488b-dbe9-4dbe-ad70-7b723725f259">
+        <Documentation>
+          <Summary>????????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="121ac1fd-1b7e-410c-b89f-47c3d75a27d6">
+        <Documentation>
+          <Summary>?????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="d32e2d01-7f51-4b75-8ec5-0655da96eaf0">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="30c66e5f-9805-41e6-9fa4-71e47f0376e6">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISSUPER" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="3b19cdab-f999-4036-800c-9c0b9c52acff">
+        <Documentation>
+          <Summary>??????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="FWQY" Type="System.String" DbType="VARCHAR2(1000 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="1000" ed:ValidateMaxLength="1000" ed:ValidateRequired="False" ed:Guid="45872855-5182-4d59-8f15-e20dbe656cf2">
+        <Documentation>
+          <Summary>????</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="MAILBOX" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="8d12401c-06ed-45bd-867b-618deeae2317">
+        <Documentation>
+          <Summary>??</Summary>
+        </Documentation>
+      </Column>
+      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="d04cbed2-da7c-4ea0-9e25-3d11d3d78d87" Member="ANNOUNCEMENTRECORDs" ed:Guid="cbaf2826-398f-4ed7-9bd0-a4124ce1ac2f" ThisKey="ID" OtherKey="USERID" Type="ANNOUNCEMENTRECORD" />
+    </Type>
+  </Table>
+  <Table Name="HSYW.ANNOUNCEMENTS" Member="ANNOUNCEMENTs">
+    <Type Name="ANNOUNCEMENT" ed:Guid="ec3ddc05-199d-4d85-a00a-c88956053f65">
+      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="ddfa8643-72ae-425f-881c-cc0a149ebb2f" />
+      <Column Name="POST_TIME" Member="POSTTIME" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="a95b02ad-5316-452c-a32b-1fd4d6f51a1e" />
+      <Column Name="POST_OWNER" Member="POSTOWNER" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="cca70f0f-e04a-41da-ab90-4add44c8a96b" />
+      <Column Name="POST_TITLE" Member="POSTTITLE" Type="System.String" DbType="VARCHAR2(200 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="True" ed:Guid="6050319b-0b5d-4d75-bca3-599095419553" />
+      <Column Name="POST_CONTENT" Member="POSTCONTENT" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="d95fa69f-0d15-4f62-bd3e-b9e90d5b3466" />
+      <Column Name="POST_COMMENT" Member="POSTCOMMENT" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="''&#xD;" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="cb8f201e-6c11-4566-881e-3dbe2c3bdd0d" />
+      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="dc40e4fb-0647-40e1-8b41-faae6718e4d0" Member="ANNOUNCEMENTRECORDs" ed:Guid="5efc37f6-f036-4d23-9ece-1883bf92f4d3" ThisKey="ID" OtherKey="ANNOUNCEMENTID" Type="ANNOUNCEMENTRECORD" />
+    </Type>
+  </Table>
+  <Table Name="HSYW.ANNOUNCEMENT_RECORD" Member="ANNOUNCEMENTRECORDs">
+    <Type Name="ANNOUNCEMENTRECORD" ed:Guid="1b6c4bd8-9066-4ece-9de0-b58996a7d935">
+      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="3e1e305d-4089-42ab-8309-31a0216c41fe" />
+      <Column Name="USER_ID" Member="USERID" Type="System.String" DbType="CHAR(36) NOT NULL" CanBeNull="false" UpdateCheck="Never" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="c36e8ad3-87ad-460b-ae84-eac1fbbabef5" />
+      <Column Name="ANNOUNCEMENT_ID" Member="ANNOUNCEMENTID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="329060f3-4928-4e17-9b94-7eddcb256b43" />
+      <Column Name="READ_FLAG" Member="READFLAG" Type="System.Decimal" DbType="FLOAT(63) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="63" ed:ValidateRequired="True" ed:Guid="341bd304-65f0-4054-8bb6-1458197c4c7a" />
+      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="d04cbed2-da7c-4ea0-9e25-3d11d3d78d87" Member="TSYSUSER" ed:Guid="8b31a1a8-df1c-4bf2-8557-411594304411" ThisKey="USERID" OtherKey="ID" Type="TSYSUSER" DeleteRule="NO ACTION" IsForeignKey="true" />
+      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="dc40e4fb-0647-40e1-8b41-faae6718e4d0" Member="ANNOUNCEMENT" ed:Guid="cd790119-33dd-44c0-b7f0-3d15bd7f14cd" ThisKey="ANNOUNCEMENTID" OtherKey="ID" Type="ANNOUNCEMENT" DeleteRule="NO ACTION" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
