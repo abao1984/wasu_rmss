@@ -30,8 +30,7 @@ Global
 		Debug|.NET = Debug|.NET
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{324E4044-9F67-44DF-86CD-F350D9CFF67B}.Debug|.NET.ActiveCfg = Debug|.NET
-		{324E4044-9F67-44DF-86CD-F350D9CFF67B}.Debug|.NET.Build.0 = Debug|.NET
+		{324E4044-9F67-44DF-86CD-F350D9CFF67B}.Debug|.NET.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

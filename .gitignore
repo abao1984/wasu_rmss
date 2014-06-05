@@ -1,4 +1,4 @@
-hsyw/App_Data/aspnetdb_log.ldf
+﻿hsyw/App_Data/aspnetdb_log.ldf
 hsyw/App_Data/ASPNETDB.MDF
 rmss/Default.htm
 rmss/Global.asax
@@ -4289,5 +4289,9 @@ PPPOE导入模板.xls
 hsyw.test/
 hsyw/光资源导出模板.xls
 hsyw/Bin/
+hsyw/Backup/
 hsyw/_UpgradeReport_Files/
 hsyw/UpgradeLog.XML
+*.refresh
+
+

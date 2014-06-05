@@ -14,6 +14,8 @@ using LinqToExcel;
 using System.Web.Script.Services;
 using Devart.Data.Linq;
 using HSYWContext;
+using System.Globalization;
+
 /// <summary>
 ///ws 的摘要说明
 /// </summary>
@@ -147,7 +149,11 @@ public class ws : System.Web.Services.WebService {
             {
                 string cellDate = item["配置时间"].ToString();
                 configDate = cellDate.Split(' ')[0];
-            
+
+                DateTimeFormatInfo dtFormat = new DateTimeFormatInfo();
+                dtFormat.ShortDatePattern = "yyyy/MM/dd";
+                DateTime dt = Convert.ToDateTime(configDate, dtFormat);
+                configDate = String.Format("{0:D4}-{1:D2}-{2:D2}",dt.Year,dt.Month,dt.Day);
             }
 
             string deviceInfo = item["设备配置信息"];
