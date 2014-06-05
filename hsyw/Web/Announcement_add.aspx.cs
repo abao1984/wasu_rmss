@@ -10,6 +10,7 @@ using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using System.Web.UI.WebControls.WebParts;
 using System.Xml.Linq;
+using HSYWContext;
 
 public partial class Announcement_add : System.Web.UI.Page
 {
@@ -62,10 +63,39 @@ post_comment varchar2(200) default ''
             return;
         }
 
-        string time_now = DateTime.Now.ToString("yyyy-MM-dd HH:MM:ss");
+        //string time_now = DateTime.Now.ToString("yyyy-MM-dd HH:MM:ss");
 
-        string sql = String.Format(@"insert into ANNOUNCEMENTS (post_time,post_owner,post_title,post_content,post_comment) values(to_date('{0}','YYYY-MM-DD HH24:MI:SS'),'{1}','{2}','{3}','{4}')", time_now, owner, title, content, "");
-        create_message = DataFunction.ExecuteNonQuery(sql);
+        //string sql = String.Format(@"insert into ANNOUNCEMENTS (post_time,post_owner,post_title,post_content,post_comment) values(to_date('{0}','YYYY-MM-DD HH24:MI:SS'),'{1}','{2}','{3}','{4}')", time_now, owner, title, content, "");
+        //create_message = DataFunction.ExecuteNonQuery(sql);
+
+        HSYWDataContext ctx = new HSYWDataContext();
+        var user_id_list = owner.Split(',');//string.Join(",",owner);
         
+        var users = (from c in ctx.TSYSUSERs
+                    where user_id_list.Contains(c.ID)
+                    select c).ToList();
+
+        var announce = new ANNOUNCEMENT
+        {
+            POSTTIME = DateTime.Now,
+            POSTOWNER = owner,
+            POSTTITLE = title,
+            POSTCONTENT = content,
+            POSTCOMMENT = "",
+        };
+        ctx.ANNOUNCEMENTs.InsertOnSubmit(announce);
+        //ctx.SubmitChanges();
+        
+        foreach(TSYSUSER user in users)
+        {
+            var record  =new ANNOUNCEMENTRECORD{
+                READFLAG = false,
+                ANNOUNCEMENT = announce,
+                TSYSUSER = user,
+            };
+            ctx.ANNOUNCEMENTRECORDs.InsertOnSubmit(record);
+            //ctx.SubmitChanges();
+        }
+        ctx.SubmitChanges();
     }
 }
