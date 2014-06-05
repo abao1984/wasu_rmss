@@ -12,7 +12,7 @@ using System.Text;
 using System.IO;
 using LinqToExcel;
 using System.Web.Script.Services;
-using Devart.Data.Linq;
+//using Devart.Data.Linq;
 using HSYWContext;
 using System.Globalization;
 
