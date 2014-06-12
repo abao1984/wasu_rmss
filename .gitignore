@@ -1,4 +1,4 @@
-﻿hsyw/App_Data/aspnetdb_log.ldf
+hsyw/App_Data/aspnetdb_log.ldf
 hsyw/App_Data/ASPNETDB.MDF
 rmss/Default.htm
 rmss/Global.asax
@@ -4295,3 +4295,7 @@ hsyw/UpgradeLog.XML
 *.refresh
 
 
+hsyw/hsyw/Admin/AdminInsert.aspx
+hsyw/hsyw/Admin/
+hsyw/upload_temp/
+hsyw.zip

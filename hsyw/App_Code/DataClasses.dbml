@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Database Name="RMSS" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSSConnectionString1" Provider="System.Data.SqlClient" />
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RMSS_TEST" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS_TEST;Persist Security Info=True;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSSConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.IP_Bussiness" Member="IP_Bussiness">
     <Type Name="IP_Bussiness">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -214,6 +213,92 @@
       <Column Name="Zylx" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
       <Column Name="Khjb" Type="System.String" DbType="NVarChar(30)" CanBeNull="true" />
       <Column Name="Xsy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zcbh_lsh" Member="zcbh_lsh">
+    <Type Name="zcbh_lsh">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="dqgzbh" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="gxr" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="gxrq" Type="System.String" DbType="NVarChar(20)" CanBeNull="true" />
+      <Column Name="lsh" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="type" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Prefix" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Length" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IP_Source_Master" Member="IP_Source_Master">
+    <Type Name="IP_Source_Master">
+      <Column Name="IPMID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IP_Head" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IP_Start_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_End_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_Num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="createID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="createName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="createDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MachineID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Used" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.vw_ip_source_master" Member="vw_ip_source_master">
+    <Type Name="vw_ip_source_master">
+      <Column Name="IPMID" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IP_Head" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IP_Start_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_End_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_Num" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="createID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="createName" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="createDate" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="State" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="MachineID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Used" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="bz" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="IP" Type="System.String" DbType="VarChar(23)" CanBeNull="true" />
+      <Column Name="IP_FullAddress" Type="System.String" DbType="VarChar(26)" CanBeNull="true" />
+      <Column Name="mac_name" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="ghyt" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="Ssqy_name" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.MachineRoom" Member="MachineRoom">
+    <Type Name="MachineRoom">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="mac_id" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="mac_name" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="mac_address" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="mac_mj" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="mac_power" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="UPS" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="mac_phone" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mac_typeID" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="mac_typename" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="remark" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="sljf" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="old_id" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="IsallNet" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Jfzt" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Jfyt" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="Jfqyrq" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="Jfjg" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="UPSDz" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSWg" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSXlh" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSWgdz" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSWkxlh" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSPzqk" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSPzjcqk" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSAzqk" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="UPSAzjcqk" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Ktazrq" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="Ssglqy" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="Fgfw" Type="System.String" DbType="NVarChar(500)" CanBeNull="true" />
+      <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

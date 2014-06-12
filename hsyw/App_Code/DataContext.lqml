@@ -125,4 +125,59 @@
       <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="977dbf25-210d-4c9c-8e7f-981c94534aee" Member="ANNOUNCEMENT" ed:Guid="b542a4ec-57e1-4e18-975f-8de90abc5ccf" ThisKey="ANNOUNCEMENTID" OtherKey="ID" Type="ANNOUNCEMENT" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>
+  <Table Name="HSYW.T_SYS_BRANCH" Member="TSYSBRANCHES">
+    <Type Name="TSYSBRANCH" ed:Guid="b0ccbf8b-4d89-4c92-bfa4-008d7590a404">
+      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="fa50cc8d-29da-4c0f-a8dc-9afe39fee114" />
+      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="7f28dd77-1f22-4cf6-98d4-b136e3f07cb4">
+        <Documentation>
+          <Summary>组织机构编码</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="BRANCHNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="bf7c78d4-1d25-4ed0-a794-13a807d8c702">
+        <Documentation>
+          <Summary>组织机构名称</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="PBRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="c5c0dcf1-b8ab-4b73-8a12-1691aa1340b0">
+        <Documentation>
+          <Summary>父组织机构编码</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="BRANCHLEVEL" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="419a0c36-7d08-4e11-b72f-ffa758539804">
+        <Documentation>
+          <Summary>组织机构层次</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="JGLX_DATADM" Member="JGLXDATADM" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="c24781d0-309c-4498-958b-363bdff7f25d">
+        <Documentation>
+          <Summary>机构类型</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="d539cf56-440a-4b7e-bc1a-2435e6021c3f">
+        <Documentation>
+          <Summary>排序字段</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="4146f385-07a3-4b88-940b-ddd07ce7073d">
+        <Documentation>
+          <Summary>是否启用</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="9757a8a3-133e-4ace-8d72-94bd48f662bc">
+        <Documentation>
+          <Summary>是否显示</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISQY" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="23f3c515-30b8-44d4-a2ef-93e26004da02">
+        <Documentation>
+          <Summary>是否区域</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="PATH" Type="System.String" DbType="VARCHAR2(500 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="500" ed:ValidateMaxLength="500" ed:ValidateRequired="False" ed:Guid="2debc7c1-e114-42b0-8e95-413a61a0d417">
+        <Documentation>
+          <Summary>全路径</Summary>
+        </Documentation>
+      </Column>
+    </Type>
+  </Table>
 </Database>

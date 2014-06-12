@@ -15,6 +15,7 @@ using System.Web.Script.Services;
 //using Devart.Data.Linq;
 using HSYWContext;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 /// <summary>
 ///ws 的摘要说明
@@ -25,6 +26,8 @@ using System.Globalization;
 // [System.Web.Script.Services.ScriptService]
 public class ws : System.Web.Services.WebService {
     private static Random random = new Random((int)DateTime.Now.Ticks);
+    private HSYWDataContext ctx = new HSYWDataContext();
+    DataClassesDataContext dc = new DataClassesDataContext();
 
     public ws () {
 
@@ -43,6 +46,144 @@ public class ws : System.Web.Services.WebService {
         }
 
         return builder.ToString();
+    }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void ip_excel_upload()
+    {
+        HttpContext post = HttpContext.Current;
+        HttpFileCollection files = post.Request.Files;
+        if (files.Count == 0)
+        {
+            return;
+        }
+        HttpPostedFile target = files[0];
+        string fileName = target.FileName;
+        if (target.ContentLength == 0)
+        {
+            return;
+        }
+
+        byte[] binaryArray = new byte[target.InputStream.Length];
+        target.InputStream.Read(binaryArray, 0, (int)target.InputStream.Length);
+        var appData = Server.MapPath("~/upload_temp");
+        var file = Path.Combine(appData, Path.GetFileName(fileName));
+        FileStream fs = new FileStream(file, FileMode.Create, FileAccess.ReadWrite);
+        fs.Write(binaryArray, 0, binaryArray.Length);
+        fs.Close();
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        dict.Add("message", "");
+        try
+        {
+            //string result = "";
+            string result = queryExcel(file);
+            dict["message"] = "ok";
+            if (result.Length>0)
+            {
+                dict["message"] = result;
+            }
+
+        }
+        catch (Exception e)
+        {
+            dict["message"] = e.ToString();
+        }
+
+        writeJSONResponse(dict);
+
+    }
+
+    private string queryExcel(string excelFile)
+    {
+        string result = "";
+        var excel = new ExcelQueryFactory(excelFile);
+        var sheet = excel.Worksheet(0);
+        var rows = from c in sheet select c;
+
+        var areas = dc.TS_ZD_Info.Where(c => c.type == "区域");
+        var bussiness_types = dc.TS_ZD_Info.Where(c => c.type == "IP业务类型");
+        foreach (var row in rows)
+        {
+            string ip_info = row["IP地址"];
+
+            var match = dc.vw_ip_source_master.Where(c => c.IP_FullAddress == ip_info);
+
+            if (match.Count() > 0)
+            {
+                result += "<br/>" + ip_info + ","; 
+                continue;
+            }
+
+            string[] ip_address = ip_info.Split('/');
+            string ip_num = ip_address[1];
+            string ip_start_no = ip_address[0].Split('.')[3];
+            string ip_end_no = "255";
+            string[] ip_head_array = ip_address[0].Split('.');
+            string ip_head = "";
+            for (int i = 0; i < 3; i++)
+            {
+                ip_head = ip_head+ip_head_array[i] + ".";
+            }
+
+            string machine_room_id = row["所属机房"];
+            var room = dc.MachineRoom.Where(c => c.mac_id == machine_room_id).SingleOrDefault();
+
+            string area_name = row["所属区域"];
+
+            var area = areas.Where(c => c.mc == area_name).SingleOrDefault();
+            string area_lsh = area.lsh;
+
+            var type = bussiness_types.Where(c => c.mc == row["IP业务类型"]).SingleOrDefault();
+            string type_lsh = type.lsh;
+
+            var ip = new IP_Source_Master
+            {
+                IP_Head = ip_head,
+                IP_Start_No = int.Parse(ip_start_no),
+                IP_End_No = int.Parse(ip_end_no),
+                IP_Num = int.Parse(ip_num),
+                createDate = DateTime.Now.ToShortDateString(),
+                State = 0,
+                MachineID = machine_room_id,
+                Used = type_lsh,
+                Ssqy = area_lsh,
+                bz = "import by ip excel files",
+            };
+
+            var vw_ip = new vw_ip_source_master
+            {
+                IP_Head = ip_head,
+                IP_Start_No = int.Parse(ip_start_no),
+                IP_End_No = int.Parse(ip_end_no),
+                IP_Num = int.Parse(ip_num),
+                createDate = DateTime.Now.ToShortDateString(),
+                State = 0,
+                MachineID = machine_room_id,
+                Used = type_lsh,
+                Ssqy = area_lsh,
+                IP = ip_address[0],
+                IP_FullAddress = ip_info,
+                mac_name = room.mac_name,
+                ghyt = row["IP业务类型"],
+                Ssqy_name = area_name,
+                bz = "import by ip excel files",
+
+            };
+            dc.IP_Source_Master.InsertOnSubmit(ip);
+            dc.SubmitChanges();
+            vw_ip.IPMID = ip.IPMID;
+            dc.vw_ip_source_master.InsertOnSubmit(vw_ip);
+            dc.SubmitChanges();    
+        }
+
+        if (result.Length > 0)
+        {
+            result = String.Format(@"导入excel中的数据‘{0}’已存在", result); 
+        }
+
+        return result;
+
     }
 
     [WebMethod]
@@ -108,13 +249,17 @@ public class ws : System.Web.Services.WebService {
         var query = from d in sheet
                     select d;
 
-        DataClassesDataContext dc = new DataClassesDataContext();
+        //DataClassesDataContext dc = new DataClassesDataContext();
 
         var PPPOEBussiness = from a in dc.IP_Bussiness
                                 where a.Bussiness_code.StartsWith("Z_P_") orderby a.Bussiness_code descending
                                 select a;
-
-        long count = long.Parse(PPPOEBussiness.First().Bussiness_code.Replace("Z_P_", ""));
+        long count = 0;
+        if (PPPOEBussiness.Count() != 0)
+        {
+            count = long.Parse(PPPOEBussiness.First().Bussiness_code.Replace("Z_P_", ""));
+        
+        }
         foreach (var item in query)
         {
             if (item["设备配置信息"].ToString().Length == 0)
@@ -288,7 +433,12 @@ public class ws : System.Web.Services.WebService {
             
         }
 
-        
+        var prefix = "Z_P_";
+        var pppoeQuery = dc.IP_Bussiness.Where(c => c.Bussiness_code.StartsWith(prefix)).OrderByDescending(c=>c.Bussiness_code).First();
+        var totalCount = pppoeQuery.Bussiness_code.Replace(prefix,"");
+        var z = dc.zcbh_lsh.Where(c => c.Prefix == prefix).SingleOrDefault();
+        z.dqgzbh = totalCount;
+        dc.SubmitChanges();
 
         if (result.Length > 0)
         {
@@ -461,8 +611,9 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
 
     private void writeJSONResponse(Object o)
     {
-        Encoding encode = System.Text.Encoding.GetEncoding("Unicode"); 
-        string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented);
+        Encoding encode = System.Text.Encoding.GetEncoding("Unicode");
+        var serializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+        string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented,serializerSettings);
         Context.Response.AddHeader("Content-type", "text/html;charset=UTF-8");
         Context.Response.Write(jsonData);
         Context.Response.End();
@@ -518,6 +669,61 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
         }
 
         return list;
+    }
+
+    [WebMethod]
+    public void getUserNameByAnnounceId(int announceId)
+    {
+        
+        var a = ctx.ANNOUNCEMENTs.Where(c => c.ID == announceId).FirstOrDefault();
+        var strUserIds = a.POSTOWNER;
+        var userIdList = strUserIds.Split(',');
+        var branchQuery = ctx.TSYSBRANCHES.ToList();
+        List<string> pathList = new List<string>();
+        foreach (var id in userIdList)
+        {
+            var user = ctx.TSYSUSERs.Where(c => c.ID == id).FirstOrDefault();
+            var departmentQuery = ctx.TSYSBRANCHES.Where(c => c.BRANCHCODE == user.BRANCHCODE).FirstOrDefault();
+            string strDepartmentName = "";
+            getDepartmentPath(ref strDepartmentName, departmentQuery.BRANCHCODE,branchQuery);
+            
+            string path = String.Format("{0}/{1}", strDepartmentName, user.USERREALNAME);
+            pathList.Add(path);
+            
+        }
+
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        dict.Add("result", string.Join(",",pathList.ToArray()));
+        writeJSONResponse(dict);
+    }
+
+    private void getDepartmentPath(ref string path,string code,List<HSYWContext.TSYSBRANCH> list)
+    {
+        var q = list.Where(c => c.BRANCHCODE == code).FirstOrDefault();
+        if (q.PATH == null)
+        {
+            if (path.Length == 0)
+            {
+                path = q.BRANCHNAME;
+            }
+            else
+            {
+                path = String.Format("{0}/{1}", q.BRANCHNAME, path);
+            }
+            getDepartmentPath(ref path, q.PBRANCHCODE,list);
+        }
+        else
+        {
+            if (path.Length == 0)
+            {
+                path = q.PATH;
+            }
+            else
+            {
+                path = String.Format("{0}/{1}", q.PATH,path);
+            }
+            
+        }
     }
 
     private ArrayList getArea(string isArea)
