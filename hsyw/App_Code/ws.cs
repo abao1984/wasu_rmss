@@ -150,7 +150,7 @@ public class ws : System.Web.Services.WebService {
                 Ssqy = area_lsh,
                 bz = "import by ip excel files",
             };
-
+            /*
             var vw_ip = new vw_ip_source_master
             {
                 IP_Head = ip_head,
@@ -170,11 +170,12 @@ public class ws : System.Web.Services.WebService {
                 bz = "import by ip excel files",
 
             };
+             * */
             dc.IP_Source_Master.InsertOnSubmit(ip);
             dc.SubmitChanges();
-            vw_ip.IPMID = ip.IPMID;
-            dc.vw_ip_source_master.InsertOnSubmit(vw_ip);
-            dc.SubmitChanges();    
+            //vw_ip.IPMID = ip.IPMID;
+            //dc.vw_ip_source_master.InsertOnSubmit(vw_ip);
+            //dc.SubmitChanges();    
         }
 
         if (result.Length > 0)
