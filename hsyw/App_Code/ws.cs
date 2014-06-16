@@ -14,7 +14,7 @@ using LinqToExcel;
 using System.Web.Script.Services;
 using System.Globalization;
 using System.Text.RegularExpressions;
-using HSYWContext;
+//using HSYWContext;
 
 
 
@@ -29,8 +29,10 @@ using HSYWContext;
 // [System.Web.Script.Services.ScriptService]
 public class ws : System.Web.Services.WebService {
     private static Random random = new Random((int)DateTime.Now.Ticks);
-    private HSYWDataContext ctx = new HSYWDataContext();
+    //private HSYWDataContext ctx = new HSYWDataContext();
     DataClassesDataContext dc = new DataClassesDataContext();
+
+ 
 
     public ws () {
 
@@ -203,6 +205,181 @@ public class ws : System.Web.Services.WebService {
 
         return result;
 
+    }
+
+    [WebMethod]
+    public void get_sql_area()
+    {
+        var area_list = dc.TS_ZD_Info.Where(c => c.type == "区域").OrderBy(c=>c.xh);
+        writeJSONResponse(area_list);
+    }
+
+    [WebMethod]
+    public void get_sql_resource_list()
+    {
+        var resource_list = dc.IP_Bussiness.OrderBy(c => c.Bussiness_code).Take(100);
+        writeJSONResponse(resource_list);
+    }
+
+    [WebMethod]
+    public void get_cmts_list(string device_code, string belong_to)
+    {
+        var list = dc.CMTS.OrderBy(c=>c.id);
+        if (device_code.Trim().Length > 0)
+        {
+            list = list.Where(c => c.device_code.Contains(device_code)).OrderBy(c => c.id);
+        }
+
+        if (belong_to.Trim().Length > 0)
+        {
+            list = list.Where(c => c.belong_to.Contains(belong_to)
+                ).OrderBy(c => c.id);
+        }
+        writeJSONResponse(list);
+    }
+
+    [WebMethod]
+    public void get_cmts_detail(string id)
+    {
+        var entity = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
+        if (entity != null)
+        {
+            writeJSONResponse(entity);
+        }
+        else
+        {
+            writeJSONResponse(null);
+        }
+
+    }
+
+    [WebMethod]
+    public void edit_cmts(string id,string device_code, string belong_to, string room_id)
+    {
+        var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
+        if (e != null)
+        {
+            e.device_code = device_code;
+            e.belong_to = belong_to;
+            e.room_id = Convert.ToInt32(room_id);
+            dc.SubmitChanges();
+            Dictionary<string, string> dict = new Dictionary<string, string>();
+            dict.Add("result", "0");
+            writeJSONResponse(dict);
+        }
+        else
+        { 
+            Dictionary<string, string> dict = new Dictionary<string,string>();
+            dict.Add("result","-1");
+            writeJSONResponse(dict);
+        }
+        
+    }
+
+    [WebMethod]
+    public void delete_cmts_list(string id_list)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            List<string> cmts_id_list = id_list.Split(',').ToList();
+
+            foreach (string id in cmts_id_list)
+            {
+                int pk = Convert.ToInt32(id);
+                var e = dc.CMTS.Where(c => c.id == pk).FirstOrDefault();
+                dc.CMTS.DeleteOnSubmit(e);
+            }
+            dc.SubmitChanges();
+
+            dict.Add("result", "0");
+
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+        }
+
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
+    public void delete_cmts(string id)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
+            dc.CMTS.DeleteOnSubmit(e);
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+        }
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
+    public void get_config_list()
+    { 
+        var list =  dc.IP_Bussiness.Where(c=>c.Bussiness_code.StartsWith("Z_P"));
+        writeJSONResponse(list.Take(100));
+    }
+
+    [WebMethod]
+    public void get_config_detail(string id)
+    {
+        var e = dc.IP_Bussiness.Where(c => c.ID == Convert.ToInt32( id)).FirstOrDefault();
+        writeJSONResponse(e);
+
+    }
+
+    [WebMethod]
+    public void get_cmts_by_config_id(string config_id)
+    {
+        var entities = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(config_id)).OrderBy(c => c.id);
+        writeJSONResponse(entities);
+    }
+
+    [WebMethod]
+    public void add_cmts(string device_code, string belong_to, string room_id)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try
+        {
+            var cmts = new CMTS
+            {
+                device_code = device_code,
+                belong_to = belong_to,
+                room_id = Convert.ToInt32(room_id)
+            };
+            dc.CMTS.InsertOnSubmit(cmts);
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+
+        }
+
+        writeJSONResponse(dict);
+        
+
+
+
+    }
+
+    [WebMethod]
+    public void get_sql_client_lv()
+    {
+
+        var client_lv_list = dc.TS_ZD_Info.Where(c => c.type == "客户级别").OrderBy(c => c.xh);
+        writeJSONResponse(client_lv_list);
     }
 
     [WebMethod]
@@ -562,7 +739,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
        
         writeJSONResponse(dict);
     }
-
+    /*
     [WebMethod]
     public void get_announcement_v2(string uid, string page)
     {
@@ -582,7 +759,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
 
         //writeJSONResponse(q);
     }
-
+    */
     [WebMethod]
     public void get_announcement(string user_id,string page)
     {
@@ -687,7 +864,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
 
         return list;
     }
-
+    /*
     [WebMethod]
     public void getUserNameByAnnounceId(int announceId)
     {
@@ -713,7 +890,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
         dict.Add("result", string.Join(",",pathList.ToArray()));
         writeJSONResponse(dict);
     }
-
+    
     private void getDepartmentPath(ref string path,string code,List<TSYSBRANCH> list)
     {
         var q = list.Where(c => c.BRANCHCODE == code).FirstOrDefault();
@@ -742,7 +919,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
             
         }
     }
-
+    */
     private ArrayList getArea(string isArea)
     {
         string sql;
