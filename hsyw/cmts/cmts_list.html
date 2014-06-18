@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
+<script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+
+<script>
+$(function(){
+	function searchData()
+	{
+		var device_code = $('#id_device_code').val();
+		var belong_to = $('#id_belong_to').val()
+		var post_data = {}
+		post_data.device_code = device_code;
+		post_data.belong_to = belong_to;
+		$('#table-list tr').remove();
+		var html_header = '' +
+			'<tr>'+
+			'<th>选择</th>'+
+			'<th>设备编号</th>'+
+			'<th>所属分公司</th>'+
+			'<th>所属机房</th>'+
+			'</tr>';
+		$('#table-list').append(html_header);
+		$.post('/hsyw/ws.asmx/get_cmts_list',post_data,function(result){
+			var data_list = JSON.parse(result);
+			$.each(data_list,function(i,v){
+				var html  = '<tr>' +
+					'<td><input type="checkbox" name="check" data-id="'+v.id+'"></td>' +
+					'<td><a href="/hsyw/cmts/get_cmts_detail.html?id='+v.id+'">'+ v.device_code +'</a></td>' + 
+					'<td>'+ v.belong_to +'</td>' + 
+					'<td>'+ v.room_id +'</td>' + 
+					'</tr>';
+				$('#table-list').append(html);
+			});
+		});
+	}
+	var res = searchData();
+	$('#id_search').click(function(){
+		var res = searchData();
+	});
+	
+	$('#id_button_confirm').click(function(){
+		$('#myModal').modal('show');
+	});
+	
+	$('#id_button_delete').click(function(){
+		$('#myModal').modal('hide');
+		var checked_checkboxes = $('input[type="checkbox"]:checked');
+		var data_id_list =[];
+		for (var i=0;i<checked_checkboxes.length;i++)
+		{
+			var node_id = $(checked_checkboxes[i]).attr('data-id');
+			data_id_list.push(node_id);
+		}
+		var id_list = data_id_list.join(',');
+		var post_data = {};
+		post_data.id_list = id_list;
+		$.post('/hsyw/ws.asmx/delete_cmts_list', post_data)
+		.done(function(result){
+			var data = JSON.parse(result);
+			if (data.result ==='0')
+			{
+				alert ('删除成功');
+			}
+			else
+			{
+				alert('操作失败：'+data.msg);
+			}
+			var res = searchData();
+		});
+	});
+	
+});
+</script>
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<form id="form1" role="form" class="form-inline" >
+<hr>
+<div class="form-group">
+<label class="sr-only" for="id_room_id">设备编号</label>
+<input class="form-control" type="text" placeholder="设备编号" name="device_code" id="id_device_code">
+</div>
+<div class="form-group">
+<label class="sr-only" for="id_code">所属分公司</label>
+<input class="form-control" type="text" placeholder="所属分公司" name="belong_to" id="id_belong_to">
+</div>
+<hr>
+<button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span> 查询</button>
+<a href="/hsyw/cmts/add_cmts.html" class="btn btn-default">新增</a>
+<a type="button" id="id_button_confirm" class="btn btn-danger">删除</a>
+<button class="btn btn-info">导入</button>
+<button class="btn btn-success">导出</button>
+</form>
+<p></p>
+<table class="table table-hover" id="table-list">
+</table>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>确定删除这些记录吗？</h4>
+</div>
+<div class="modal-body">
+<p>
+是否确定要删除这些记录吗，此操作将无法撤消？
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<button type="button" class="btn btn-primary" id="id_button_delete">确定</button>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

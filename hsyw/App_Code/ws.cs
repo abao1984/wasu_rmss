@@ -14,6 +14,7 @@ using LinqToExcel;
 using System.Web.Script.Services;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Collections.Specialized;
 //using HSYWContext;
 
 
@@ -324,39 +325,108 @@ public class ws : System.Web.Services.WebService {
 
     [WebMethod]
     public void get_config_list()
-    { 
-        var list =  dc.IP_Bussiness.Where(c=>c.Bussiness_code.StartsWith("Z_P"));
+    {
+        var list = dc.IP_Bussiness;
         writeJSONResponse(list.Take(100));
     }
 
     [WebMethod]
-    public void get_config_detail(string id)
+    public void add_cmts_temp()
     {
-        var e = dc.IP_Bussiness.Where(c => c.ID == Convert.ToInt32( id)).FirstOrDefault();
-        writeJSONResponse(e);
-
+        var form = HttpContext.Current.Request.Form;
+        string device_code = form["device_code"];
+        string belong_to = form["belong_to"];
+        string room_id = form["room_id"];
+        add_cmts(device_code, belong_to,room_id,"");
+            
     }
 
     [WebMethod]
-    public void get_cmts_by_config_id(string config_id)
+    public void get_cmts_by_config_id(string id)
     {
-        var entities = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(config_id)).OrderBy(c => c.id);
+        var entities = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(id)).OrderBy(c => c.id);
         writeJSONResponse(entities);
     }
 
     [WebMethod]
-    public void add_cmts(string device_code, string belong_to, string room_id)
+    public void edit_config()
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
         try
         {
-            var cmts = new CMTS
+            HttpContext post = HttpContext.Current;
+            NameValueCollection form = post.Request.Form;
+            int id = Convert.ToInt32(form["id"]);
+            var config = dc.IP_Bussiness.Where(c => c.ID == id).FirstOrDefault();
+            config.Bussiness_code = form["bussiness_code"];
+            config.sbpzxx = form["device_info"];
+            config.khmc = form["client_name"];
+            config.pzr = form["config_person"];
+            config.pzsj = form["config_date"];
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+
+        }
+        writeJSONResponse(dict);
+        
+        
+
+    }
+
+
+    [WebMethod]
+    public void get_config_detail(string id)
+    {
+        var e = dc.IP_Bussiness.Where(c => c.ID == Convert.ToInt32(id)).FirstOrDefault();
+        var cmts_list = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(id)).OrderBy(c => c.id);
+        var bussiness_type = dc.Jrlx_List.Where(c => c.nodeid == e.ywlx).FirstOrDefault();
+        var client = dc.ts_kh.Where(c => c.ywbm == e.Bussiness_code).FirstOrDefault();
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        dict.Add("bussiness", e);
+        dict.Add("cmts_list", cmts_list);
+        dict.Add("bussiness_type", bussiness_type);
+        dict.Add("client", client);
+
+        writeJSONResponse(dict);
+
+
+    }
+
+    [WebMethod]
+    public void add_cmts(string device_code, string belong_to, string room_id,string bussiness_id)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try
+        {
+            if (bussiness_id.Length > 0)
             {
-                device_code = device_code,
-                belong_to = belong_to,
-                room_id = Convert.ToInt32(room_id)
-            };
-            dc.CMTS.InsertOnSubmit(cmts);
+                var cmts = new CMTS
+                {
+                    device_code = device_code,
+                    belong_to = belong_to,
+                    room_id = Convert.ToInt32(room_id),
+                    bussiness_id = Convert.ToInt32(bussiness_id)
+
+                };
+                dc.CMTS.InsertOnSubmit(cmts);
+            }
+            else 
+            {
+                var cmts = new CMTS
+                {
+                    device_code = device_code,
+                    belong_to = belong_to,
+                    room_id = Convert.ToInt32(room_id),
+                };
+                dc.CMTS.InsertOnSubmit(cmts);
+            }
+            
+           
             dc.SubmitChanges();
             dict.Add("result", "0");
         }
@@ -802,11 +872,13 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='ÈÅóÂ
         Context.Response.End();
         
     }
+  
 
     private void writeJSONResponse(Object o)
     {
         Encoding encode = System.Text.Encoding.GetEncoding("Unicode");
-        var serializerSettings = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+        //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        var serializerSettings = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
         string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented,serializerSettings);
         Context.Response.AddHeader("Content-type", "text/html;charset=UTF-8");
         Context.Response.Write(jsonData);
