@@ -208,6 +208,24 @@ public class ws : System.Web.Services.WebService {
 
     }
 
+    
+
+    [WebMethod]
+    public void get_client_by_bussiness_code(string bussiness_code)
+    {
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        var entity = dc.ts_kh.Where(c => c.ywbm == bussiness_code).FirstOrDefault();
+        dict.Add("result", "-1");
+        if (entity!=null)
+        {
+            dict["result"] = "0";
+            dict.Add("client", entity);
+        }
+
+        writeJSONResponse(dict);
+
+    }
+
     [WebMethod]
     public void get_sql_area()
     {
@@ -216,7 +234,7 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void get_sql_resource_list()
+    public void get_sql_resource_list(string bussiness_code, string client, string device_info)
     {
         var resource_list = dc.IP_Bussiness.OrderBy(c => c.Bussiness_code).Take(100);
         writeJSONResponse(resource_list);
@@ -324,9 +342,61 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void add_config()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+
+            var form = HttpContext.Current.Request.Form;
+            string bussiness_code = form["bussiness_code"];
+            string device_info = form["device_info"];
+            string client_name = form["client_name"];
+            string config_person = form["config_person"];
+            string config_date = form["config_date"];
+
+            var e = new IP_Bussiness
+            {
+                Bussiness_code = bussiness_code,
+                sbpzxx = device_info,
+                khmc = client_name,
+                pzr = config_person,
+                pzsj = config_date,
+            };
+            dc.IP_Bussiness.InsertOnSubmit(e);
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+            dict.Add("id", e.ID.ToString());
+        }
+        catch (Exception ex)
+        {
+            dict.Add("msg", ex.Message);
+            dict["result"] = "-1";
+        }
+        writeJSONResponse(dict);
+        
+    }
+
+    [WebMethod]
     public void get_config_list()
     {
-        var list = dc.IP_Bussiness;
+        var list = dc.IP_Bussiness.OrderBy(c=>c.ID);
+        var form = HttpContext.Current.Request.Form;
+        string bussiness_code = form["bussiness_code"];
+        string client = form["client"];
+        string device_info = form["device_info"];
+        if (bussiness_code.Trim().Length > 0)
+        {
+            list = list.Where(c => c.Bussiness_code.Contains(bussiness_code)).OrderBy(c=>c.ID);
+        }
+        if (client.Trim().Length > 0)
+        {
+            list = list.Where(c => c.khmc.Contains(client)).OrderBy(c => c.ID);
+        }
+
+        if (device_info.Trim().Length > 0)
+        {
+            list = list.Where(c => c.sbpzxx.Contains(device_info)).OrderBy(c => c.ID);
+        }
         writeJSONResponse(list.Take(100));
     }
 
@@ -393,6 +463,45 @@ public class ws : System.Web.Services.WebService {
         dict.Add("client", client);
 
         writeJSONResponse(dict);
+
+
+    }
+
+    [WebMethod]
+    public void get_available_cmts_list(string device_code)
+    {
+        var li = dc.CMTS.Where(c => c.bussiness_id == null).OrderBy(c => c.id);
+        if (device_code.Length > 0)
+        {
+            li = li.Where(c => c.device_code.Contains(device_code)).OrderBy(c => c.id);
+        }
+
+        writeJSONResponse(li);
+    
+    }
+
+    [WebMethod]
+    public void update_cmts_bussiness_id_in_list(string bussiness_id, string cmts_id_list)
+    {
+        Dictionary<string,string> dict =new Dictionary<string,string>();
+        try{
+            int bid = Convert.ToInt32(bussiness_id);
+            List<string> id_list = cmts_id_list.Split(',').ToList();
+            foreach (string id in id_list)
+            {
+                var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
+                e.bussiness_id =bid;
+            }
+            dc.SubmitChanges();
+            dict.Add("result","0");
+        }
+        catch(Exception ex)
+        {
+            dict.Add("msg",ex.Message);
+            dict["result"] = "-1";
+        }
+        writeJSONResponse(dict);
+
 
 
     }
