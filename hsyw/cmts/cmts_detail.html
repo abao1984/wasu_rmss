@@ -28,12 +28,16 @@ $(function(){
 			if (data.result==='0')
 			{
 				alert('删除成功');
+				var host =location.hostname;
+				var port =location.port;
+				var url = 'http://'+ host + ':' + port + '/hsyw/cmts/cmts_list.html?result=2';
+				window.location = url;
 			}
 			else
 			{
 				alert('删除失败');
 			}
-			$('#myModal').modal('hide');
+			//$('#myModal').modal('hide');
 		});
 	});
 	$('#id_button_save').click(function(){
@@ -52,7 +56,11 @@ $(function(){
 		var data = JSON.parse(result);
 		if (data.result === '0')
 		{
-			alert ('保存成功');
+			//alert ('保存成功');
+			var host =location.hostname;
+			var port =location.port;
+			var url = 'http://'+ host + ':' + port + '/hsyw/cmts/cmts_list.html?result=1';
+			window.location = url;
 		}
 		else
 		{

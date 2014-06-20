@@ -208,7 +208,8 @@ public class ws : System.Web.Services.WebService {
 
     }
 
-    
+
+    #region CMTS webservice APIs
 
     [WebMethod]
     public void get_client_by_bussiness_code(string bussiness_code)
@@ -221,11 +222,10 @@ public class ws : System.Web.Services.WebService {
             dict["result"] = "0";
             dict.Add("client", entity);
         }
-
         writeJSONResponse(dict);
 
     }
-
+    
     [WebMethod]
     public void get_sql_area()
     {
@@ -560,6 +560,8 @@ public class ws : System.Web.Services.WebService {
         var client_lv_list = dc.TS_ZD_Info.Where(c => c.type == "客户级别").OrderBy(c => c.xh);
         writeJSONResponse(client_lv_list);
     }
+
+    #endregion
 
     [WebMethod]
     [ScriptMethod(ResponseFormat=ResponseFormat.Json)]

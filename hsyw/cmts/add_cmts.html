@@ -14,47 +14,58 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(function(){
+
 	var url = document.URL;
 	var query_dict = getQueryDict(url);
 	if (query_dict['bussiness_id']!==undefined)
 	{
 		$('#id_bussiness_id').val(query_dict['bussiness_id']);
 	}
+	
 	function getQueryDict(url)
 	{
-		var query = url.split('?')[1];
-		var params = query.split('&');
-		var data_dict = {}
-		for (var i=0;i<params.length;i++)
+		var query = url.split('?')
+		if(query.length >1)
 		{
-			var data = params[i];
-			var key = data.split('=')[0];
-			var value = data.split('=')[1];
-			data_dict[key] = value;
+			query = query[1];  
+			var params = query.split('&');
+			var data_dict = {}
+			for (var i=0;i<params.length;i++)
+			{
+				var data = params[i];
+				var key = data.split('=')[0];
+				var value = data.split('=')[1];
+				data_dict[key] = value;
+			}
+			return data_dict;
 		}
-		return data_dict;
+		return null;
 	}
 
 	$('#id_button_save').click(function(){
 		var device_code = $('#id_device_code').val();
 		var belong_to = $('#id_belong_to').val();
 		var room_id = $('#id_machine_room').val();
-		var bussiness_id  =$('#id_bussiness_id').val();
+		var bussiness_id = $('#id_bussiness_id').val();
 		var post_dict = {};
 		post_dict.device_code = device_code;
 		post_dict.belong_to = belong_to;
 		post_dict.room_id = room_id
-		
+		post_dict.bussiness_id = bussiness_id;
 		$.post('/hsyw/ws.asmx/add_cmts', post_dict)
 		.done(function(result){
 			var data = JSON.parse(result);
 			if (data.result ==='0')
 			{
-				alert('数据添加成功');
+				//alert('保存成功');
+				var host =location.hostname;
+				var port =location.port;
+				var url = 'http://'+ host + ':' + port + '/hsyw/cmts/cmts_list.html?result=0&op=add';
+				window.location = url;
 			}
 			else
 			{
-				alert('数据添加失败：'+data.msg);
+				alert('保存失败：'+data.msg);
 			}
 		});
 	});

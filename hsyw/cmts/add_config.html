@@ -14,111 +14,6 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(function(){
-	/*
-	$.post('/hsyw/ws.asmx/get_sql_resource_list', function(data){
-		var json_obj = JSON.parse(data);
-		$.each(json_obj,function(index, value){
-			var code = value['Bussiness_code'];
-			var device = value['sbmc'];
-			var client = value['khmc'];
-		});
-	});
-	$.post("/hsyw/ws.asmx/get_sql_client_lv",function(data){
-		var json_obj = JSON.parse(data);
-		$.each(json_obj, function(index,value){
-			var name = value['mc'];
-			var id = value['lsh'];
-			var option_html = '<option value="'+ id +'">' + name + '</option>'
-			$('#id_client_lv').append(option_html);
-		});
-	});
-	$.post("/hsyw/ws.asmx/get_sql_area", function(data){
-		var json_obj = JSON.parse(data);
-		$.each(json_obj, function(index, value){
-			var name = value['mc'];
-			var id = value['lsh'];
-			var option_html = '<option value="'+ id +'">' + name + '</option>';
-			$('#id_area').append(option_html);
-		})
-	});
-	$.post('/hsyw/ws.asmx/get_bussiness_list')
-	.done(function(result){
-		var json_obj = JSON.parse(result);
-		$.each(json_obj,function(index,value){
-			var id = value['ID']
-			var bussiness_code = value['Bussiness_code'];
-			var device_code = value['sbpzxx'];
-			var client_name = value['khmc'];
-			
-			var tr_html = '' + 
-			'<tr>' +
-			'<td><input type="checkbox" name="check[]" id="'+id+'"></td>'+
-			'<td><a href="/hsyw/cmts/config_detail.html?id='+id+'">'+ bussiness_code +'</a></td>'+
-			'<td>'+ device_code +'</td>'+
-			'<td>'+ client_name +'</td>'+
-			'</tr>';
-				
-			$('#id_configure_table').append(tr_html);
-			
-		})
-	});
-	
-	var url = document.URL;
-	var query_dict = getQueryDict(url);
-	function getQueryDict(url)
-	{
-		var query = url.split('?')[1];
-		var params = query.split('&');
-		var data_dict = {}
-		for (var i=0;i<params.length;i++)
-		{
-			var data = params[i];
-			var key = data.split('=')[0];
-			var value = data.split('=')[1];
-			data_dict[key] = value;
-		}
-		return data_dict;
-	}
-	
-	$.post('/hsyw/ws.asmx/get_config_detail',query_dict)
-	.done(function(result){
-		var json_obj = JSON.parse(result);
-		var bussiness = json_obj['bussiness'];
-		var cmts_list = json_obj['cmts_list'];
-		var bussiness_type = json_obj['bussiness_type'];
-		var client = json_obj['client'];
-		
-		var config_person  = bussiness.pzr;
-		var config_date = bussiness.pzsj;
-		$('#id_id').val(bussiness.ID);
-		$('#id_bussiness_code').val(bussiness.Bussiness_code);
-		$('#id_device_info').val(bussiness.sbpzxx);
-		$('#id_client_name').val(bussiness.khmc);
-		$('#id_config_date').val(config_date);
-		$('#id_config_person').val(config_person);
-		var client_code = client.khbh
-		var unit = client.khmc;
-		var address= client.khdz;
-		var contact_person = client.khlxr;
-		var client_sales = client.Xsy;
-		var mobile = client.ydsj;
-		$('#id_client_code').text(client_code);
-		$('#id_unit').text (unit);
-		$('#id_address').text(address);
-		$('#id_contact_person').text(contact_person);
-		$('#id_config_person').text(config_person);
-		
-		$('#id_mobile').text(mobile);
-		
-		$.each(bussiness.CMTS,function(i,v){
-			var item_id = v.id;
-			var item_name = v.device_code;
-			var html = '<li class="list-group-item"><div class="checkbox"><label><input type="checkbox" name="check[]" data-id="'+item_id+'"><a href="/hsyw/cmts/get_cmts_detail.html?id='+ item_id +'" >'+ item_name+'</a></label></div></li>';
-			$('#id_cmts_list').append(html);
-		});
-		
-	});
-	*/
 	$('#id_save').click(function(){
 		//var id=$('#id_id').val();
 		
@@ -142,8 +37,19 @@ $(function(){
 		$.post('/hsyw/ws.asmx/add_config',post_dict)
 		.done(function(result){
 			var json_obj = JSON.parse(result);
+			if(json_obj['result']==='0')
+			{
+				var host =location.hostname;
+				var port =location.port;
+				var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_detail.html?id='+json_obj['id'];
+				location.replace(url);
+			}
+			else{
+				alert(json_obj['msg']);
+			}
 		});	
 	});
+	
 	$('#id_delete_cmts').click(function(){
 		var checked_checkboxes = $('input[type="checkbox"]:checked');
 		var data_id_list =[];
@@ -170,10 +76,39 @@ $(function(){
 			var res = searchData();
 		});
 	});
-	var bussiness_id = query_dict['id'];
+	
+	//var bussiness_id = query_dict['id'];
+	
 	$('#id_add_cmts').click(function(){
-		window.location='/hsyw/cmts/add_cmts.html?bussiness_id='+ bussiness_id+''
+		window.location='/hsyw/cmts/add_cmts.html';
 	});
+
+	$('#id_bussiness_code').change(function(){
+		var bussiness_code = $('#id_bussiness_code').val();
+		var post_dict ={};
+		post_dict["bussiness_code"]= bussiness_code;
+		$.post('/hsyw/ws.asmx/get_client_by_bussiness_code', post_dict)
+		.done(function(result){
+			var json_obj = JSON.parse(result);
+			if (json_obj['result']==='0')
+			{
+				var client  = json_obj['client'];
+				$('#id_client_helper').remove();
+				$('#id_client_code').text(client.khbh);
+				$('#id_unit').text(client.khmc);
+				$('#id_address').text(client.khdz);
+				$('#id_client_sales').text(client.Xsy);
+				$('#id_contact_person').text(client.khlxr);
+				$('#id_mobile').text(client.ydsj);
+
+			}
+			else
+			{
+				var help_html = '<span class="help-block" id="id_client_helper">没有找到相关客户信息</span>';
+				$('#id_bussiness_code').parent().append(help_html);
+			}
+		});
+	})
 });
 </script>
 </head>
@@ -241,7 +176,7 @@ $(function(){
 </dl>
 </div>
 </div>
-
+<!--
 <div class="panel panel-default">
 <div class="panel-heading">cmts
 <div class="pull-right btn-group">
@@ -250,10 +185,9 @@ $(function(){
 </div>
 </div>
 <div class="panel-body list-group" id="id_cmts_list">
-
-
 </div>
 </div>
+-->
 </form>
 
 

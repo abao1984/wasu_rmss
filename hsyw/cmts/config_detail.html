@@ -14,6 +14,7 @@
 <script src="http://malsup.github.com/jquery.form.js"></script>
 <script>
 $(function(){
+/*
 	$.post('/hsyw/ws.asmx/get_sql_resource_list', function(data){
 		var json_obj = JSON.parse(data);
 		$.each(json_obj,function(index, value){
@@ -60,7 +61,7 @@ $(function(){
 			$('#id_configure_table').append(tr_html);
 			
 		})
-	});
+	});*/
 	
 	var url = document.URL;
 	var query_dict = getQueryDict(url);
@@ -106,13 +107,13 @@ $(function(){
 		$('#id_address').text(address);
 		$('#id_contact_person').text(contact_person);
 		$('#id_config_person').text(config_person);
-		
+		$('#id_client_sales').text(client_sales);
 		$('#id_mobile').text(mobile);
 		
 		$.each(bussiness.CMTS,function(i,v){
 			var item_id = v.id;
 			var item_name = v.device_code;
-			var html = '<li class="list-group-item"><div class="checkbox"><label><input type="checkbox" name="check[]" data-id="'+item_id+'"><a href="/hsyw/cmts/get_cmts_detail.html?id='+ item_id +'" >'+ item_name+'</a></label></div></li>';
+			var html = '<li class="list-group-item"><div class="checkbox"><label><input type="checkbox" name="check[]" data-id="'+item_id+'"><a href="/hsyw/cmts/cmts_detail.html?id='+ item_id +'" >'+ item_name+'</a></label></div></li>';
 			$('#id_cmts_list').append(html);
 		});
 		
@@ -136,6 +137,10 @@ $(function(){
 		$.post('/hsyw/ws.asmx/edit_config',post_dict)
 		.done(function(result){
 			var json_obj = JSON.parse(result);
+			var host =location.hostname;
+			var port =location.port;
+			var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=2';
+			window.location = url;
 		});	
 	});
 	$('#id_delete_cmts').click(function(){
@@ -147,6 +152,11 @@ $(function(){
 			data_id_list.push(node_id);
 		}
 		var id_list = data_id_list.join(',');
+		if (id_list.length===0)
+		{
+			alert('请选择一条cmts记录！');
+			return;
+		}
 		var post_data = {};
 		post_data.id_list = id_list;
 		$.post('/hsyw/ws.asmx/delete_cmts_list', post_data)
@@ -166,12 +176,96 @@ $(function(){
 	});
 	var bussiness_id = query_dict['id'];
 	$('#id_add_cmts').click(function(){
-		window.location='/hsyw/cmts/add_cmts.html?bussiness_id='+ bussiness_id+''
+		var host =location.hostname;
+		var port =location.port;
+		var url = 'http://'+ host + ':' + port + '/hsyw/cmts/add_cmts.html?bussiness_id='+ bussiness_id;
+		window.open(url,'_blank');
 	});
+	
+	$('#id_cmts_seach').click(function(){
+		var device_code = $('#id_device_code').val();
+		var post_dict = {};
+		post_dict['device_code'] = device_code;
+		$.post('/hsyw/ws.asmx/get_available_cmts_list',post_dict)
+		.done(function(result){
+			var json = JSON.parse(result);
+			$.each(json, function(i,v){
+				var cmts_id = v['id'];
+				var code = v['device_code'];
+				var li_html = '<li class="list-group-item"><div class="checkbox"><input type="checkbox" name="select_check[]" data-id="'+cmts_id+'">'+code+'</div></li>';
+				$('#id_search_field').append(li_html);
+			})
+		});
+	});
+	
+	$('#id_select_ok').click(function(){
+		var check_list=  $('input[type="checkbox"][name="select_check[]"]:checked');
+		data_list  = [];
+		for (var i=0;i<check_list.length;i++)
+		{
+			var data_id = $(check_list[i]).attr('data-id');
+			data_list.push(data_id);
+		}
+		var bussiness_id = $('#id_id').val();
+		var post_dict = {};
+		post_dict['bussiness_id'] = bussiness_id;
+		post_dict['cmts_id_list'] = data_list.join(',');
+		$.post('/hsyw/ws.asmx/update_cmts_bussiness_id_in_list', post_dict)
+		.done(function(result){
+			var json = JSON.parse(result);
+			if(json['result']==='0')
+			{
+				location.reload();
+				//$('#myModal').modal('hide');
+			}
+			else{
+				alert (json['msg']);
+			}
+		})
+		
+		
+	});
+	
 });
 </script>
 </head>
 <body>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>
+请选择要加入的cmts
+</h4>
+
+</div>
+
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+	<label class="sr-only" for="id_device_code">device_code</label>
+	<input type="text" class="form-control" id="id_device_code" placeholder="请输入设备编码">
+</div>
+<button type="button" id="id_cmts_seach" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>查询</button>
+</form>
+<p></p>
+<div id="id_search_field" class="list-group">
+</div>
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+<button type="button" class="btn btn-primary" id="id_select_ok">确定</button>
+</div>
+
+</div>
+</div>
+</div>
+
 <div class="container">
 <div class="row">
 <div class="col-xs-12">
@@ -238,10 +332,32 @@ $(function(){
 
 <div class="panel panel-default">
 <div class="panel-heading">cmts
+<div class="dropdown pull-right">
+<button class="btn btn-default dropdown-toggle btn-xs"
+ type="button" id="dropdownMenu1" data-toggle="dropdown">
+ 数据操作 
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="" id="id_add_cmts">直接创建</a>
+</li>
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="" id="id_select_cmts" data-toggle="modal" data-target="#myModal">列表选择</a>
+</li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="" id="id_delete_cmts">删除</a>
+</li>
+
+</ul>
+</div>
+<!--
 <div class="pull-right btn-group">
 <button type="button" class="btn btn-default btn-xs" id="id_add_cmts">添加</button>
 <button type="button" class="btn btn-danger btn-xs" id="id_delete_cmts">删除</button>
 </div>
+-->
 </div>
 <div class="panel-body list-group" id="id_cmts_list">
 

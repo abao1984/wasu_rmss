@@ -10,7 +10,12 @@
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
-
+<script src="/hsyw/bootstrap/notify.min.js"></script>
+<style>
+body {
+  padding-top: 50px;
+}
+</style>
 <script>
 $(function(){
 	function searchData()
@@ -34,7 +39,7 @@ $(function(){
 			$.each(data_list,function(i,v){
 				var html  = '<tr>' +
 					'<td><input type="checkbox" name="check" data-id="'+v.id+'"></td>' +
-					'<td><a href="/hsyw/cmts/get_cmts_detail.html?id='+v.id+'">'+ v.device_code +'</a></td>' + 
+					'<td><a href="/hsyw/cmts/cmts_detail.html?id='+v.id+'">'+ v.device_code +'</a></td>' + 
 					'<td>'+ v.belong_to +'</td>' + 
 					'<td>'+ v.room_id +'</td>' + 
 					'</tr>';
@@ -68,7 +73,11 @@ $(function(){
 			var data = JSON.parse(result);
 			if (data.result ==='0')
 			{
-				alert ('删除成功');
+				$.notify('数据成功删除。',
+				{
+				position:'top center',
+				className:'info'
+				});
 			}
 			else
 			{
@@ -78,6 +87,59 @@ $(function(){
 		});
 	});
 	
+	var url = document.URL;
+	var query_dict = getQueryDict(url);
+	var msg = '';
+	if (query_dict['result'] === '0')
+	{
+		$.notify('数据添加成功。',
+		{
+		position:'top center',
+		className:'info'
+		});
+	}
+	
+	if (query_dict['result']==='1')
+	{	
+		$.notify('数据更新成功。',
+		{
+		position:'top center',
+		className:'info'
+		});
+		
+	}
+	
+	if (query_dict['result']==='2')
+	{	
+		$.notify('数据删除成功。',
+		{
+		position:'top center',
+		className:'info'
+		});
+		
+	}
+	
+	
+	function getQueryDict(url)
+	{
+		var query = url.split('?')
+		if(query.length >1)
+		{
+			query = query[1];  
+			var params = query.split('&');
+			var data_dict = {}
+			for (var i=0;i<params.length;i++)
+			{
+				var data = params[i];
+				var key = data.split('=')[0];
+				var value = data.split('=')[1];
+				data_dict[key] = value;
+			}
+			return data_dict;
+		}
+		return null;
+	}
+	
 });
 </script>
 </head>
@@ -85,6 +147,10 @@ $(function(){
 <div class="container">
 <div class="row">
 <div class="col-xs-12">
+<div class="alert alert-info fade in hide" id="id_message">
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+操作成功
+</div>
 <form id="form1" role="form" class="form-inline" >
 <hr>
 <div class="form-group">
@@ -95,8 +161,13 @@ $(function(){
 <label class="sr-only" for="id_code">所属分公司</label>
 <input class="form-control" type="text" placeholder="所属分公司" name="belong_to" id="id_belong_to">
 </div>
-<hr>
+<div class="form-group">
+<label class="sr-only" for="id_room_id">所属机房</label>
+<input class="form-control" type="text" placeholder="所属机房" name="room_id" id="id_room_id">
+</div>
 <button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span> 查询</button>
+<hr>
+
 <a href="/hsyw/cmts/add_cmts.html" class="btn btn-default">新增</a>
 <a type="button" id="id_button_confirm" class="btn btn-danger">删除</a>
 <button class="btn btn-info">导入</button>

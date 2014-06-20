@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.125, 8.5" name="DataClasses">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 15.125, 14.375" name="DataClasses">
   <DataContextMoniker Name="/DataClassesDataContext" />
   <nestedChildShapes>
-    <classShape Id="dfa44785-d27b-4e41-9cf7-a1b3fd270e66" isExpanded="false" absoluteBounds="1, 0.625, 2, 0.45">
+    <classShape Id="dfa44785-d27b-4e41-9cf7-a1b3fd270e66" absoluteBounds="1, 0.625, 2, 13.548922119140626">
       <DataClassMoniker Name="/DataClassesDataContext/IP_Bussiness" />
       <nestedChildShapes>
         <elementListCompartment Id="112e489b-0fb6-4262-bfe3-8d1fe8525de7" absoluteBounds="1.0150000000000001, 1.085, 1.9700000000000002, 12.988922119140625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
@@ -98,14 +98,14 @@
         <elementListCompartment Id="f903aeab-e96c-4d43-a573-90e13251c193" absoluteBounds="1.1400000000000006, 1.9600000000000009, 1.9700000000000002, 1.1620992024739583" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.0625 : 1.075); (2.0625 : 1.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2 : 0.625); (2 : 0.375); (2.125 : 0.375); (2.125 : 1.5)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClassesDataContext/IP_Bussiness/IP_Bussiness_CMTS" />
       <nodes>
         <classShapeMoniker Id="dfa44785-d27b-4e41-9cf7-a1b3fd270e66" />
         <classShapeMoniker Id="15b0ad3a-5132-496d-a7da-f0938b422ff6" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(2.0625 : 2.375); (2.0625 : 1.95)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1 : 2.6); (0.625 : 2.6); (0.625 : 1.725); (1.125 : 1.725)]" fixedFrom="Algorithm" fixedTo="NotFixed">
       <AssociationMoniker Name="/DataClassesDataContext/MachineRoom/MachineRoom_CMTS" />
       <nodes>
         <classShapeMoniker Id="91a8180a-b37f-4bae-972a-839442ce26f0" />
