@@ -46,6 +46,11 @@ $(function(){
 
 	$('#id_button_save').click(function(){
 		var device_code = $('#id_device_code').val();
+		if (device_code.length === 0)
+		{
+			alert("请输入设备编码");
+			return;
+		}
 		var belong_to = $('#id_belong_to').val();
 		var room_id = $('#id_machine_room').val();
 		var bussiness_id = $('#id_bussiness_id').val();
