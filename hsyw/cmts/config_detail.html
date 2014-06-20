@@ -192,6 +192,7 @@ $(function(){
 		var device_code = $('#id_device_code').val();
 		var post_dict = {};
 		post_dict['device_code'] = device_code;
+		$('#id_search_field li').remove();
 		$.post('/hsyw/ws.asmx/get_available_cmts_list',post_dict)
 		.done(function(result){
 			var json = JSON.parse(result);
