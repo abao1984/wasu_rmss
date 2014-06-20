@@ -568,6 +568,13 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void machine_room_detail(string id)
+    {
+        var e = dc.MachineRoom.Where(c => c.ID == Convert.ToInt32(id)).FirstOrDefault();
+        writeJSONResponse(e);
+    }
+
+    [WebMethod]
     public void add_cmts(string device_code, string belong_to, string room_id,string bussiness_id)
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
