@@ -77,7 +77,41 @@ $(function(){
 		});
 	});
 	
-	
+	$('#id_room_search').click(function(){
+		var post_dict = {};
+		var room_id = $('#id_room_id').val();
+		post_dict['room_id'] = room_id;
+		$('#search_field li').remove();
+		$.post('/hsyw/ws.asmx/search_room_by_room_id', post_dict)
+		.done(function(result){
+			var json = JSON.parse(result);
+			$.each(json,function(i,v){
+				var id = v['ID'];
+				var room_id = v['mac_id'];
+				var name = v['mac_name'];
+				var li_html = '<li class="list-group-item">'+
+					'<div class="row">'+
+					'<div class="col-md-1"><input type="radio" name="radio[]" data-id="'+ id +'"></div>'+
+					'<div>['+ room_id +'] '+ name +'</div>'+
+					'</div>'+
+					'</li>';
+				$('#search_field').append(li_html);
+			});
+		});
+	});
+
+	$('#id_button_select').click(function(){
+		var object = $('input[type="radio"]:checked');
+		if(object !== null)
+		{
+			var id = object.attr('data-id');
+			var room_name = $(object.parent().parent()).text();
+			$('#id_machine_room').val(id);
+			$('#id_room_name').val(room_name);
+			$('#roomModal').modal('hide');
+		}
+		
+	});
 	
 });
 </script>
@@ -103,7 +137,13 @@ $(function(){
 </div>
 <div class="form-group">
 <label for="id_machine_room">所属机房</label>
-<input type="text" name="room_id" id="id_machine_room" class="form-control">
+<input type="hidden" name="room_id" id="id_machine_room" class="form-control">
+<div class="input-group">
+<input type="text" name="room_name" id="id_room_name" readonly="readonly" class="form-control">
+<span class="input-group-btn">
+<button type="button" class="btn btn-default" data-toggle="modal" data-target="#roomModal">选择</button>
+</span>
+</div>
 </div>
 </fieldset>
 <hr>
@@ -130,6 +170,38 @@ $(function(){
 <div class="modal-footer">
 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 <button type="button" class="btn btn-primary" id="id_button_delete">确定</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>请选择所属机房...</h4>
+</div>
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+<label class="sr-only" for="id_room_id">room_id</label>
+<input type="text" class="form-control" id="id_room_id" placeholder="请输入机房ID">
+</div>
+<button type="button" id="id_room_search" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>
+查询
+</button>
+<p></p>
+<div id="search_field" class="list-group">
+</div>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<button type="button" class="btn btn-primary" id="id_button_select">确定</button>
 </div>
 </div>
 </div>
