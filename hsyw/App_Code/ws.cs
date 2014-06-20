@@ -305,24 +305,34 @@ public class ws : System.Web.Services.WebService {
     [WebMethod]
     public void edit_cmts(string id,string device_code, string belong_to, string room_id)
     {
-        var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
-        if (e != null)
-        {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
             e.device_code = device_code;
             e.belong_to = belong_to;
             e.room_id = Convert.ToInt32(room_id);
             dc.SubmitChanges();
-            Dictionary<string, string> dict = new Dictionary<string, string>();
+
             dict.Add("result", "0");
-            writeJSONResponse(dict);
+             
+            
         }
-        else
-        { 
-            Dictionary<string, string> dict = new Dictionary<string,string>();
-            dict.Add("result","-1");
-            writeJSONResponse(dict);
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
         }
+
+        writeJSONResponse(dict);
         
+        
+    }
+
+    [WebMethod]
+    public void search_room_by_room_id(string room_id)
+    {
+        var entities = dc.MachineRoom.Where(c => c.mac_id.Contains(room_id.Trim())).OrderBy(c => c.ID);
+        writeJSONResponse(entities.Take(100));
     }
 
     [WebMethod]
