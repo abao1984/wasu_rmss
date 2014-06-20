@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
-<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
+<script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
+<script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
 $(function(){
 /*
@@ -96,19 +97,24 @@ $(function(){
 		$('#id_client_name').val(bussiness.khmc);
 		$('#id_config_date').val(config_date);
 		$('#id_config_person').val(config_person);
-		var client_code = client.khbh
-		var unit = client.khmc;
-		var address= client.khdz;
-		var contact_person = client.khlxr;
-		var client_sales = client.Xsy;
-		var mobile = client.ydsj;
-		$('#id_client_code').text(client_code);
-		$('#id_unit').text (unit);
-		$('#id_address').text(address);
-		$('#id_contact_person').text(contact_person);
-		$('#id_config_person').text(config_person);
-		$('#id_client_sales').text(client_sales);
-		$('#id_mobile').text(mobile);
+		if (client!==null)
+		{
+			var client_code = client.CUSTOMER_NO
+			var unit = client.DESCRIPTION;
+			var address= client.ADDRESS;
+			var contact_person = client.LINKMAN;
+			var client_sales = client.SALE_NAME;
+			var mobile = client.MOBILE_NO;
+			$('#id_client_code').text(client_code);
+			$('#id_unit').text (unit);
+			$('#id_address').text(address);
+			$('#id_contact_person').text(contact_person);
+			$('#id_client_sales').text(client_sales);
+			$('#id_mobile').text(mobile);
+			$('#id_client_phone').text(client.PHONE_NO);
+			$('#id_client_type').text(client.CUSTTYPE);
+		}
+		
 		
 		$.each(bussiness.CMTS,function(i,v){
 			var item_id = v.id;
@@ -139,7 +145,7 @@ $(function(){
 			var json_obj = JSON.parse(result);
 			var host =location.hostname;
 			var port =location.port;
-			var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=2';
+			var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=0';
 			window.location = url;
 		});	
 	});
@@ -159,7 +165,7 @@ $(function(){
 		}
 		var post_data = {};
 		post_data.id_list = id_list;
-		$.post('/hsyw/ws.asmx/delete_cmts_list', post_data)
+		$.post('/hsyw/ws.asmx/clear_cmts_list_bussiness_id', post_data)
 		.done(function(result){
 			var data = JSON.parse(result);
 			if (data.result ==='0')
@@ -224,6 +230,14 @@ $(function(){
 		})
 		
 		
+	});
+	
+	$('.input-group.date').datepicker({
+		format:'yyyy-mm-dd',
+		todayBtn:'linked',
+		language: 'zh-CN',
+		autoclose:true,
+		todayHighlight:true
 	});
 	
 });
@@ -299,7 +313,10 @@ $(function(){
 </div>
 <div class="form-group">
 	<label for="id_config_date">配置时间</label>
+	<div class="input-group date">
 	<input type="text" name="config_date" id="id_config_date" class="form-control">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	</div>
 </div>
 </div>
 </div>
@@ -311,7 +328,7 @@ $(function(){
 <dt >客户编号<dt>
 <dd id="id_client_code"><dd>
 <dt>用户类型<dt>
-<dd id=""><dd>
+<dd id="id_client_type"><dd>
 <dt >接入单位<dt>
 <dd id="id_unit"><dd>
 <dt>销售员<dt>
@@ -319,11 +336,11 @@ $(function(){
 <dt>用户负责人<dt>
 <dd id="id_contact_person"><dd>
 <dt>座机<dt>
-<dd id=""><dd>
+<dd id="id_client_phone"><dd>
 <dt>手机<dt>
 <dd id="id_mobile"><dd>
 <dt>Email<dt>
-<dd id=""><dd>
+<dd id="id_email"><dd>
 <dt>用户地址<dt>
 <dd id="id_address"><dd>
 </dl>

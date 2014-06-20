@@ -224,6 +224,14 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 			return this.GetTable<CMTS>();
 		}
 	}
+	
+	public System.Data.Linq.Table<ClientTypeA> ClientTypeA
+	{
+		get
+		{
+			return this.GetTable<ClientTypeA>();
+		}
+	}
 }
 
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IP_Bussiness")]
@@ -6603,6 +6611,285 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		if ((this.PropertyChanged != null))
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ClientTypeA")]
+public partial class ClientTypeA
+{
+	
+	private string _SUBSCRIBERNO;
+	
+	private string _DESCRIPTION;
+	
+	private string _CUSTOMER_NO;
+	
+	private string _CUSTTYPE;
+	
+	private string _LINKMAN;
+	
+	private string _EMAIL;
+	
+	private string _MOBILE_NO;
+	
+	private string _PHONE_NO;
+	
+	private string _FAX_NO;
+	
+	private string _ZIP_CODE;
+	
+	private string _ADDRESS;
+	
+	private string _TYPE;
+	
+	private string _REMARK;
+	
+	private string _CUSTOMER_LEVEL;
+	
+	private string _SALE_NAME;
+	
+	public ClientTypeA()
+	{
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SUBSCRIBERNO", DbType="NVarChar(255)")]
+	public string SUBSCRIBERNO
+	{
+		get
+		{
+			return this._SUBSCRIBERNO;
+		}
+		set
+		{
+			if ((this._SUBSCRIBERNO != value))
+			{
+				this._SUBSCRIBERNO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(255)")]
+	public string DESCRIPTION
+	{
+		get
+		{
+			return this._DESCRIPTION;
+		}
+		set
+		{
+			if ((this._DESCRIPTION != value))
+			{
+				this._DESCRIPTION = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_NO", DbType="NVarChar(255)")]
+	public string CUSTOMER_NO
+	{
+		get
+		{
+			return this._CUSTOMER_NO;
+		}
+		set
+		{
+			if ((this._CUSTOMER_NO != value))
+			{
+				this._CUSTOMER_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTTYPE", DbType="NVarChar(255)")]
+	public string CUSTTYPE
+	{
+		get
+		{
+			return this._CUSTTYPE;
+		}
+		set
+		{
+			if ((this._CUSTTYPE != value))
+			{
+				this._CUSTTYPE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LINKMAN", DbType="NVarChar(255)")]
+	public string LINKMAN
+	{
+		get
+		{
+			return this._LINKMAN;
+		}
+		set
+		{
+			if ((this._LINKMAN != value))
+			{
+				this._LINKMAN = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EMAIL", DbType="NVarChar(255)")]
+	public string EMAIL
+	{
+		get
+		{
+			return this._EMAIL;
+		}
+		set
+		{
+			if ((this._EMAIL != value))
+			{
+				this._EMAIL = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOBILE_NO", DbType="NVarChar(255)")]
+	public string MOBILE_NO
+	{
+		get
+		{
+			return this._MOBILE_NO;
+		}
+		set
+		{
+			if ((this._MOBILE_NO != value))
+			{
+				this._MOBILE_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PHONE_NO", DbType="NVarChar(255)")]
+	public string PHONE_NO
+	{
+		get
+		{
+			return this._PHONE_NO;
+		}
+		set
+		{
+			if ((this._PHONE_NO != value))
+			{
+				this._PHONE_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FAX_NO", DbType="NVarChar(255)")]
+	public string FAX_NO
+	{
+		get
+		{
+			return this._FAX_NO;
+		}
+		set
+		{
+			if ((this._FAX_NO != value))
+			{
+				this._FAX_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZIP_CODE", DbType="NVarChar(255)")]
+	public string ZIP_CODE
+	{
+		get
+		{
+			return this._ZIP_CODE;
+		}
+		set
+		{
+			if ((this._ZIP_CODE != value))
+			{
+				this._ZIP_CODE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ADDRESS", DbType="NVarChar(255)")]
+	public string ADDRESS
+	{
+		get
+		{
+			return this._ADDRESS;
+		}
+		set
+		{
+			if ((this._ADDRESS != value))
+			{
+				this._ADDRESS = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPE", DbType="NVarChar(255)")]
+	public string TYPE
+	{
+		get
+		{
+			return this._TYPE;
+		}
+		set
+		{
+			if ((this._TYPE != value))
+			{
+				this._TYPE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REMARK", DbType="NVarChar(255)")]
+	public string REMARK
+	{
+		get
+		{
+			return this._REMARK;
+		}
+		set
+		{
+			if ((this._REMARK != value))
+			{
+				this._REMARK = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_LEVEL", DbType="NVarChar(255)")]
+	public string CUSTOMER_LEVEL
+	{
+		get
+		{
+			return this._CUSTOMER_LEVEL;
+		}
+		set
+		{
+			if ((this._CUSTOMER_LEVEL != value))
+			{
+				this._CUSTOMER_LEVEL = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SALE_NAME", DbType="NVarChar(255)")]
+	public string SALE_NAME
+	{
+		get
+		{
+			return this._SALE_NAME;
+		}
+		set
+		{
+			if ((this._SALE_NAME != value))
+			{
+				this._SALE_NAME = value;
+			}
 		}
 	}
 }

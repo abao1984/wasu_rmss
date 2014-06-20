@@ -90,35 +90,37 @@ $(function(){
 	var url = document.URL;
 	var query_dict = getQueryDict(url);
 	var msg = '';
-	if (query_dict['result'] === '0')
+	if (query_dict !== null)
 	{
-		$.notify('数据添加成功。',
+		if (query_dict['result'] === '0')
 		{
-		position:'top center',
-		className:'info'
-		});
-	}
+			$.notify('数据添加成功。',
+			{
+			position:'top center',
+			className:'info'
+			});
+		}
 	
-	if (query_dict['result']==='1')
-	{	
-		$.notify('数据更新成功。',
-		{
-		position:'top center',
-		className:'info'
-		});
+		if (query_dict['result']==='1')
+		{	
+			$.notify('数据更新成功。',
+			{
+				position:'top center',
+				className:'info'
+			});
 		
-	}
+		}
 	
-	if (query_dict['result']==='2')
-	{	
-		$.notify('数据删除成功。',
-		{
-		position:'top center',
-		className:'info'
-		});
+		if (query_dict['result']==='2')
+		{	
+			$.notify('数据删除成功。',
+			{
+				position:'top center',
+				className:'info'
+			});
 		
+		}
 	}
-	
 	
 	function getQueryDict(url)
 	{
@@ -165,13 +167,13 @@ $(function(){
 <label class="sr-only" for="id_room_id">所属机房</label>
 <input class="form-control" type="text" placeholder="所属机房" name="room_id" id="id_room_id">
 </div>
-<button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span> 查询</button>
+<button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span>&nbsp;查询</button>
 <hr>
 
-<a href="/hsyw/cmts/add_cmts.html" class="btn btn-default">新增</a>
-<a type="button" id="id_button_confirm" class="btn btn-danger">删除</a>
-<button class="btn btn-info">导入</button>
-<button class="btn btn-success">导出</button>
+<a href="/hsyw/cmts/add_cmts.html" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增</a>
+<a type="button" id="id_button_confirm" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span>&nbsp;删除</a>
+<button class="btn btn-info"><span class="glyphicon glyphicon-import"></span>&nbsp; 导入</button>
+<button class="btn btn-success"><span class="glyphicon glyphicon-export"></span>&nbsp;导出</button>
 </form>
 <p></p>
 <table class="table table-hover" id="table-list">

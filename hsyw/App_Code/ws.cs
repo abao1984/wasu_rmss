@@ -212,10 +212,40 @@ public class ws : System.Web.Services.WebService {
     #region CMTS webservice APIs
 
     [WebMethod]
+    public void delete_config(string config_id_list)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try
+        {
+            List<string> pk_list = config_id_list.Split(',').ToList();
+            foreach (string config_id in pk_list)
+            {
+                int pk = Convert.ToInt32(config_id);
+                var bussiness = dc.IP_Bussiness.Where(c => c.ID == pk).FirstOrDefault();
+                var cmts_list = dc.CMTS.Where(c => c.bussiness_id == pk).OrderBy(c => c.id);
+                foreach (var cmts in cmts_list)
+                {
+                    cmts.bussiness_id = null;
+                }
+                dc.IP_Bussiness.DeleteOnSubmit(bussiness);
+            }
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+        }
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
     public void get_client_by_bussiness_code(string bussiness_code)
     {
         Dictionary<string, object> dict = new Dictionary<string, object>();
-        var entity = dc.ts_kh.Where(c => c.ywbm == bussiness_code).FirstOrDefault();
+        var entity = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == bussiness_code).FirstOrDefault();
         dict.Add("result", "-1");
         if (entity!=null)
         {
@@ -293,6 +323,29 @@ public class ws : System.Web.Services.WebService {
             writeJSONResponse(dict);
         }
         
+    }
+
+    [WebMethod]
+    public void clear_cmts_list_bussiness_id(string id_list)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            List<string> cmts_id_list = id_list.Split(',').ToList();
+            foreach (string id in cmts_id_list)
+            {
+                int pk = Convert.ToInt32(id);
+                var e = dc.CMTS.Where(c => c.id == pk).FirstOrDefault();
+                e.bussiness_id = null;
+            }
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+        }
+        catch (Exception ex)
+        {
+            dict.Add("msg", ex.Message);
+            dict.Add("result", "-1");
+        }
+        writeJSONResponse(dict);
     }
 
     [WebMethod]
@@ -443,9 +496,6 @@ public class ws : System.Web.Services.WebService {
 
         }
         writeJSONResponse(dict);
-        
-        
-
     }
 
 
@@ -455,7 +505,8 @@ public class ws : System.Web.Services.WebService {
         var e = dc.IP_Bussiness.Where(c => c.ID == Convert.ToInt32(id)).FirstOrDefault();
         var cmts_list = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(id)).OrderBy(c => c.id);
         var bussiness_type = dc.Jrlx_List.Where(c => c.nodeid == e.ywlx).FirstOrDefault();
-        var client = dc.ts_kh.Where(c => c.ywbm == e.Bussiness_code).FirstOrDefault();
+        //var client = dc.ts_kh.Where(c => c.ywbm == e.Bussiness_code).FirstOrDefault();
+        var client = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == e.Bussiness_code.ToString()).FirstOrDefault();
         Dictionary<string, object> dict = new Dictionary<string, object>();
         dict.Add("bussiness", e);
         dict.Add("cmts_list", cmts_list);
@@ -547,10 +598,6 @@ public class ws : System.Web.Services.WebService {
         }
 
         writeJSONResponse(dict);
-        
-
-
-
     }
 
     [WebMethod]

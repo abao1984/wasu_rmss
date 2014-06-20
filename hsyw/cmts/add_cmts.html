@@ -17,10 +17,14 @@ $(function(){
 
 	var url = document.URL;
 	var query_dict = getQueryDict(url);
-	if (query_dict['bussiness_id']!==undefined)
+	if (query_dict!== null)
 	{
-		$('#id_bussiness_id').val(query_dict['bussiness_id']);
+		if (query_dict['bussiness_id']!==undefined)
+		{
+			$('#id_bussiness_id').val(query_dict['bussiness_id']);
+		}
 	}
+	
 	
 	function getQueryDict(url)
 	{

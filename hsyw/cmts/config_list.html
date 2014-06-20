@@ -45,7 +45,7 @@ body {
 					var client_name = value['khmc'];
 					var tr_html = '' +
 						'<tr>' +
-						'<td><input type="checkbox" name="check[]" id="' + id + '"></td>' +
+						'<td><input type="checkbox" name="check[]" data-id="' + id + '"></td>' +
 						'<td><a href="/hsyw/cmts/config_detail.html?id=' + id + '">' + bussiness_code + '</a></td>' +
 						'<td>' + device_code + '</td>' +
 						'<td>' + client_name + '</td>' +
@@ -74,8 +74,81 @@ body {
 			window.location = url;
 		});
 		
+		$('#id_delete_config').click(function(){
+			var post_dict = {};
+			var checked_list = $('input[type="checkbox"]:checked');
+			if (checked_list.length===0)
+			{
+				alert('请至少选择一条数据');
+			}
+			var config_id_list = [];
+			for(var i=0;i<checked_list.length;i++)
+			{
+				var data_id = $(checked_list[i]).attr('data-id');
+				config_id_list.push(data_id);
+			}
+			post_dict['config_id_list'] = config_id_list.join(',');
+			$.post('/hsyw/ws.asmx/delete_config', post_dict)
+			.done(function(result){
+				var json = JSON.parse(result);
+				if(json['result']==='0')
+				{
+					var host = location.hostname;
+					var port = location.port;
+					var url = 'http://'+ host+':' + port + '/hsyw/cmts/config_list.html?result=2';
+					window.location = url;
+				}
+				else
+				{
+					alert(json['msg']);
+					
+				}
+			});
+		});
+			
+		function getQueryDict(url)
+		{
+			var query = url.split('?')
+			if(query.length >1)
+			{
+				query = query[1];  
+				var params = query.split('&');
+				var data_dict = {}
+				for (var i=0;i<params.length;i++)
+				{
+					var data = params[i];
+					var key = data.split('=')[0];
+					var value = data.split('=')[1];
+					data_dict[key] = value;
+				}
+				return data_dict;
+			}
+			return null;
+		}
+		var url = document.URL;
+		var query_dict = getQueryDict(url);
+		var msg = '';
+		if (query_dict !== null)
+		{
+			if (query_dict['result'] === '0')
+			{
+				$.notify('数据保存成功。',
+				{
+					position:'top center',
+					className:'info'
+				});
+			}
 		
+			if (query_dict['result']==='2')
+			{	
+				$.notify('数据删除成功。',
+				{
+					position:'top center',
+					className:'info'
+				});
 		
+			}
+		}
 	}); 
 </script>
 </head>
@@ -121,11 +194,11 @@ body {
 </select>
 </div>
 -->
-<button type="button" class="btn btn-primary" id="id_search">查询</button>
+<button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span> 查询</button>
 <hr>
-<button class="btn btn-default" id="id_add_config" type="button">新增</button>
-<button type="button" class="btn btn-danger" id="id_delete_config">删除</button>
-<button class="btn btn-info" type="button">导入</button>
+<button class="btn btn-default" id="id_add_config" type="button"><span class="glyphicon glyphicon-plus"></span>&nbsp;新增</button>
+<button type="button" class="btn btn-danger" id="id_button_confirm" data-toggle="modal" data-target="#myModal" ><span class="glyphicon glyphicon-remove"></span>&nbsp;删除</button>
+<button class="btn btn-info" type="button"><span class="glyphicon glyphicon-import"></span>&nbsp;导入</button>
 </form>
 <p></p>
 <table id="id_configure_table" class="table table-hover">
@@ -136,6 +209,29 @@ body {
 <th>客户名称</th>
 </tr>
 </table>
+</div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>确定删除这些记录吗？</h4>
+</div>
+<div class="modal-body">
+<p>
+是否确定要删除这些记录吗，此操作将无法撤消？
+</p>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<button type="button" class="btn btn-primary" id="id_delete_config">确定</button>
+</div>
+</div>
 </div>
 </div>
 

@@ -10,8 +10,9 @@
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
-<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
+<script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
+<script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
 $(function(){
 	$('#id_save').click(function(){
@@ -94,13 +95,14 @@ $(function(){
 			{
 				var client  = json_obj['client'];
 				$('#id_client_helper').remove();
-				$('#id_client_code').text(client.khbh);
-				$('#id_unit').text(client.khmc);
-				$('#id_address').text(client.khdz);
-				$('#id_client_sales').text(client.Xsy);
-				$('#id_contact_person').text(client.khlxr);
-				$('#id_mobile').text(client.ydsj);
-
+				$('#id_client_code').text(client.CUSTOMER_NO);
+				$('#id_unit').text(client.DESCRIPTION);
+				$('#id_address').text(client.ADDRESS);
+				$('#id_client_sales').text(client.SALE_NAME);
+				$('#id_contact_person').text(client.LINKMAN);
+				$('#id_mobile').text(client.MOBILE_NO);
+				$('#id_client_phone').text(client.PHONE_NO);
+				$('#id_client_type').text(client.CUSTTYPE);
 			}
 			else
 			{
@@ -108,7 +110,14 @@ $(function(){
 				$('#id_bussiness_code').parent().append(help_html);
 			}
 		});
-	})
+	});
+	$('.input-group.date').datepicker({
+		format:'yyyy-mm-dd',
+		todayBtn:'linked',
+		language: 'zh-CN',
+		autoclose:true,
+		todayHighlight:true
+	});
 });
 </script>
 </head>
@@ -146,7 +155,10 @@ $(function(){
 </div>
 <div class="form-group">
 	<label for="id_config_date">配置时间</label>
+	<div class="input-group date">
 	<input type="text" name="config_date" id="id_config_date" class="form-control">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	</div>
 </div>
 </div>
 </div>
@@ -158,7 +170,7 @@ $(function(){
 <dt >客户编号<dt>
 <dd id="id_client_code"><dd>
 <dt>用户类型<dt>
-<dd id=""><dd>
+<dd id="id_client_type"><dd>
 <dt >接入单位<dt>
 <dd id="id_unit"><dd>
 <dt>销售员<dt>
@@ -166,28 +178,17 @@ $(function(){
 <dt>用户负责人<dt>
 <dd id="id_contact_person"><dd>
 <dt>座机<dt>
-<dd id=""><dd>
+<dd id="id_client_phone"><dd>
 <dt>手机<dt>
 <dd id="id_mobile"><dd>
 <dt>Email<dt>
-<dd id=""><dd>
+<dd id="id_email"><dd>
 <dt>用户地址<dt>
 <dd id="id_address"><dd>
 </dl>
 </div>
 </div>
-<!--
-<div class="panel panel-default">
-<div class="panel-heading">cmts
-<div class="pull-right btn-group">
-<button type="button" class="btn btn-default btn-xs" id="id_add_cmts">添加</button>
-<button type="button" class="btn btn-danger btn-xs" id="id_delete_cmts">删除</button>
-</div>
-</div>
-<div class="panel-body list-group" id="id_cmts_list">
-</div>
-</div>
--->
+
 </form>
 
 
