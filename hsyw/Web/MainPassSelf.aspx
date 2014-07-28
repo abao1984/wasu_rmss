@@ -118,8 +118,13 @@
                 <tr>
                     <td class="tableBg1" style="text-align:right; width:80px; height:30px">
                         
+                        <asp:Label ID="Label6" Font-Size="12px" runat="server" Text="联系电话："></asp:Label>
+                        
                         </td>
                     <td class="tableBg2" align="left">
+                        
+
+                        <asp:TextBox ID="text_phone" runat="server" Width="240px"></asp:TextBox>
                         
 
                     </td>

@@ -301,4 +301,15 @@
       <Column Name="Ssqy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
     </Type>
   </Table>
+  <Table Name="dbo.IP_Free_Info" Member="IP_Free_Info">
+    <Type Name="IP_Free_Info">
+      <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="IPMID" Type="System.Int64" DbType="BigInt" CanBeNull="true" />
+      <Column Name="IP_Head" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="IP_Start_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_End_No" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IP_FreeNum" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="type" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
 </Database>

@@ -1,183 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Database Name="HSYW" EntityNamespace="HSYWContext" ContextNamespace="HSYWContext" Class="HSYWDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="cf8e70c2-c9d6-4279-945f-1130b061c263" Provider="Devart.Data.Oracle.Linq.Provider.OracleDataProvider, Devart.Data.Oracle.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
-  <Connection Mode="ConnectionString" ConnectionString="User Id=hsyw;Password=hsyw;Server=125.210.208.56/rmss;Unicode=True;Persist Security Info=True" Provider="Devart.Data.Oracle" />
-  <Table Name="HSYW.T_SYS_USER" Member="TSYSUSERs">
-    <Type Name="TSYSUSER" ed:Guid="87605a84-f1b0-437a-bdf5-a5ab36909eb4">
-      <Documentation>
-        <Summary>系统用户表</Summary>
-      </Documentation>
-      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="4acf48b9-0eb8-42fe-bbb2-333be8dfa1b0">
-        <Documentation>
-          <Summary>用户ID</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERNAME" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="68403c10-86da-49ea-beb0-fe60d15c6511">
-        <Documentation>
-          <Summary>用户名</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERID" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="9e224901-e069-49cc-b734-1369be75354f">
-        <Documentation>
-          <Summary>身份证号码</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERREALNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="da1a11e6-ca76-4ab0-982d-2a22a9febf96">
-        <Documentation>
-          <Summary>用户真实姓名</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERPASS" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="dee34000-a469-4d4f-8cc1-90bbefb7bb6f">
-        <Documentation>
-          <Summary>用户密码</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="be55acf0-2967-49e6-900c-c8487f662040">
-        <Documentation>
-          <Summary>组织编码</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERPHONE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="977cf59f-c01e-407a-af63-d9f4e98dea7b">
-        <Documentation>
-          <Summary>联系电话</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERREGIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="ee1883c6-8802-4c20-bc78-d869aebb4521">
-        <Documentation>
-          <Summary>用户创建IP</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERREGDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="fc43dcd1-919a-4a3e-9fef-0b8ed8899941">
-        <Documentation>
-          <Summary>用户创建时间</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERLOGINIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="21f4bbfe-f78f-4704-b60b-30c7aa871964">
-        <Documentation>
-          <Summary>用户最近登录IP</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="USERLOGINDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="fb24e15b-611f-4d91-933c-26133de8783b">
-        <Documentation>
-          <Summary>用户最近登录时间</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="49bbb697-c7b3-48a2-b7f7-2dff25487d7a">
-        <Documentation>
-          <Summary>用户顺序号</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="2d47a65a-5e1b-4550-be07-1c4e18ef7433">
-        <Documentation>
-          <Summary>是否启用</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="6b8b3ea9-57c2-49db-9da0-31dc2fd826fa">
-        <Documentation>
-          <Summary>是否隐藏</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="ISSUPER" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="eb6822e2-7073-4d15-a228-caa284e59b5f">
-        <Documentation>
-          <Summary>是否超级用户</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="FWQY" Type="System.String" DbType="VARCHAR2(1000 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="1000" ed:ValidateMaxLength="1000" ed:ValidateRequired="False" ed:Guid="386d7622-a56d-4e64-a884-03e5f315fc77">
-        <Documentation>
-          <Summary>访问区于</Summary>
-        </Documentation>
-      </Column>
-      <Column Name="MAILBOX" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="662352e2-0492-43e2-90a5-352c5134c030">
-        <Documentation>
-          <Summary>邮箱</Summary>
-        </Documentation>
-      </Column>
-      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="38bd9cd7-7c02-402f-af33-ca11323f0933" Member="ANNOUNCEMENTRECORDs" ed:Guid="e6d767d5-dde5-4ea1-a94e-a6442358f16c" ThisKey="ID" OtherKey="USERID" Type="ANNOUNCEMENTRECORD" />
-    </Type>
-  </Table>
-  <Table Name="HSYW.ANNOUNCEMENTS" Member="ANNOUNCEMENTs">
-    <Type Name="ANNOUNCEMENT" ed:Guid="a37035fb-5400-4d1f-b0bf-f6e71fc6a020">
-      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="9b433d09-c2c6-436a-b7ab-75546c8787b1">
-        <Generator Name="Sequence">
-          <GeneratorParameter Name="Sequence" Value="my_seq" />
-          <GeneratorParameter Name="IsDbGenerated" Value="True" />
-        </Generator>
-      </Column>
-      <Column Name="POST_TIME" Member="POSTTIME" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="cfbeadf2-cfce-4be8-9de1-502c61334289" />
-      <Column Name="POST_OWNER" Member="POSTOWNER" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="f4fe660c-4021-4028-850b-a8f8ab0f9bfb" />
-      <Column Name="POST_TITLE" Member="POSTTITLE" Type="System.String" DbType="VARCHAR2(200 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="True" ed:Guid="1bec9602-f491-4597-8839-6f2563812cf6" />
-      <Column Name="POST_CONTENT" Member="POSTCONTENT" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="bcf61828-cb32-4b95-9c76-0f5fde55e754" />
-      <Column Name="POST_COMMENT" Member="POSTCOMMENT" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="''&#xD;" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="50d75eb5-eff6-4952-8eab-ebed643c8087" />
-      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="977dbf25-210d-4c9c-8e7f-981c94534aee" Member="ANNOUNCEMENTRECORDs" ed:Guid="59a5da35-b50a-4cef-b9f6-29c0a87a42fd" ThisKey="ID" OtherKey="ANNOUNCEMENTID" Type="ANNOUNCEMENTRECORD" />
-    </Type>
-  </Table>
-  <Table Name="HSYW.ANNOUNCEMENT_RECORD" Member="ANNOUNCEMENTRECORDs">
-    <Type Name="ANNOUNCEMENTRECORD" ed:Guid="069fc2f3-1a6e-43de-8bb0-870fbfcf2db4">
-      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="83fb181e-be34-458f-b971-a5d73e33fcaf">
-        <Generator Name="Sequence">
-          <GeneratorParameter Name="Sequence" Value="my_seq1" />
-          <GeneratorParameter Name="IsDbGenerated" Value="True" />
-        </Generator>
-      </Column>
-      <Column Name="USER_ID" Member="USERID" Type="System.String" DbType="CHAR(36) NOT NULL" CanBeNull="false" UpdateCheck="Never" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="fba63293-f15c-4b9f-9fa0-6d296ae776a0" />
-      <Column Name="ANNOUNCEMENT_ID" Member="ANNOUNCEMENTID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="3ce1f8b8-39b2-46d2-8968-34f148ada1c2" />
-      <Column Name="READ_FLAG" Member="READFLAG" Type="System.Boolean" DbType="NUMBER(1) NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="f7f84958-81c3-4c19-a0cf-179c7c43b790" />
-      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="38bd9cd7-7c02-402f-af33-ca11323f0933" Member="TSYSUSER" ed:Guid="d6469414-099b-4309-9c2d-0403cec53fb9" ThisKey="USERID" OtherKey="ID" Type="TSYSUSER" DeleteRule="NO ACTION" IsForeignKey="true" />
-      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="977dbf25-210d-4c9c-8e7f-981c94534aee" Member="ANNOUNCEMENT" ed:Guid="b542a4ec-57e1-4e18-975f-8de90abc5ccf" ThisKey="ANNOUNCEMENTID" OtherKey="ID" Type="ANNOUNCEMENT" DeleteRule="NO ACTION" IsForeignKey="true" />
-    </Type>
-  </Table>
+<Database Name="HSYW" EntityNamespace="HSYWContext" ContextNamespace="HSYWContext" Class="HSYWDataContext" xmlns:ed="http://devart.com/schemas/EntityDeveloper/1.0" ed:Guid="85715896-33da-484a-91bf-b4755fe246a6" Provider="Devart.Data.Oracle.Linq.Provider.OracleDataProvider, Devart.Data.Oracle.Linq" Extended="true" xmlns="http://schemas.devart.com/linqconnect/mapping">
+  <Connection Mode="ConnectionString" ConnectionString="User Id=hsyw;Password=hsyw;Server=125.210.208.56/rmss;Persist Security Info=True" Provider="Devart.Data.Oracle" />
   <Table Name="HSYW.T_SYS_BRANCH" Member="TSYSBRANCHES">
-    <Type Name="TSYSBRANCH" ed:Guid="b0ccbf8b-4d89-4c92-bfa4-008d7590a404">
-      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="fa50cc8d-29da-4c0f-a8dc-9afe39fee114" />
-      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="7f28dd77-1f22-4cf6-98d4-b136e3f07cb4">
+    <Type Name="TSYSBRANCH" ed:Guid="67fddee4-5c2c-4085-b79f-ec66c59a6579">
+      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="5fca41ad-d845-459d-b672-ebf8474a83b9" />
+      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="b5dc691d-283a-4090-82d1-b3f64693819a">
         <Documentation>
           <Summary>组织机构编码</Summary>
         </Documentation>
       </Column>
-      <Column Name="BRANCHNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="bf7c78d4-1d25-4ed0-a794-13a807d8c702">
+      <Column Name="BRANCHNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="edce2c26-c23b-4d97-ba37-1708670e7c67">
         <Documentation>
           <Summary>组织机构名称</Summary>
         </Documentation>
       </Column>
-      <Column Name="PBRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="c5c0dcf1-b8ab-4b73-8a12-1691aa1340b0">
+      <Column Name="PBRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="8c83190d-13ca-4890-81dc-daa7700ca604">
         <Documentation>
           <Summary>父组织机构编码</Summary>
         </Documentation>
       </Column>
-      <Column Name="BRANCHLEVEL" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="419a0c36-7d08-4e11-b72f-ffa758539804">
+      <Column Name="BRANCHLEVEL" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="c136e2b8-835a-4544-a5cc-a315c54564ac">
         <Documentation>
           <Summary>组织机构层次</Summary>
         </Documentation>
       </Column>
-      <Column Name="JGLX_DATADM" Member="JGLXDATADM" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="c24781d0-309c-4498-958b-363bdff7f25d">
+      <Column Name="JGLX_DATADM" Member="JGLXDATADM" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="c1853cc0-c898-4e0b-b789-91102478ff18">
         <Documentation>
           <Summary>机构类型</Summary>
         </Documentation>
       </Column>
-      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="d539cf56-440a-4b7e-bc1a-2435e6021c3f">
+      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="5670d42b-913f-4890-a65b-c374ba3c2fcd">
         <Documentation>
           <Summary>排序字段</Summary>
         </Documentation>
       </Column>
-      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="4146f385-07a3-4b88-940b-ddd07ce7073d">
+      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="862d1ff1-d65c-4042-8939-96e94a67f979">
         <Documentation>
           <Summary>是否启用</Summary>
         </Documentation>
       </Column>
-      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="9757a8a3-133e-4ace-8d72-94bd48f662bc">
+      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="69c4c2c0-6f69-4687-9234-984abe01bbc4">
         <Documentation>
           <Summary>是否显示</Summary>
         </Documentation>
       </Column>
-      <Column Name="ISQY" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="23f3c515-30b8-44d4-a2ef-93e26004da02">
+      <Column Name="ISQY" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="f98f8351-9604-4e93-872c-4c599e1da8d8">
         <Documentation>
           <Summary>是否区域</Summary>
         </Documentation>
       </Column>
-      <Column Name="PATH" Type="System.String" DbType="VARCHAR2(500 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="500" ed:ValidateMaxLength="500" ed:ValidateRequired="False" ed:Guid="2debc7c1-e114-42b0-8e95-413a61a0d417">
+      <Column Name="PATH" Type="System.String" DbType="VARCHAR2(500 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="500" ed:ValidateMaxLength="500" ed:ValidateRequired="False" ed:Guid="104feeff-5b02-4c81-8d87-07084997ac6d">
         <Documentation>
           <Summary>全路径</Summary>
         </Documentation>
       </Column>
+    </Type>
+  </Table>
+  <Table Name="HSYW.T_SYS_USER" Member="TSYSUSERs">
+    <Type Name="TSYSUSER" ed:Guid="6028a099-3260-4284-951d-c7b5ce2a98aa">
+      <Documentation>
+        <Summary>系统用户表</Summary>
+      </Documentation>
+      <Column Name="ID" Type="System.String" DbType="CHAR(36) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="fecee7d1-8dab-41e9-a409-3a2a08034880">
+        <Documentation>
+          <Summary>用户ID</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERNAME" Type="System.String" DbType="VARCHAR2(100 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="True" ed:Guid="69234229-4281-4f4c-a909-4982ab6c1ab0">
+        <Documentation>
+          <Summary>用户名</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERID" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="95dfac16-93e4-4969-a3bb-d200e60eb21f">
+        <Documentation>
+          <Summary>身份证号码</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREALNAME" Type="System.String" DbType="NVARCHAR2(200) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" Unicode="true" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="70875c2e-5bcd-430b-a35b-36340be7fdfc">
+        <Documentation>
+          <Summary>用户真实姓名</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERPASS" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="61dc2939-fbaa-48c7-8785-1aa4d57ad798">
+        <Documentation>
+          <Summary>用户密码</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="BRANCHCODE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="04d2b245-b1a3-473e-ac43-b1a01dbcc122">
+        <Documentation>
+          <Summary>组织编码</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERPHONE" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="5e8d1920-591a-4dfb-a37d-757a26550f20">
+        <Documentation>
+          <Summary>联系电话</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREGIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="ae8301fd-7af5-4586-b97a-c2e2f5511bee">
+        <Documentation>
+          <Summary>用户创建IP</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERREGDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="6e2f253f-4762-4398-96b4-ba0586dc6a08">
+        <Documentation>
+          <Summary>用户创建时间</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERLOGINIP" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="276cb4ef-664b-4fa2-89e3-5a6b45ba5f03">
+        <Documentation>
+          <Summary>用户最近登录IP</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="USERLOGINDATE" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="c2810b36-028d-405c-9d9b-b3a34043027d">
+        <Documentation>
+          <Summary>用户最近登录时间</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="DISPLAYORDER" Type="System.String" DbType="VARCHAR2(100 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="100" ed:ValidateMaxLength="100" ed:ValidateRequired="False" ed:Guid="1ac9b8c1-e7bd-4db5-85ac-c89b707ca4c5">
+        <Documentation>
+          <Summary>用户顺序号</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISUSE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="08ec4512-41b6-46e2-9868-241a0859a200">
+        <Documentation>
+          <Summary>是否启用</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISVISIBLE" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="cc183a80-3085-44b1-bcc8-ffb9c5e1db24">
+        <Documentation>
+          <Summary>是否隐藏</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="ISSUPER" Type="System.String" DbType="CHAR(1) NULL" CanBeNull="true" UpdateCheck="Never" FixedLength="true" MaxLength="1" ed:ValidateMaxLength="1" ed:ValidateRequired="False" ed:Guid="b0ef713b-b1d6-415f-b290-7515c60e4782">
+        <Documentation>
+          <Summary>是否超级用户</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="FWQY" Type="System.String" DbType="VARCHAR2(1000 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="1000" ed:ValidateMaxLength="1000" ed:ValidateRequired="False" ed:Guid="18cac287-beba-459f-908f-3249c5ab6913">
+        <Documentation>
+          <Summary>访问区于</Summary>
+        </Documentation>
+      </Column>
+      <Column Name="MAILBOX" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="c2cd323e-b38d-4075-9228-91b358f3361a">
+        <Documentation>
+          <Summary>邮箱</Summary>
+        </Documentation>
+      </Column>
+      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="18f33bb5-d581-4b06-bbdd-c1b121b4de57" Member="ANNOUNCEMENTRECORDs" ed:Guid="48f8b4b5-21fd-4b1e-9d95-3ea31f6b4c2a" ThisKey="ID" OtherKey="USERID" Type="ANNOUNCEMENTRECORD" />
+    </Type>
+  </Table>
+  <Table Name="HSYW.ANNOUNCEMENTS" Member="ANNOUNCEMENTs">
+    <Type Name="ANNOUNCEMENT" ed:Guid="d6d5a7f2-2335-463f-a9d4-cf8bdf007e7f">
+      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="af018c94-0e7d-4911-af86-9aea559f88f3" />
+      <Column Name="POST_TIME" Member="POSTTIME" Type="System.DateTime" DbType="DATE NULL" CanBeNull="true" UpdateCheck="Never" Precision="0" ed:ValidateRequired="False" ed:Guid="76bf4020-9a0c-4588-a690-cb9c18bff3ed" />
+      <Column Name="POST_OWNER" Member="POSTOWNER" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="1ae3351b-65cb-46fc-8aeb-3520e829162a" />
+      <Column Name="POST_TITLE" Member="POSTTITLE" Type="System.String" DbType="VARCHAR2(200 CHAR) NOT NULL" CanBeNull="false" UpdateCheck="Never" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="True" ed:Guid="96f019ec-7124-4773-8cc5-3da7394475a3" />
+      <Column Name="POST_CONTENT" Member="POSTCONTENT" Type="System.String" DbType="CLOB NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="a575bf89-7487-48b6-919d-f7e1285674ec" />
+      <Column Name="POST_COMMENT" Member="POSTCOMMENT" Type="System.String" DbType="VARCHAR2(200 CHAR) NULL" CanBeNull="true" UpdateCheck="Never" DefaultValue="''&#xD;" MaxLength="200" ed:ValidateMaxLength="200" ed:ValidateRequired="False" ed:Guid="814903eb-ccf5-4c1f-b2a2-12518f7129ff" />
+      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="88ae3bfe-964a-4b44-b99e-eaa09a1bef3d" Member="ANNOUNCEMENTRECORDs" ed:Guid="9c627ac4-3cf0-4bec-a6d7-451d3ad5f038" ThisKey="ID" OtherKey="ANNOUNCEMENTID" Type="ANNOUNCEMENTRECORD" />
+    </Type>
+  </Table>
+  <Table Name="HSYW.ANNOUNCEMENT_RECORD" Member="ANNOUNCEMENTRECORDs">
+    <Type Name="ANNOUNCEMENTRECORD" ed:Guid="6a057e93-3ad2-4a7a-b353-3a13aab28eaa">
+      <Column Name="ID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" UpdateCheck="Always" Precision="10" ed:ValidateRequired="True" ed:Guid="4450d5c4-6c6c-4bd2-997b-ed8cd71f0074" />
+      <Column Name="USER_ID" Member="USERID" Type="System.String" DbType="CHAR(36) NOT NULL" CanBeNull="false" UpdateCheck="Never" FixedLength="true" MaxLength="36" ed:ValidateMaxLength="36" ed:ValidateRequired="True" ed:Guid="d39f7ca8-7e81-4e2e-b0ea-667614c63903" />
+      <Column Name="ANNOUNCEMENT_ID" Member="ANNOUNCEMENTID" Type="System.Int64" DbType="NUMBER(10) NOT NULL" CanBeNull="false" UpdateCheck="Never" Precision="10" ed:ValidateRequired="True" ed:Guid="a58c1edc-bdc7-4430-b097-5a0e52d63576" />
+      <Column Name="READ_FLAG" Member="READFLAG" Type="System.Boolean" DbType="NUMBER(1) NOT NULL" CanBeNull="false" UpdateCheck="Never" ed:ValidateRequired="True" ed:Guid="4aff94a1-4c31-47af-8e1d-88cded7c95a7" />
+      <Association Name="TSYSUSER_ANNOUNCEMENTRECORD" ed:AssociationGuid="18f33bb5-d581-4b06-bbdd-c1b121b4de57" Member="TSYSUSER" ed:Guid="dab90c2a-ff07-4844-b7d4-f7c51f1ef65c" ThisKey="USERID" OtherKey="ID" Type="TSYSUSER" DeleteRule="NO ACTION" IsForeignKey="true" />
+      <Association Name="ANNOUNCEMENT_ANNOUNCEMENTRECORD" ed:AssociationGuid="88ae3bfe-964a-4b44-b99e-eaa09a1bef3d" Member="ANNOUNCEMENT" ed:Guid="ed71326e-0c35-4cfe-8983-0268699f928b" ThisKey="ANNOUNCEMENTID" OtherKey="ID" Type="ANNOUNCEMENT" DeleteRule="NO ACTION" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

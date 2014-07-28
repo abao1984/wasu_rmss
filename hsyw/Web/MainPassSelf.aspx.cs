@@ -55,6 +55,7 @@ public partial class Web_MainPassSelf : System.Web.UI.Page
                     ZLTextBox_UserRealName.Text = dr["UserRealName"].ToString().Trim();
                     ZLTextBox_UserRealName.Enabled = false;
                     strLink = "";
+                    text_phone.Text = dr["USERPHONE"].ToString().Trim();
                 }
                 else
                 {
@@ -88,11 +89,11 @@ public partial class Web_MainPassSelf : System.Web.UI.Page
         string UserName = ZLTextBox_UserName.Text.ToString().Trim();
         string UserPass = ZLTextBox_UserPass.Text.ToString().Trim();
         string UserPassOld = ZLTextBox_UserPassOld.Text.ToString().Trim();
-
+        string user_phone = text_phone.Text.ToString().Trim();
         UserPass = publ.MD5(UserPass);
         UserPassOld = publ.MD5(UserPassOld);
 
-        n = user.UpdatePassSelf(UserName, UserPass, UserPassOld, out strMsg);
+        n = user.UpdatePassSelf(UserName, UserPass, UserPassOld,user_phone, out strMsg);
 
         if (n > 0)
         {

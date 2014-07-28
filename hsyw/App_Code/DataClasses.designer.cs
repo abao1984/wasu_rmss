@@ -59,6 +59,9 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void Insertvw_ip_source_master(vw_ip_source_master instance);
   partial void Updatevw_ip_source_master(vw_ip_source_master instance);
   partial void Deletevw_ip_source_master(vw_ip_source_master instance);
+  partial void InsertIP_Free_Info(IP_Free_Info instance);
+  partial void UpdateIP_Free_Info(IP_Free_Info instance);
+  partial void DeleteIP_Free_Info(IP_Free_Info instance);
   #endregion
 	
 	public DataClassesDataContext() : 
@@ -192,6 +195,14 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		get
 		{
 			return this.GetTable<MachineRoom>();
+		}
+	}
+	
+	public System.Data.Linq.Table<IP_Free_Info> IP_Free_Info
+	{
+		get
+		{
+			return this.GetTable<IP_Free_Info>();
 		}
 	}
 }
@@ -6095,6 +6106,212 @@ public partial class MachineRoom
 			{
 				this._Ssqy = value;
 			}
+		}
+	}
+}
+
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.IP_Free_Info")]
+public partial class IP_Free_Info : INotifyPropertyChanging, INotifyPropertyChanged
+{
+	
+	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+	
+	private long _ID;
+	
+	private System.Nullable<long> _IPMID;
+	
+	private string _IP_Head;
+	
+	private System.Nullable<int> _IP_Start_No;
+	
+	private System.Nullable<int> _IP_End_No;
+	
+	private System.Nullable<int> _IP_FreeNum;
+	
+	private System.Nullable<int> _type;
+	
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIDChanging(long value);
+    partial void OnIDChanged();
+    partial void OnIPMIDChanging(System.Nullable<long> value);
+    partial void OnIPMIDChanged();
+    partial void OnIP_HeadChanging(string value);
+    partial void OnIP_HeadChanged();
+    partial void OnIP_Start_NoChanging(System.Nullable<int> value);
+    partial void OnIP_Start_NoChanged();
+    partial void OnIP_End_NoChanging(System.Nullable<int> value);
+    partial void OnIP_End_NoChanged();
+    partial void OnIP_FreeNumChanging(System.Nullable<int> value);
+    partial void OnIP_FreeNumChanged();
+    partial void OntypeChanging(System.Nullable<int> value);
+    partial void OntypeChanged();
+    #endregion
+	
+	public IP_Free_Info()
+	{
+		OnCreated();
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ID", AutoSync=AutoSync.OnInsert, DbType="BigInt NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	public long ID
+	{
+		get
+		{
+			return this._ID;
+		}
+		set
+		{
+			if ((this._ID != value))
+			{
+				this.OnIDChanging(value);
+				this.SendPropertyChanging();
+				this._ID = value;
+				this.SendPropertyChanged("ID");
+				this.OnIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IPMID", DbType="BigInt")]
+	public System.Nullable<long> IPMID
+	{
+		get
+		{
+			return this._IPMID;
+		}
+		set
+		{
+			if ((this._IPMID != value))
+			{
+				this.OnIPMIDChanging(value);
+				this.SendPropertyChanging();
+				this._IPMID = value;
+				this.SendPropertyChanged("IPMID");
+				this.OnIPMIDChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP_Head", DbType="VarChar(20)")]
+	public string IP_Head
+	{
+		get
+		{
+			return this._IP_Head;
+		}
+		set
+		{
+			if ((this._IP_Head != value))
+			{
+				this.OnIP_HeadChanging(value);
+				this.SendPropertyChanging();
+				this._IP_Head = value;
+				this.SendPropertyChanged("IP_Head");
+				this.OnIP_HeadChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP_Start_No", DbType="Int")]
+	public System.Nullable<int> IP_Start_No
+	{
+		get
+		{
+			return this._IP_Start_No;
+		}
+		set
+		{
+			if ((this._IP_Start_No != value))
+			{
+				this.OnIP_Start_NoChanging(value);
+				this.SendPropertyChanging();
+				this._IP_Start_No = value;
+				this.SendPropertyChanged("IP_Start_No");
+				this.OnIP_Start_NoChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP_End_No", DbType="Int")]
+	public System.Nullable<int> IP_End_No
+	{
+		get
+		{
+			return this._IP_End_No;
+		}
+		set
+		{
+			if ((this._IP_End_No != value))
+			{
+				this.OnIP_End_NoChanging(value);
+				this.SendPropertyChanging();
+				this._IP_End_No = value;
+				this.SendPropertyChanged("IP_End_No");
+				this.OnIP_End_NoChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IP_FreeNum", DbType="Int")]
+	public System.Nullable<int> IP_FreeNum
+	{
+		get
+		{
+			return this._IP_FreeNum;
+		}
+		set
+		{
+			if ((this._IP_FreeNum != value))
+			{
+				this.OnIP_FreeNumChanging(value);
+				this.SendPropertyChanging();
+				this._IP_FreeNum = value;
+				this.SendPropertyChanged("IP_FreeNum");
+				this.OnIP_FreeNumChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="Int")]
+	public System.Nullable<int> type
+	{
+		get
+		{
+			return this._type;
+		}
+		set
+		{
+			if ((this._type != value))
+			{
+				this.OntypeChanging(value);
+				this.SendPropertyChanging();
+				this._type = value;
+				this.SendPropertyChanged("type");
+				this.OntypeChanged();
+			}
+		}
+	}
+	
+	public event PropertyChangingEventHandler PropertyChanging;
+	
+	public event PropertyChangedEventHandler PropertyChanged;
+	
+	protected virtual void SendPropertyChanging()
+	{
+		if ((this.PropertyChanging != null))
+		{
+			this.PropertyChanging(this, emptyChangingEventArgs);
+		}
+	}
+	
+	protected virtual void SendPropertyChanged(String propertyName)
+	{
+		if ((this.PropertyChanged != null))
+		{
+			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

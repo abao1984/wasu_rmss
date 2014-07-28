@@ -80,5 +80,11 @@
         <elementListCompartment Id="a3fe582b-20a5-40c6-b396-6756da960d4f" absoluteBounds="8.39, 10.96, 1.9700000000000002, 5.9667460123697911" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="b9cf8a4c-63d0-44ce-9c1e-67fa1c62ea6f" absoluteBounds="0.5, 0.625, 2, 2.0916874186197916">
+      <DataClassMoniker Name="/DataClassesDataContext/IP_Free_Info" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b482191a-0512-4e84-ace6-d89b1c3a7405" absoluteBounds="0.515, 1.085, 1.9700000000000002, 1.5316874186197915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>

@@ -16,8 +16,8 @@ public partial class Web_GZCL_GZBB_LiShiShuJu : System.Web.UI.Page
         {
             bindDrop();
             InitPage();
-            InitTable();
-            BindList();
+            //InitTable();
+            //BindList();
         }
     }
 
@@ -326,13 +326,13 @@ where to_char(t.jdsj,'yyyy-mm-dd')>='{0}' and to_char(t.jdsj,'yyyy-mm-dd')<='{1}
                 for (int j = 0; j < length1; j++)
                 {
                     workbook.Worksheets[0].Cells[i, j].PutValue(row.Cells[j].InnerText);
-                    workbook.Worksheets[0].Cells[i, j].Style.Font.Size = 9;
+                    //workbook.Worksheets[0].Cells[i, j].Style.Font.Size = 9;
                     if (i == 0 || j==0)
                     {
-                        workbook.Worksheets[0].Cells[i, j].Style.Font.IsBold = true;
-                        workbook.Worksheets[0].Cells[i, j].Style.BackgroundColor = System.Drawing.Color.BlueViolet;
-                        workbook.Worksheets[0].Cells[i, j].Style.Borders.SetStyle(CellBorderType.Thin);
-                        workbook.Worksheets[0].Cells[i, j].Style.Borders.DiagonalStyle = CellBorderType.None;
+                        //workbook.Worksheets[0].Cells[i, j].Style.Font.IsBold = true;
+                        //workbook.Worksheets[0].Cells[i, j].Style.BackgroundColor = System.Drawing.Color.BlueViolet;
+                        //workbook.Worksheets[0].Cells[i, j].Style.Borders.SetStyle(CellBorderType.Thin);
+                        //workbook.Worksheets[0].Cells[i, j].Style.Borders.DiagonalStyle = CellBorderType.None;
                     }
                 }
             
@@ -346,13 +346,13 @@ where to_char(t.jdsj,'yyyy-mm-dd')>='{0}' and to_char(t.jdsj,'yyyy-mm-dd')<='{1}
                 for (int j = 0; j < row.Cells.Count; j++)
                 {
                     workbook.Worksheets[0].Cells[idx, j].PutValue(row.Cells[j].InnerText);
-                    workbook.Worksheets[0].Cells[idx, j].Style.Font.Size = 9;
+                    //workbook.Worksheets[0].Cells[idx, j].Style.Font.Size = 9;
                     if (i == 0)
                     {
-                        workbook.Worksheets[0].Cells[idx, j].Style.Font.IsBold = true;
-                        workbook.Worksheets[0].Cells[idx, j].Style.BackgroundColor = System.Drawing.Color.BlueViolet;
-                        workbook.Worksheets[0].Cells[idx, j].Style.Borders.SetStyle(CellBorderType.Thin);
-                        workbook.Worksheets[0].Cells[idx, j].Style.Borders.DiagonalStyle = CellBorderType.None;
+                        //workbook.Worksheets[0].Cells[idx, j].Style.Font.IsBold = true;
+                        //workbook.Worksheets[0].Cells[idx, j].Style.BackgroundColor = System.Drawing.Color.BlueViolet;
+                        //workbook.Worksheets[0].Cells[idx, j].Style.Borders.SetStyle(CellBorderType.Thin);
+                        //workbook.Worksheets[0].Cells[idx, j].Style.Borders.DiagonalStyle = CellBorderType.None;
                     }
                 }
             }

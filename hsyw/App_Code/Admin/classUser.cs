@@ -380,7 +380,7 @@ public class classUser
 
 
     //更改密码，返回记录的条数===================================================================================
-    public int UpdatePassSelf(string UserName, string UserPass, string UserPassOld, out string strMsg)
+    public int UpdatePassSelf(string UserName, string UserPass, string UserPassOld,string user_phone, out string strMsg)
     {
         int nResult = 0;
         try
@@ -395,7 +395,7 @@ public class classUser
                 //dbSys.AddParameter("@UserPass", UserPass);
 
                 //nResult = dbSys.ExecuteNonQuery("p_User_pass_update");
-                string sql = string.Format("update T_SYS_USER set USERPASS = '{0}' where USERNAME = '{1}'",UserPass,UserName);
+                string sql = string.Format("update T_SYS_USER set USERPASS = '{0}',USERPHONE='{2}' where USERNAME = '{1}'",UserPass,UserName,user_phone);
                 nResult = DataFunction.ExecuteNonQuery(sql);
                 if (nResult == 0)
                 {

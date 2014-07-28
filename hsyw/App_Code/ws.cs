@@ -12,10 +12,13 @@ using System.Text;
 using System.IO;
 using LinqToExcel;
 using System.Web.Script.Services;
-//using Devart.Data.Linq;
-using HSYWContext;
 using System.Globalization;
 using System.Text.RegularExpressions;
+using HSYWContext;
+
+
+
+
 
 /// <summary>
 ///ws 的摘要说明
@@ -103,6 +106,19 @@ public class ws : System.Web.Services.WebService {
 
         var areas = dc.TS_ZD_Info.Where(c => c.type == "区域");
         var bussiness_types = dc.TS_ZD_Info.Where(c => c.type == "IP业务类型");
+
+        Dictionary<int, int> dict = new Dictionary<int, int>();
+        dict.Add(23, 512);
+        dict.Add(24, 256);
+        dict.Add(25, 128);
+        dict.Add(26, 64);
+        dict.Add(27, 32);
+        dict.Add(28, 16);
+        dict.Add(29, 8);
+        dict.Add(30, 4);
+        dict.Add(31, 2);
+        dict.Add(32, 1);
+
         foreach (var row in rows)
         {
             string ip_info = row["IP地址"];
@@ -118,7 +134,7 @@ public class ws : System.Web.Services.WebService {
             string[] ip_address = ip_info.Split('/');
             string ip_num = ip_address[1];
             string ip_start_no = ip_address[0].Split('.')[3];
-            string ip_end_no = "255";
+            string ip_end_no = dict[int.Parse(ip_num)].ToString();
             string[] ip_head_array = ip_address[0].Split('.');
             string ip_head = "";
             for (int i = 0; i < 3; i++)
@@ -150,32 +166,34 @@ public class ws : System.Web.Services.WebService {
                 Ssqy = area_lsh,
                 bz = "import by ip excel files",
             };
-            /*
-            var vw_ip = new vw_ip_source_master
-            {
-                IP_Head = ip_head,
-                IP_Start_No = int.Parse(ip_start_no),
-                IP_End_No = int.Parse(ip_end_no),
-                IP_Num = int.Parse(ip_num),
-                createDate = DateTime.Now.ToShortDateString(),
-                State = 0,
-                MachineID = machine_room_id,
-                Used = type_lsh,
-                Ssqy = area_lsh,
-                IP = ip_address[0],
-                IP_FullAddress = ip_info,
-                mac_name = room.mac_name,
-                ghyt = row["IP业务类型"],
-                Ssqy_name = area_name,
-                bz = "import by ip excel files",
-
-            };
-             * */
             dc.IP_Source_Master.InsertOnSubmit(ip);
             dc.SubmitChanges();
-            //vw_ip.IPMID = ip.IPMID;
-            //dc.vw_ip_source_master.InsertOnSubmit(vw_ip);
-            //dc.SubmitChanges();    
+
+            int ip_numbers = (int)ip.IP_End_No - (int)ip.IP_Start_No + 1;
+
+            int loop = ip_numbers / 256;
+
+            for (int i = 0; i < loop; i++)
+            {
+                var free = new IP_Free_Info
+                {
+                    IPMID = ip.IPMID,
+                };
+                string head =String.Format("{0}.{1}.{2}.",ip_head_array[0],ip_head_array[1],int.Parse(ip_head_array[2])+i);
+                free.IP_Head = head;
+                int start_no = (i>0) ? 0 : int.Parse(ip_start_no);
+                free.IP_Start_No = start_no;
+                
+                int end_num = Math.Min(start_no+(ip_numbers-256*i),255);
+                                
+                int free_num = end_num-start_no+1;
+
+                free.IP_End_No = end_num;
+                free.IP_FreeNum = free_num;
+
+                dc.IP_Free_Info.InsertOnSubmit(free);
+            }
+            dc.SubmitChanges();    
         }
 
         if (result.Length > 0)
@@ -552,19 +570,17 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
         {
             page = "1";
         }
-        HSYWDataContext ctx = new HSYWDataContext();
+        //HSYWDataContext ctx = new HSYWDataContext();
         var query = from c in ctx.ANNOUNCEMENTs
                     where c.POSTOWNER.Contains(uid)
                     select c;
         query = query.Skip((int.Parse(page) - 1) * 100).Take(100);
 
-        var q = from c in ctx.ANNOUNCEMENTRECORDs
-                where c.USERID == uid
-                select c;
+        //var q = ctx.Announcements.Where(c => c.AnnouncementRecord = );
 
-        q = q.Skip((int.Parse(page) - 1) * 100).Take(100);
+        //q = q.Skip((int.Parse(page) - 1) * 100).Take(100);
 
-        writeJSONResponse(q);
+        //writeJSONResponse(q);
     }
 
     [WebMethod]
@@ -686,7 +702,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
             var user = ctx.TSYSUSERs.Where(c => c.ID == id).FirstOrDefault();
             var departmentQuery = ctx.TSYSBRANCHES.Where(c => c.BRANCHCODE == user.BRANCHCODE).FirstOrDefault();
             string strDepartmentName = "";
-            getDepartmentPath(ref strDepartmentName, departmentQuery.BRANCHCODE,branchQuery);
+            getDepartmentPath(ref strDepartmentName, departmentQuery.BRANCHCODE, branchQuery);
             
             string path = String.Format("{0}/{1}", strDepartmentName, user.USERREALNAME);
             pathList.Add(path);
@@ -698,7 +714,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
         writeJSONResponse(dict);
     }
 
-    private void getDepartmentPath(ref string path,string code,List<HSYWContext.TSYSBRANCH> list)
+    private void getDepartmentPath(ref string path,string code,List<TSYSBRANCH> list)
     {
         var q = list.Where(c => c.BRANCHCODE == code).FirstOrDefault();
         if (q.PATH == null)
@@ -721,7 +737,7 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='遗�
             }
             else
             {
-                path = String.Format("{0}/{1}", q.PATH,path);
+                path = String.Format("{0}/{1}", q.PATH, path);
             }
             
         }

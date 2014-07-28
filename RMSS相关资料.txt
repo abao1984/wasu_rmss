@@ -16,7 +16,7 @@
 电话受理 -> 调度发单 -> 维修返单  涉及部门维护部
 
 新RMSS服务器地址：125.210.208.56 
-用户名和密码：administrator/Wasu!rmss
+用户名和密码：administrator/chang076054901
 
 老RMSS服务器地址：218.108.255.183
 RadminViewer连接

@@ -287,7 +287,7 @@ public partial class Web_GZCL_GuZhangQuery : System.Web.UI.Page
                 for (int i = 0; i < names.Length; i++ )
                 {
                     cells[0, i].PutValue(names[i]);
-                    cells[0, i].Style.HorizontalAlignment = TextAlignmentType.Center;
+                   // cells[0, i].Style.HorizontalAlignment = TextAlignmentType.Center;
                 }
                 
                 //行
@@ -332,7 +332,7 @@ public partial class Web_GZCL_GuZhangQuery : System.Web.UI.Page
                                 }
                             }
                         }
-                        cells[j, i].Style.HorizontalAlignment = TextAlignmentType.Center;
+                        //cells[j, i].Style.HorizontalAlignment = TextAlignmentType.Center;
                     }
                 }
                 Session.Remove("dateName");

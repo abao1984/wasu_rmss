@@ -175,7 +175,24 @@ public partial class Web_GZCL_FDZ_DiaoDuFaDan : System.Web.UI.Page
         dr["SJCLRY"] = getUsersName();
         ds.Tables[0].Rows.Add(dr);
         DataFunction.SaveData(ds, "t_fau_cllc");
+        insertPhoneToDB(getUsersName(), ZBGUID.Text);
         ClientScript.RegisterStartupScript(GetType(), Guid.NewGuid().ToString(), "<script>window.returnValue='true';window.close();</script>");
+    }
+
+    private void insertPhoneToDB(string username,string id)
+    {
+        var users = username.Split(',');
+        List<String> phone_list = new List<string>();
+        foreach (var user in users)
+        {
+            string sql = String.Format("select * from t_sys_user where userrealname='{0}'", user);
+            DataRow row=DataFunction.GetSingleRow(sql);
+            string phone = String.Format("{0}:{1}",user,row["userphone"].ToString());
+            phone_list.Add(phone);
+        }
+        string phone_field = string.Join(",", phone_list.ToArray());
+        string update = String.Format("update t_fau_zb set gzlx_yw='{0}' where zbguid='{1}'",phone_field,id);
+        DataFunction.ExecuteNonQuery(update);
     }
 
     private string getUsersName()

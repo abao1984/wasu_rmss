@@ -30,10 +30,11 @@
                     <asp:ListItem Text="拥有人"  Value="YYR"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="故障时长(分)"  Value="GZSC"  Selected="True"></asp:ListItem>
                     <asp:ListItem Text="故障状态"  Value="GZZT"  Selected="True"></asp:ListItem>
-                    <asp:ListItem Selected="True" Value="GZYY">故障原因</asp:ListItem>
+                    <%--<asp:ListItem Selected="True" Value="GZYY">故障原因</asp:ListItem>--%>
                     <asp:ListItem Selected="True" Value="GZMS">故障描述</asp:ListItem>
                     <asp:ListItem Selected="True" Value="GZCLFF">处理方法</asp:ListItem>
                     <asp:ListItem Selected="True" Value="GZFFMS">处理方法描述</asp:ListItem>
+                    <asp:ListItem Selected="True" Value="ZJYY">故障原因描述</asp:ListItem>
                 </asp:CheckBoxList>
             </td>
         </tr>
