@@ -869,7 +869,7 @@ public partial class Web_Resource_ConfigResourceIpEdit : System.Web.UI.Page
                 ++row;
             });
             MemoryStream ms = new MemoryStream();
-            book.Save(ms, FileFormatType.Excel2003);
+            book.Save(ms, FileFormatType.Excel97To2003);
             IDP.Common.WebUtils.ResponseWriteBinary(ms.ToArray(), "IP资源配置.xls");
         }
         catch (Exception)

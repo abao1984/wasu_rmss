@@ -282,11 +282,7 @@ public partial class Web_Resource_ConfigResourceIpList : System.Web.UI.Page
             {
 
                 ws.Cells[row, col].PutValue(con.HeaderText);
-                ws.Cells[row, col].Style.Borders.SetStyle(CellBorderType.Thin);
-                ws.Cells[row, col].Style.Borders.DiagonalStyle = CellBorderType.None;
-                ws.Cells[row, col].Style.HorizontalAlignment = TextAlignmentType.Center;
-                ws.Cells[row, col].Style.Font.IsBold = true;
-                ws.Cells[row, col].Style.Font.Size = 9;
+                
             }
             ++col;
         });
@@ -307,10 +303,7 @@ public partial class Web_Resource_ConfigResourceIpList : System.Web.UI.Page
                 {
                     string sort=con.SortExpression;
                     ws.Cells[row, col].PutValue(dr[sort]);
-                    ws.Cells[row, col].Style.Borders.SetStyle(CellBorderType.Thin);
-                    ws.Cells[row, col].Style.Borders.DiagonalStyle = CellBorderType.None;
-                    ws.Cells[row, col].Style.Font.Size = 8;
-
+                    
 
                 }
                 ++idx;
@@ -321,7 +314,7 @@ public partial class Web_Resource_ConfigResourceIpList : System.Web.UI.Page
         MemoryStream ms = new MemoryStream();
 
         byte[] by = null;
-        book.Save(ms, FileFormatType.Excel2003);
+        book.Save(ms, FileFormatType.Excel97To2003);
         by = ms.ToArray();
         IDP.Common.WebUtils.ResponseWriteBinary(by, "IP资源配置.xls");
     }

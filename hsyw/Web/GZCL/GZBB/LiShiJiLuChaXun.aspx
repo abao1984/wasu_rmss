@@ -131,7 +131,7 @@
                     <asp:GridView ID="GridView1" runat="server" SkinID="GridView2" DataKeyNames="ZBGUID"
                         BorderColor="#5B9ED1" BorderWidth="1px" AllowPaging="True" AllowSorting="True"
                         Width="200%" AutoGenerateColumns="False" OnRowDataBound="GridView1_RowDataBound"
-                        OnSorting="GridView1_Sorting" PageSize="50">
+                        OnSorting="GridView1_Sorting" PageSize="50" EnableModelValidation="True">
                         <Columns>
                             <asp:BoundField HeaderText="序" DataField="XH">
                                 <ItemStyle Width="1%" HorizontalAlign="Center" />
@@ -252,6 +252,8 @@
                             </asp:BoundField>
                             <asp:BoundField DataField="CUSTOMER_LEVEL" HeaderText="客户等级" ReadOnly="True" 
                                 SortExpression="CUSTOMER_LEVEL" />
+                            <asp:BoundField DataField="khqy" HeaderText="客户区域" SortExpression="khqy" />
+                            <asp:BoundField DataField="gzdj" HeaderText="故障等级" SortExpression="gzdj" />
                         </Columns>
                     </asp:GridView>
                 </div>

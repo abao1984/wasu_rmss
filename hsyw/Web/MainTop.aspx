@@ -49,7 +49,7 @@
                      <td  style="background-image:url(Images/Header/top4.jpg); width: 2px; height: 25px; padding-top: 4px;">
                         <img align="absMiddle" alt="" src="Images/Header/navspacer.gif" /> </td>
                          <td  style="background-image:url(Images/Header/top4.jpg); width: 58px; padding-bottom: 2px;" align="center" valign="bottom">
-                       <a href="MainLeft.aspx?PMENUCODE=13&SJGGG=<% =Session["SJGGG"].ToString()%>" target="LeftFrame" class="MenuStyle" >资源管理</a>                       
+                       <a href="MainLeft.aspx?PMENUCODE=02&SJGGG=<% =Session["SJGGG"].ToString()%>" target="LeftFrame" class="MenuStyle" >资源管理</a>                       
                     </td>
                      <%--  <td  style="background-image:url(Images/Header/top4.jpg); width: 2px; height: 25px; padding-top: 4px;">
                         <img align="absMiddle" alt="" src="Images/Header/navspacer.gif" /> </td>
