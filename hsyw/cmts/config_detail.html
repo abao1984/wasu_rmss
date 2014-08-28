@@ -91,12 +91,28 @@ $(function(){
 		
 		var config_person  = bussiness.pzr;
 		var config_date = bussiness.pzsj;
+		var line_code = bussiness.Line_code;
+		var device_type = bussiness.sbmc;
+		var room_id = bussiness.macid;
+		
+		$.post('/hsyw/ws.asmx/machine_room_detail_by_room_id',{room_id:room_id})
+		.done(function(result){
+			var json = JSON.parse(result);
+			var id = json['ID'];
+			var room_id = json['mac_id'];
+			var room_name = json['mac_name'];
+			var value = '['+ room_id +']' + room_name;
+			$('#id_machine_room').val(id);
+			$('#id_room_name').val(value);
+		});
+		
 		$('#id_id').val(bussiness.ID);
 		$('#id_bussiness_code').val(bussiness.Bussiness_code);
 		$('#id_device_info').val(bussiness.sbpzxx);
 		$('#id_client_name').val(bussiness.khmc);
 		$('#id_config_date').val(config_date);
 		$('#id_config_person').val(config_person);
+		$('#id_line_code').val(line_code);
 		if (client!==null)
 		{
 			var client_code = client.CUSTOMER_NO
@@ -317,6 +333,28 @@ $(function(){
 	<div class="input-group date">
 	<input type="text" name="config_date" id="id_config_date" class="form-control">
 	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	</div>
+</div>
+<div class="form-group">
+	<label for="id_line_code">线路编码</label>
+	<input type="text" name="line_code" id="id_line_code" class="form-control">
+</div>
+<div class="form-group">
+	<label for="id_device_type">接入设备</label>
+	<select class="form-control" name="device_type" id="id_device_type">
+	<option value="EPON">EPON</option>
+	<option value="光机">光机</option>
+	<option value="CMTS">CMTS</option>
+	</select>
+</div>
+<div class="form-group">
+	<label for="id_room_name">机房</label>
+	<input type="hidden" name="room_id" id="id_machine_room">
+	<div class="input-group">
+	<input class="form-control" type="text" readonly="readonly" name="room_name"  id="id_room_name" >
+	<span class="input-group-btn">
+	<button class="btn btn-default" type="button" data-toggle="modal" data-target="#roomModal">选择</button>
+	</span>
 	</div>
 </div>
 </div>

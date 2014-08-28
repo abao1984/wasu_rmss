@@ -217,19 +217,19 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
 		}
 	}
 	
-	public System.Data.Linq.Table<CMTS> CMTS
-	{
-		get
-		{
-			return this.GetTable<CMTS>();
-		}
-	}
-	
 	public System.Data.Linq.Table<ClientTypeA> ClientTypeA
 	{
 		get
 		{
 			return this.GetTable<ClientTypeA>();
+		}
+	}
+	
+	public System.Data.Linq.Table<CMTS> CMTS
+	{
+		get
+		{
+			return this.GetTable<CMTS>();
 		}
 	}
 }
@@ -6416,6 +6416,285 @@ public partial class CMTSDevice
 	}
 }
 
+[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ClientTypeA")]
+public partial class ClientTypeA
+{
+	
+	private string _SUBSCRIBERNO;
+	
+	private string _DESCRIPTION;
+	
+	private string _CUSTOMER_NO;
+	
+	private string _CUSTTYPE;
+	
+	private string _LINKMAN;
+	
+	private string _EMAIL;
+	
+	private string _MOBILE_NO;
+	
+	private string _PHONE_NO;
+	
+	private string _FAX_NO;
+	
+	private string _ZIP_CODE;
+	
+	private string _ADDRESS;
+	
+	private string _TYPE;
+	
+	private System.Nullable<char> _REMARK;
+	
+	private System.Nullable<decimal> _CUSTOMER_LEVEL;
+	
+	private string _SALE_NAME;
+	
+	public ClientTypeA()
+	{
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SUBSCRIBERNO", DbType="VarChar(256)")]
+	public string SUBSCRIBERNO
+	{
+		get
+		{
+			return this._SUBSCRIBERNO;
+		}
+		set
+		{
+			if ((this._SUBSCRIBERNO != value))
+			{
+				this._SUBSCRIBERNO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="VarChar(256)")]
+	public string DESCRIPTION
+	{
+		get
+		{
+			return this._DESCRIPTION;
+		}
+		set
+		{
+			if ((this._DESCRIPTION != value))
+			{
+				this._DESCRIPTION = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_NO", DbType="VarChar(63) NOT NULL", CanBeNull=false)]
+	public string CUSTOMER_NO
+	{
+		get
+		{
+			return this._CUSTOMER_NO;
+		}
+		set
+		{
+			if ((this._CUSTOMER_NO != value))
+			{
+				this._CUSTOMER_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTTYPE", DbType="VarChar(64)")]
+	public string CUSTTYPE
+	{
+		get
+		{
+			return this._CUSTTYPE;
+		}
+		set
+		{
+			if ((this._CUSTTYPE != value))
+			{
+				this._CUSTTYPE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LINKMAN", DbType="VarChar(63)")]
+	public string LINKMAN
+	{
+		get
+		{
+			return this._LINKMAN;
+		}
+		set
+		{
+			if ((this._LINKMAN != value))
+			{
+				this._LINKMAN = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EMAIL", DbType="VarChar(30)")]
+	public string EMAIL
+	{
+		get
+		{
+			return this._EMAIL;
+		}
+		set
+		{
+			if ((this._EMAIL != value))
+			{
+				this._EMAIL = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOBILE_NO", DbType="VarChar(64)")]
+	public string MOBILE_NO
+	{
+		get
+		{
+			return this._MOBILE_NO;
+		}
+		set
+		{
+			if ((this._MOBILE_NO != value))
+			{
+				this._MOBILE_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PHONE_NO", DbType="VarChar(129)")]
+	public string PHONE_NO
+	{
+		get
+		{
+			return this._PHONE_NO;
+		}
+		set
+		{
+			if ((this._PHONE_NO != value))
+			{
+				this._PHONE_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FAX_NO", DbType="VarChar(64)")]
+	public string FAX_NO
+	{
+		get
+		{
+			return this._FAX_NO;
+		}
+		set
+		{
+			if ((this._FAX_NO != value))
+			{
+				this._FAX_NO = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZIP_CODE", DbType="VarChar(6)")]
+	public string ZIP_CODE
+	{
+		get
+		{
+			return this._ZIP_CODE;
+		}
+		set
+		{
+			if ((this._ZIP_CODE != value))
+			{
+				this._ZIP_CODE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ADDRESS", DbType="VarChar(704)")]
+	public string ADDRESS
+	{
+		get
+		{
+			return this._ADDRESS;
+		}
+		set
+		{
+			if ((this._ADDRESS != value))
+			{
+				this._ADDRESS = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPE", DbType="VarChar(100)")]
+	public string TYPE
+	{
+		get
+		{
+			return this._TYPE;
+		}
+		set
+		{
+			if ((this._TYPE != value))
+			{
+				this._TYPE = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REMARK", DbType="Char(1)")]
+	public System.Nullable<char> REMARK
+	{
+		get
+		{
+			return this._REMARK;
+		}
+		set
+		{
+			if ((this._REMARK != value))
+			{
+				this._REMARK = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_LEVEL", DbType="Decimal(2,0)")]
+	public System.Nullable<decimal> CUSTOMER_LEVEL
+	{
+		get
+		{
+			return this._CUSTOMER_LEVEL;
+		}
+		set
+		{
+			if ((this._CUSTOMER_LEVEL != value))
+			{
+				this._CUSTOMER_LEVEL = value;
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SALE_NAME", DbType="VarChar(64)")]
+	public string SALE_NAME
+	{
+		get
+		{
+			return this._SALE_NAME;
+		}
+		set
+		{
+			if ((this._SALE_NAME != value))
+			{
+				this._SALE_NAME = value;
+			}
+		}
+	}
+}
+
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CMTS")]
 public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 {
@@ -6431,6 +6710,52 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 	private System.Nullable<int> _room_id;
 	
 	private System.Nullable<long> _bussiness_id;
+	
+	private string _distance_to_transfer;
+	
+	private string _transfer_code;
+	
+	private string _transfer_fiber_num;
+	
+	private string _older_num;
+	
+	private string _distance_between_transfer_to_room;
+	
+	private string _code_between_transfer_to_room;
+	
+	private string _room_fiber;
+	
+	private string _onu;
+	
+	private string _switcher_code;
+	
+	private string _gigabit_alloc_port;
+	
+	private string _wave_length;
+	
+	private string _splitter_code;
+	
+	private string _spot_code;
+	
+	private string _spot_name;
+	
+	private string _spot_receiver_fiber_num;
+	
+	private string _distance_between_transfer_to_spot;
+	
+	private string _unit;
+	
+	private System.Nullable<System.DateTime> _start_date;
+	
+	private string _signal_type;
+	
+	private string _type;
+	
+	private string _remark;
+	
+	private string _contact;
+	
+	private string _output_power;
 	
 	private EntityRef<IP_Bussiness> _IP_Bussiness;
 	
@@ -6448,6 +6773,52 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
     partial void Onroom_idChanged();
     partial void Onbussiness_idChanging(System.Nullable<long> value);
     partial void Onbussiness_idChanged();
+    partial void Ondistance_to_transferChanging(string value);
+    partial void Ondistance_to_transferChanged();
+    partial void Ontransfer_codeChanging(string value);
+    partial void Ontransfer_codeChanged();
+    partial void Ontransfer_fiber_numChanging(string value);
+    partial void Ontransfer_fiber_numChanged();
+    partial void Onolder_numChanging(string value);
+    partial void Onolder_numChanged();
+    partial void Ondistance_between_transfer_to_roomChanging(string value);
+    partial void Ondistance_between_transfer_to_roomChanged();
+    partial void Oncode_between_transfer_to_roomChanging(string value);
+    partial void Oncode_between_transfer_to_roomChanged();
+    partial void Onroom_fiberChanging(string value);
+    partial void Onroom_fiberChanged();
+    partial void OnonuChanging(string value);
+    partial void OnonuChanged();
+    partial void Onswitcher_codeChanging(string value);
+    partial void Onswitcher_codeChanged();
+    partial void Ongigabit_alloc_portChanging(string value);
+    partial void Ongigabit_alloc_portChanged();
+    partial void Onwave_lengthChanging(string value);
+    partial void Onwave_lengthChanged();
+    partial void Onsplitter_codeChanging(string value);
+    partial void Onsplitter_codeChanged();
+    partial void Onspot_codeChanging(string value);
+    partial void Onspot_codeChanged();
+    partial void Onspot_nameChanging(string value);
+    partial void Onspot_nameChanged();
+    partial void Onspot_receiver_fiber_numChanging(string value);
+    partial void Onspot_receiver_fiber_numChanged();
+    partial void Ondistance_between_transfer_to_spotChanging(string value);
+    partial void Ondistance_between_transfer_to_spotChanged();
+    partial void OnunitChanging(string value);
+    partial void OnunitChanged();
+    partial void Onstart_dateChanging(System.Nullable<System.DateTime> value);
+    partial void Onstart_dateChanged();
+    partial void Onsignal_typeChanging(string value);
+    partial void Onsignal_typeChanged();
+    partial void OntypeChanging(string value);
+    partial void OntypeChanged();
+    partial void OnremarkChanging(string value);
+    partial void OnremarkChanged();
+    partial void OncontactChanging(string value);
+    partial void OncontactChanged();
+    partial void Onoutput_powerChanging(string value);
+    partial void Onoutput_powerChanged();
     #endregion
 	
 	public CMTS()
@@ -6560,6 +6931,466 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_distance_to_transfer", DbType="VarChar(50)")]
+	public string distance_to_transfer
+	{
+		get
+		{
+			return this._distance_to_transfer;
+		}
+		set
+		{
+			if ((this._distance_to_transfer != value))
+			{
+				this.Ondistance_to_transferChanging(value);
+				this.SendPropertyChanging();
+				this._distance_to_transfer = value;
+				this.SendPropertyChanged("distance_to_transfer");
+				this.Ondistance_to_transferChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_transfer_code", DbType="VarChar(50)")]
+	public string transfer_code
+	{
+		get
+		{
+			return this._transfer_code;
+		}
+		set
+		{
+			if ((this._transfer_code != value))
+			{
+				this.Ontransfer_codeChanging(value);
+				this.SendPropertyChanging();
+				this._transfer_code = value;
+				this.SendPropertyChanged("transfer_code");
+				this.Ontransfer_codeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_transfer_fiber_num", DbType="VarChar(50)")]
+	public string transfer_fiber_num
+	{
+		get
+		{
+			return this._transfer_fiber_num;
+		}
+		set
+		{
+			if ((this._transfer_fiber_num != value))
+			{
+				this.Ontransfer_fiber_numChanging(value);
+				this.SendPropertyChanging();
+				this._transfer_fiber_num = value;
+				this.SendPropertyChanged("transfer_fiber_num");
+				this.Ontransfer_fiber_numChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_older_num", DbType="VarChar(50)")]
+	public string older_num
+	{
+		get
+		{
+			return this._older_num;
+		}
+		set
+		{
+			if ((this._older_num != value))
+			{
+				this.Onolder_numChanging(value);
+				this.SendPropertyChanging();
+				this._older_num = value;
+				this.SendPropertyChanged("older_num");
+				this.Onolder_numChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_distance_between_transfer_to_room", DbType="VarChar(50)")]
+	public string distance_between_transfer_to_room
+	{
+		get
+		{
+			return this._distance_between_transfer_to_room;
+		}
+		set
+		{
+			if ((this._distance_between_transfer_to_room != value))
+			{
+				this.Ondistance_between_transfer_to_roomChanging(value);
+				this.SendPropertyChanging();
+				this._distance_between_transfer_to_room = value;
+				this.SendPropertyChanged("distance_between_transfer_to_room");
+				this.Ondistance_between_transfer_to_roomChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_code_between_transfer_to_room", DbType="VarChar(50)")]
+	public string code_between_transfer_to_room
+	{
+		get
+		{
+			return this._code_between_transfer_to_room;
+		}
+		set
+		{
+			if ((this._code_between_transfer_to_room != value))
+			{
+				this.Oncode_between_transfer_to_roomChanging(value);
+				this.SendPropertyChanging();
+				this._code_between_transfer_to_room = value;
+				this.SendPropertyChanged("code_between_transfer_to_room");
+				this.Oncode_between_transfer_to_roomChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_room_fiber", DbType="VarChar(50)")]
+	public string room_fiber
+	{
+		get
+		{
+			return this._room_fiber;
+		}
+		set
+		{
+			if ((this._room_fiber != value))
+			{
+				this.Onroom_fiberChanging(value);
+				this.SendPropertyChanging();
+				this._room_fiber = value;
+				this.SendPropertyChanged("room_fiber");
+				this.Onroom_fiberChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_onu", DbType="VarChar(50)")]
+	public string onu
+	{
+		get
+		{
+			return this._onu;
+		}
+		set
+		{
+			if ((this._onu != value))
+			{
+				this.OnonuChanging(value);
+				this.SendPropertyChanging();
+				this._onu = value;
+				this.SendPropertyChanged("onu");
+				this.OnonuChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_switcher_code", DbType="VarChar(50)")]
+	public string switcher_code
+	{
+		get
+		{
+			return this._switcher_code;
+		}
+		set
+		{
+			if ((this._switcher_code != value))
+			{
+				this.Onswitcher_codeChanging(value);
+				this.SendPropertyChanging();
+				this._switcher_code = value;
+				this.SendPropertyChanged("switcher_code");
+				this.Onswitcher_codeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_gigabit_alloc_port", DbType="VarChar(50)")]
+	public string gigabit_alloc_port
+	{
+		get
+		{
+			return this._gigabit_alloc_port;
+		}
+		set
+		{
+			if ((this._gigabit_alloc_port != value))
+			{
+				this.Ongigabit_alloc_portChanging(value);
+				this.SendPropertyChanging();
+				this._gigabit_alloc_port = value;
+				this.SendPropertyChanged("gigabit_alloc_port");
+				this.Ongigabit_alloc_portChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_wave_length", DbType="VarChar(50)")]
+	public string wave_length
+	{
+		get
+		{
+			return this._wave_length;
+		}
+		set
+		{
+			if ((this._wave_length != value))
+			{
+				this.Onwave_lengthChanging(value);
+				this.SendPropertyChanging();
+				this._wave_length = value;
+				this.SendPropertyChanged("wave_length");
+				this.Onwave_lengthChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_splitter_code", DbType="VarChar(50)")]
+	public string splitter_code
+	{
+		get
+		{
+			return this._splitter_code;
+		}
+		set
+		{
+			if ((this._splitter_code != value))
+			{
+				this.Onsplitter_codeChanging(value);
+				this.SendPropertyChanging();
+				this._splitter_code = value;
+				this.SendPropertyChanged("splitter_code");
+				this.Onsplitter_codeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_code", DbType="VarChar(50)")]
+	public string spot_code
+	{
+		get
+		{
+			return this._spot_code;
+		}
+		set
+		{
+			if ((this._spot_code != value))
+			{
+				this.Onspot_codeChanging(value);
+				this.SendPropertyChanging();
+				this._spot_code = value;
+				this.SendPropertyChanged("spot_code");
+				this.Onspot_codeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_name", DbType="VarChar(50)")]
+	public string spot_name
+	{
+		get
+		{
+			return this._spot_name;
+		}
+		set
+		{
+			if ((this._spot_name != value))
+			{
+				this.Onspot_nameChanging(value);
+				this.SendPropertyChanging();
+				this._spot_name = value;
+				this.SendPropertyChanged("spot_name");
+				this.Onspot_nameChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_spot_receiver_fiber_num", DbType="VarChar(50)")]
+	public string spot_receiver_fiber_num
+	{
+		get
+		{
+			return this._spot_receiver_fiber_num;
+		}
+		set
+		{
+			if ((this._spot_receiver_fiber_num != value))
+			{
+				this.Onspot_receiver_fiber_numChanging(value);
+				this.SendPropertyChanging();
+				this._spot_receiver_fiber_num = value;
+				this.SendPropertyChanged("spot_receiver_fiber_num");
+				this.Onspot_receiver_fiber_numChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_distance_between_transfer_to_spot", DbType="VarChar(50)")]
+	public string distance_between_transfer_to_spot
+	{
+		get
+		{
+			return this._distance_between_transfer_to_spot;
+		}
+		set
+		{
+			if ((this._distance_between_transfer_to_spot != value))
+			{
+				this.Ondistance_between_transfer_to_spotChanging(value);
+				this.SendPropertyChanging();
+				this._distance_between_transfer_to_spot = value;
+				this.SendPropertyChanged("distance_between_transfer_to_spot");
+				this.Ondistance_between_transfer_to_spotChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_unit", DbType="VarChar(50)")]
+	public string unit
+	{
+		get
+		{
+			return this._unit;
+		}
+		set
+		{
+			if ((this._unit != value))
+			{
+				this.OnunitChanging(value);
+				this.SendPropertyChanging();
+				this._unit = value;
+				this.SendPropertyChanged("unit");
+				this.OnunitChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_date", DbType="Date")]
+	public System.Nullable<System.DateTime> start_date
+	{
+		get
+		{
+			return this._start_date;
+		}
+		set
+		{
+			if ((this._start_date != value))
+			{
+				this.Onstart_dateChanging(value);
+				this.SendPropertyChanging();
+				this._start_date = value;
+				this.SendPropertyChanged("start_date");
+				this.Onstart_dateChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_signal_type", DbType="VarChar(50)")]
+	public string signal_type
+	{
+		get
+		{
+			return this._signal_type;
+		}
+		set
+		{
+			if ((this._signal_type != value))
+			{
+				this.Onsignal_typeChanging(value);
+				this.SendPropertyChanging();
+				this._signal_type = value;
+				this.SendPropertyChanged("signal_type");
+				this.Onsignal_typeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_type", DbType="VarChar(50)")]
+	public string type
+	{
+		get
+		{
+			return this._type;
+		}
+		set
+		{
+			if ((this._type != value))
+			{
+				this.OntypeChanging(value);
+				this.SendPropertyChanging();
+				this._type = value;
+				this.SendPropertyChanged("type");
+				this.OntypeChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_remark", DbType="VarChar(50)")]
+	public string remark
+	{
+		get
+		{
+			return this._remark;
+		}
+		set
+		{
+			if ((this._remark != value))
+			{
+				this.OnremarkChanging(value);
+				this.SendPropertyChanging();
+				this._remark = value;
+				this.SendPropertyChanged("remark");
+				this.OnremarkChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_contact", DbType="NChar(10)")]
+	public string contact
+	{
+		get
+		{
+			return this._contact;
+		}
+		set
+		{
+			if ((this._contact != value))
+			{
+				this.OncontactChanging(value);
+				this.SendPropertyChanging();
+				this._contact = value;
+				this.SendPropertyChanged("contact");
+				this.OncontactChanged();
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_output_power", DbType="VarChar(50)")]
+	public string output_power
+	{
+		get
+		{
+			return this._output_power;
+		}
+		set
+		{
+			if ((this._output_power != value))
+			{
+				this.Onoutput_powerChanging(value);
+				this.SendPropertyChanging();
+				this._output_power = value;
+				this.SendPropertyChanged("output_power");
+				this.Onoutput_powerChanged();
+			}
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IP_Bussiness_CMTS", Storage="_IP_Bussiness", ThisKey="bussiness_id", OtherKey="ID", IsForeignKey=true)]
 	public IP_Bussiness IP_Bussiness
 	{
@@ -6611,285 +7442,6 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		if ((this.PropertyChanged != null))
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-	}
-}
-
-[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.ClientTypeA")]
-public partial class ClientTypeA
-{
-	
-	private string _SUBSCRIBERNO;
-	
-	private string _DESCRIPTION;
-	
-	private string _CUSTOMER_NO;
-	
-	private string _CUSTTYPE;
-	
-	private string _LINKMAN;
-	
-	private string _EMAIL;
-	
-	private string _MOBILE_NO;
-	
-	private string _PHONE_NO;
-	
-	private string _FAX_NO;
-	
-	private string _ZIP_CODE;
-	
-	private string _ADDRESS;
-	
-	private string _TYPE;
-	
-	private string _REMARK;
-	
-	private string _CUSTOMER_LEVEL;
-	
-	private string _SALE_NAME;
-	
-	public ClientTypeA()
-	{
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SUBSCRIBERNO", DbType="NVarChar(255)")]
-	public string SUBSCRIBERNO
-	{
-		get
-		{
-			return this._SUBSCRIBERNO;
-		}
-		set
-		{
-			if ((this._SUBSCRIBERNO != value))
-			{
-				this._SUBSCRIBERNO = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DESCRIPTION", DbType="NVarChar(255)")]
-	public string DESCRIPTION
-	{
-		get
-		{
-			return this._DESCRIPTION;
-		}
-		set
-		{
-			if ((this._DESCRIPTION != value))
-			{
-				this._DESCRIPTION = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_NO", DbType="NVarChar(255)")]
-	public string CUSTOMER_NO
-	{
-		get
-		{
-			return this._CUSTOMER_NO;
-		}
-		set
-		{
-			if ((this._CUSTOMER_NO != value))
-			{
-				this._CUSTOMER_NO = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTTYPE", DbType="NVarChar(255)")]
-	public string CUSTTYPE
-	{
-		get
-		{
-			return this._CUSTTYPE;
-		}
-		set
-		{
-			if ((this._CUSTTYPE != value))
-			{
-				this._CUSTTYPE = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_LINKMAN", DbType="NVarChar(255)")]
-	public string LINKMAN
-	{
-		get
-		{
-			return this._LINKMAN;
-		}
-		set
-		{
-			if ((this._LINKMAN != value))
-			{
-				this._LINKMAN = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EMAIL", DbType="NVarChar(255)")]
-	public string EMAIL
-	{
-		get
-		{
-			return this._EMAIL;
-		}
-		set
-		{
-			if ((this._EMAIL != value))
-			{
-				this._EMAIL = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_MOBILE_NO", DbType="NVarChar(255)")]
-	public string MOBILE_NO
-	{
-		get
-		{
-			return this._MOBILE_NO;
-		}
-		set
-		{
-			if ((this._MOBILE_NO != value))
-			{
-				this._MOBILE_NO = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_PHONE_NO", DbType="NVarChar(255)")]
-	public string PHONE_NO
-	{
-		get
-		{
-			return this._PHONE_NO;
-		}
-		set
-		{
-			if ((this._PHONE_NO != value))
-			{
-				this._PHONE_NO = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_FAX_NO", DbType="NVarChar(255)")]
-	public string FAX_NO
-	{
-		get
-		{
-			return this._FAX_NO;
-		}
-		set
-		{
-			if ((this._FAX_NO != value))
-			{
-				this._FAX_NO = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ZIP_CODE", DbType="NVarChar(255)")]
-	public string ZIP_CODE
-	{
-		get
-		{
-			return this._ZIP_CODE;
-		}
-		set
-		{
-			if ((this._ZIP_CODE != value))
-			{
-				this._ZIP_CODE = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ADDRESS", DbType="NVarChar(255)")]
-	public string ADDRESS
-	{
-		get
-		{
-			return this._ADDRESS;
-		}
-		set
-		{
-			if ((this._ADDRESS != value))
-			{
-				this._ADDRESS = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TYPE", DbType="NVarChar(255)")]
-	public string TYPE
-	{
-		get
-		{
-			return this._TYPE;
-		}
-		set
-		{
-			if ((this._TYPE != value))
-			{
-				this._TYPE = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_REMARK", DbType="NVarChar(255)")]
-	public string REMARK
-	{
-		get
-		{
-			return this._REMARK;
-		}
-		set
-		{
-			if ((this._REMARK != value))
-			{
-				this._REMARK = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CUSTOMER_LEVEL", DbType="NVarChar(255)")]
-	public string CUSTOMER_LEVEL
-	{
-		get
-		{
-			return this._CUSTOMER_LEVEL;
-		}
-		set
-		{
-			if ((this._CUSTOMER_LEVEL != value))
-			{
-				this._CUSTOMER_LEVEL = value;
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_SALE_NAME", DbType="NVarChar(255)")]
-	public string SALE_NAME
-	{
-		get
-		{
-			return this._SALE_NAME;
-		}
-		set
-		{
-			if ((this._SALE_NAME != value))
-			{
-				this._SALE_NAME = value;
-			}
 		}
 	}
 }

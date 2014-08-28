@@ -15,6 +15,12 @@
 <script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
 $(function(){
+	$.post('/hsyw/ws.asmx/get_last_config_bussiness_id')
+	.done(function(result){
+		var json = JSON.parse(result);
+		var b_id = json['Bussiness_code'];
+		$('#id_bussiness_code').val(parseInt(b_id)+1);
+	});
 	$('#id_save').click(function(){
 		//var id=$('#id_id').val();
 		
@@ -27,6 +33,9 @@ $(function(){
 		var client_name = $('#id_client_name').val();
 		var config_date = $('#id_config_date').val();
 		var config_person = $('#id_config_person').val();
+		var line_code = $('#id_line_code').val();
+		var device_type = $('#id_device_type').val();
+		var room_id = $('#id_machine_room').val();
 		var post_dict = {};
 		//post_dict['id'] = id;
 		post_dict['bussiness_code'] = bussiness_code;
@@ -34,6 +43,9 @@ $(function(){
 		post_dict['client_name'] = client_name;
 		post_dict['config_person'] = config_person;
 		post_dict['config_date'] = config_date;
+		post_dict['line_code'] = line_code;
+		post_dict['device_type'] = device_type;
+		post_dict['room_id'] = room_id;
 		
 		$.post('/hsyw/ws.asmx/add_config',post_dict)
 		.done(function(result){
@@ -118,6 +130,41 @@ $(function(){
 		autoclose:true,
 		todayHighlight:true
 	});
+	$('#id_room_search').click(function(){
+		var post_dict = {};
+		var room_id = $('#id_room_id').val();
+		post_dict['room_id'] = room_id;
+		$('#search_field li').remove();
+		$.post('/hsyw/ws.asmx/search_room_by_room_id', post_dict)
+		.done(function(result){
+			var json = JSON.parse(result);
+			$.each(json,function(i,v){
+				var id = v['ID'];
+				var room_id = v['mac_id'];
+				var name = v['mac_name'];
+				var li_html = '<li class="list-group-item">'+
+					'<div class="row">'+
+					'<div class="col-md-1"><input type="radio" name="radio[]" data-id="'+ id +'"></div>'+
+					'<div>['+ room_id +'] '+ name +'</div>'+
+					'</div>'+
+					'</li>';
+				$('#search_field').append(li_html);
+			});
+		});
+	});
+	
+	$('#id_button_select').click(function(){
+		var object = $('input[type="radio"]:checked');
+		if(object !== null)
+		{
+			var id = object.attr('data-id');
+			var room_name = $(object.parent().parent()).text();
+			$('#id_machine_room').val(id);
+			$('#id_room_name').val(room_name);
+			$('#roomModal').modal('hide');
+		}
+		
+	});
 });
 </script>
 </head>
@@ -160,6 +207,28 @@ $(function(){
 	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 	</div>
 </div>
+<div class="form-group">
+	<label for="id_line_code">线路编码</label>
+	<input type="text" name="line_code" id="id_line_code" class="form-control">
+</div>
+<div class="form-group">
+	<label for="id_device_type">接入设备</label>
+	<select class="form-control" name="device_type" id="id_device_type">
+	<option value="EPON">EPON</option>
+	<option value="光机">光机</option>
+	<option value="CMTS">CMTS</option>
+	</select>
+</div>
+<div class="form-group">
+	<label for="id_room_name">机房</label>
+	<input type="hidden" name="room_id" id="id_machine_room">
+	<div class="input-group">
+	<input class="form-control" type="text" readonly="readonly" name="room_name"  id="id_room_name" >
+	<span class="input-group-btn">
+	<button class="btn btn-default" type="button" data-toggle="modal" data-target="#roomModal">选择</button>
+	</span>
+	</div>
+</div>
 </div>
 </div>
 
@@ -194,6 +263,40 @@ $(function(){
 
 
 </div>
+
+<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>请选择所属机房...</h4>
+</div>
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+<label class="sr-only" for="id_room_id">room_id</label>
+<input type="text" class="form-control" id="id_room_id" placeholder="请输入机房ID">
+</div>
+<button type="button" id="id_room_search" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>
+查询
+</button>
+<p></p>
+<div id="search_field" class="list-group">
+</div>
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<button type="button" class="btn btn-primary" id="id_button_select">确定</button>
+</div>
+</div>
+</div>
+</div>
+
+
 </div>
 
 </body>

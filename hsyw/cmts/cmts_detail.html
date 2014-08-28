@@ -48,6 +48,32 @@ $(function(){
 		post_dict.device_code = device_code;
 		post_dict.belong_to  = belong_to;
 		post_dict.room_id = room_id;
+		post_dict['belong_to'] = $('#id_belong_to').val();
+		post_dict['room_id'] = $('#id_machine_room').val();
+		post_dict['bussiness_id'] = $('#id_bussiness_id').val();
+		post_dict['distance_to_transfer'] = $('#id_distance_to_transfer').val();
+		post_dict['transfer_code'] = $('#id_transfer_code').val();
+		post_dict['transfer_fiber_num'] = $('#id_transfer_fiber_num').val();
+		post_dict['older_num'] = $('#id_older_num').val();
+		post_dict['distance_between_transfer_to_room'] = $('#id_distance_between_transfer_to_room').val();
+		post_dict['code_between_transfer_to_room'] = $('#id_code_between_transfer_to_room').val();
+		post_dict['room_fiber'] = $('#id_room_fiber').val();
+		post_dict['onu'] = $('#id_onu').val();
+		post_dict['switcher_code'] = $('#id_switcher_code').val();
+		post_dict['gigabit_alloc_port'] = $('#id_gigabit_alloc_port').val();
+		post_dict['wave_length'] = $('#id_wave_length').val();
+		post_dict['splitter_code'] = $('#id_splitter_code').val();
+		post_dict['spot_code'] = $('#id_spot_code').val();
+		post_dict['spot_name'] = $('#id_spot_name').val();
+		post_dict['spot_receiver_fiber_num'] = $('#id_spot_receiver_fiber_num').val();
+		post_dict['distance_between_transfer_to_spot'] = $('#id_distance_between_transfer_to_spot').val();
+		post_dict['output_power'] = $('#id_output_power').val();
+		post_dict['unit'] = $('#id_unit').val();
+		post_dict['start_date'] = $('#id_start_date').val();
+		post_dict['signal_type'] = $('#id_signal_type').val();
+		post_dict['remark'] = $('#id_remark').val();
+		post_dict['contact'] = $('#id_contact').val();
+		post_dict['type'] = $('#id_type').val();
 		
 		$.post('/hsyw/ws.asmx/edit_cmts',post_dict)
 		.done(function(result){
@@ -88,6 +114,32 @@ $(function(){
 			$('#id_device_code').val(device_code);
 			$('#id_belong_to').val(belong_to);
 			$('#id_machine_room').val(room_id);
+			//json['belong_to'] = $('#id_belong_to').val();
+		//json['room_id'] = $('#id_machine_room').val();
+		//json['bussiness_id'] = $('#id_bussiness_id').val();
+			$('#id_distance_to_transfer').val(dict['distance_to_transfer']);
+			$('#id_transfer_code').val(dict['transfer_code']);
+			$('#id_transfer_fiber_num').val(dict['transfer_fiber_num']);
+			$('#id_older_num').val(dict['older_num']);
+			$('#id_distance_between_transfer_to_room').val(dict['distance_between_transfer_to_room'] );
+			$('#id_code_between_transfer_to_room').val(dict['code_between_transfer_to_room']);
+			$('#id_room_fiber').val(dict['room_fiber']);
+			$('#id_onu').val(dict['onu']);
+			$('#id_switcher_code').val(dict['switcher_code']);
+			$('#id_gigabit_alloc_port').val(dict['gigabit_alloc_port']);
+			$('#id_wave_length').val(dict['wave_length']);
+			$('#id_splitter_code').val(dict['splitter_code']);
+			$('#id_spot_code').val(dict['spot_code']);
+			$('#id_spot_name').val(dict['spot_name']);
+			$('#id_spot_receiver_fiber_num').val(dict['spot_receiver_fiber_num']);
+			$('#id_distance_between_transfer_to_spot').val(dict['distance_between_transfer_to_spot']);
+			$('#id_output_power').val(dict['output_power']);
+			$('#id_unit').val(dict['unit']);
+			$('#id_start_date').val(dict['start_date']);
+			$('#id_signal_type').val(dict['signal_type']);
+			$('#id_remark').val(dict['remark']);
+			$('#id_contact').val(dict['contact']);
+			$('#id_type').val(dict['type']);
 		}
 		else
 		{
@@ -176,12 +228,129 @@ $(function(){
 </span>
 </div>
 </div>
-</fieldset>
+<div class="form-group">
+<label for="id_distance_to_transfer">机房至交接箱距离</label>
+<input id="id_distance_to_transfer" type="text" class="form-control" name="distance_to_transfer">
+</div>
+<div class="form-group">
+<label for="id_transfer_code">交接箱编号</label>
+<input type="text" class="form-control" name="transfer_code" id="id_transfer_code">
+</div>
+<div class="form-group">
+<label for="id_transfer_fiber_num">交接箱配纤号</label>
+<input type="text" class="form-control" name="transfer_fiber_num" id="id_transfer_fiber_num">
+</div>
+<div class="form-group">
+<label for="id_older_num">新老沟通纤号</label>
+<input type="text" class="form-control" id="id_older_num"  name="older_num">
+</div>
+<div class="form-group">
+<label for="id_distance_between_transfer_to_room">交接箱至小区机房距离</label>
+<input type="text" class="form-control" id="id_distance_between_transfer_to_room" name="distance_between_transfer_to_room">
+</div>
+<div class="form-group">
+<label for="id_code_between_transfer_to_room">交接箱至小区机房编号</label>
+<input type="text" class="form-control" id="id_code_between_transfer_to_room" name="code_between_transfer_to_room">
+</div>
+<div class="form-group">
+<label for="id_room_fiber">小区机房配纤</label>
+<input class="form-control" type="text" id="id_room_fiber" name="room_fiber">
+</div>
+<div class="form-group">
+<label for="id_onu">ONU型号</label>
+<input class="form-control" type="text" id="id_onu" name="onu">
+</div>
+<div class="form-group">
+<label for="id_switcher_code">交换机编号</label>
+<input class="form-control" type="text" name="switcher_code" id="id_switcher_code">
+</div>
+<div class="form-group">
+<label for="id_gigabit_alloc_port">千兆分配端口号</label>
+<input class="form-control" type="text" id="id_gigabit_alloc_port" name="gigabit_alloc_port">
+</div>
+<div class="form-group">
+<label for="id_wave_length">接入端口波长</label>
+<select id="id_wave_length" class="form-control">
+<option value="1270">1270</option>
+<option value="1290">1290</option>
+<option value="1310">1310</option>
+<option value="1330">1330</option>
+<option value="1350">1350</option>
+<option value="1410">1410</option>
+<option value="1430">1430</option>
+<option value="1450">1450</option>
+<option value="1470">1470</option>
+<option value="1490">1490</option>
+<option value="1510">1510</option>
+<option value="1530">1530</option>
+<option value="1550">1550</option>
+<option value="1570">1570</option>
+<option value="1590">1590</option>
+<option value="1610">1610</option>
+</select>
+<!--<input class="form-control" type="text" id="id_wave_length" name="wave_length"> -->
+</div>
+<div class="form-group">
+<label for="id_splitter_code">分路器编号（型号）</label>
+<input class="form-control" type="text" id="id_splitter_code" name="splitter_code">
+</div>
+<div class="form-group">
+<label for="id_spot_code">光点编号</label>
+<input class="form-control" type="text" id="id_spot_code" name="spot_code">
+</div>
+<div class="form-group">
+<label for="id_spot_name">光点名称</label>
+<input class="form-control" type="text" id="id_spot_name" name="spot_name">
+</div>
+<div class="form-group">
+<label for="id_spot_receiver_fiber_num">光收机纤号
+</label>
+<input class="form-control" type="text" id="id_spot_receiver_fiber_num" name="spot_receiver_fiber_num">
+</div>
+<div class="form-group">
+<label for="id_distance_between_transfer_to_spot">交接箱至光点距离</label>
+<input class="form-control" type="text" id="id_distance_between_transfer_to_spot" name="distance_between_transfer_to_spot">
+</div>
+<div class="form-group">
+<label for="id_output_power">输出功率</label>
+<input class="form-control" type="text" id="id_output_power" name="output_power">
+</div>
+<div class="form-group">
+<label for="id_unit">施工单位
+</label>
+<input class="form-control" type="text" id="id_unit" name="unit">
+</div>
+<div class="form-group">
+<label for="id_start_date">开通时间
+</label>
+<input class="form-control" type="text" id="id_start_date" name="start_date">
+</div>
+<div class="form-group">
+<label for="id_signal_type">信号类别</label>
+<input class="form-control" type="text" id="id_signal_type" name="signal_type">
+</div>
+<div class="form-group">
+<label for="id_type">类型
+</label>
+<input class="form-control" type="text" id="id_type" name="type">
+</div>
+<div class="form-group">
+<label for="id_remark">备注
+</label>
+<input class="form-control" type="text" id="id_remark" name="remark">
+</div>
+<div class="form-group">
+<label for="id_contact">酒店联系人
+</label>
+<input class="form-control" type="text" id="id_contact" name="contact">
+</div>
+
 <hr>
 <div class="form-group">
 <button class="btn btn-danger" data-toggle="modal" data-target="#myModal" type="button" id="id_button_delete_confirm"><span class="glyphicon glyphicon-remove"></span> 删除</button>
 <button class="btn btn-primary" type="button" id="id_button_save"><span class="glyphicon glyphicon-save"></span> 保存</button>
 </div>
+</fieldset>
 </form>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

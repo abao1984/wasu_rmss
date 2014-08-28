@@ -303,18 +303,61 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void edit_cmts(string id,string device_code, string belong_to, string room_id)
+    public void edit_cmts()
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
+        var form = HttpContext.Current.Request.Form;
         try {
-            var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(id)).FirstOrDefault();
-            e.device_code = device_code;
-            e.belong_to = belong_to;
-            e.room_id = Convert.ToInt32(room_id);
-            dc.SubmitChanges();
+            var e = dc.CMTS.Where(c => c.id == Convert.ToInt32(form["id"])).FirstOrDefault();
+            e.device_code = form["device_code"];
+            e.belong_to = form["belong_to"];
+            e.room_id = Convert.ToInt32(form["room_id"]);
+            //device_code = form["device_code"],
+            //        belong_to = form["belong_to"],
+            //        room_id = Convert.ToInt32(form["room_id"]),
+             e.bussiness_id = Convert.ToInt32(form["bussiness_id"]);
+             e.distance_to_transfer = form["distance_to_transfer"];
+             e.transfer_code = form["transfer_code"];
+             e.transfer_fiber_num = form["transfer_fiber_num"];
+             e.older_num = form["older_num"];
+             e.distance_between_transfer_to_room = form["distance_between_transfer_to_room"];
+             e.code_between_transfer_to_room = form["code_between_transfer_to_room"];
+             e.room_fiber = form["room_fiber"];
+             e.onu = form["onu"];
+             e.switcher_code = form["switcher_code"];
+             e.gigabit_alloc_port = form["gigabit_alloc_port"];
+             e.wave_length = form["wave_length"];
+             e.splitter_code = form["splitter_code"];
+             e.spot_code = form["spot_code"];
+             e.spot_name = form["spot_name"];
+             e.spot_receiver_fiber_num = form["spot_receiver_fiber_num"];
+             e.distance_between_transfer_to_spot = form["distance_between_transfer_to_spot"];
+             e.unit = form["unit"];
+                    //start_date = date,//DateTime.Parse(form["start_date"]),
+             e.signal_type = form["signal_type"];
+             e.type = form["type"];
+             e.remark = form["remark"];
+             e.contact = form["contact"];
+             e.output_power = form["output_power"];
+             if (form["start_date"].Length > 0)
+             {
+                 e.start_date = DateTime.Parse(form["start_date"]);
+             }
+             else
+             {
+                 e.start_date = null;
+             }
+             if (form["bussiness_id"]!=null)
+             {
+                 e.bussiness_id = Convert.ToInt32(form["bussiness_id"]);
+             }
+             else
+             {
+                 e.bussiness_id = null;
+             }
 
+            dc.SubmitChanges();
             dict.Add("result", "0");
-             
             
         }
         catch (Exception ex)
@@ -416,6 +459,12 @@ public class ws : System.Web.Services.WebService {
             string client_name = form["client_name"];
             string config_person = form["config_person"];
             string config_date = form["config_date"];
+            string line_code = form["line_code"];
+            string device_type = form["device_type"];
+            string room_id = form["room_id"];
+
+            var m = dc.MachineRoom.Where(c => c.ID == Convert.ToInt32(room_id)).FirstOrDefault();
+
 
             var e = new IP_Bussiness
             {
@@ -424,6 +473,9 @@ public class ws : System.Web.Services.WebService {
                 khmc = client_name,
                 pzr = config_person,
                 pzsj = config_date,
+                Line_code = line_code,
+                sbmc = device_type,
+                macid = m.mac_id,
             };
             dc.IP_Bussiness.InsertOnSubmit(e);
             dc.SubmitChanges();
@@ -440,9 +492,16 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void get_last_config_bussiness_id()
+    { 
+        var entity = dc.ExecuteQuery<IP_Bussiness>("select *,num=CAST((Bussiness_code) as int) from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 order by num desc").FirstOrDefault();
+        writeJSONResponse(entity);
+    }
+
+    [WebMethod]
     public void get_config_list()
     {
-        var list = dc.IP_Bussiness.OrderBy(c=>c.ID);
+        var list = dc.ExecuteQuery<IP_Bussiness>("select *,num=CAST((Bussiness_code) as int) from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 order by num desc");
         var form = HttpContext.Current.Request.Form;
         string bussiness_code = form["bussiness_code"];
         string client = form["client"];
@@ -466,12 +525,7 @@ public class ws : System.Web.Services.WebService {
     [WebMethod]
     public void add_cmts_temp()
     {
-        var form = HttpContext.Current.Request.Form;
-        string device_code = form["device_code"];
-        string belong_to = form["belong_to"];
-        string room_id = form["room_id"];
-        add_cmts(device_code, belong_to,room_id,"");
-            
+        add_cmts();         
     }
 
     [WebMethod]
@@ -568,6 +622,13 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void machine_room_detail_by_room_id(string room_id)
+    {
+        var e = dc.MachineRoom.Where(c => c.mac_id == room_id).FirstOrDefault();
+        writeJSONResponse(e);
+    }
+
+    [WebMethod]
     public void machine_room_detail(string id)
     {
         var e = dc.MachineRoom.Where(c => c.ID == Convert.ToInt32(id)).FirstOrDefault();
@@ -575,31 +636,90 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void add_cmts(string device_code, string belong_to, string room_id,string bussiness_id)
+    public void add_cmts()
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
+        var form = HttpContext.Current.Request.Form;
         try
         {
-            if (bussiness_id.Length > 0)
+            
+            if (form["bussiness_id"].Length > 0)
             {
                 var cmts = new CMTS
                 {
-                    device_code = device_code,
-                    belong_to = belong_to,
-                    room_id = Convert.ToInt32(room_id),
-                    bussiness_id = Convert.ToInt32(bussiness_id)
+                    device_code = form["device_code"],
+                    belong_to = form["belong_to"],
+                    room_id = Convert.ToInt32(form["room_id"]),
+                    bussiness_id = Convert.ToInt32(form["bussiness_id"]),
+                    distance_to_transfer = form["distance_to_transfer"],
+                    transfer_code = form["transfer_code"],
+                    transfer_fiber_num = form["transfer_fiber_num"],
+                    older_num = form["older_num"],
+                    distance_between_transfer_to_room = form["distance_between_transfer_to_room"],
+                    code_between_transfer_to_room = form["code_between_transfer_to_room"],
+                    room_fiber = form["room_fiber"],
+                    onu = form["onu"],
+                    switcher_code = form["switcher_code"],
+                    gigabit_alloc_port = form["gigabit_alloc_port"],
+                    wave_length = form["wave_length"],
+                    splitter_code = form["splitter_code"],
+                    spot_code = form["spot_code"],
+                    spot_name = form["spot_name"],
+                    spot_receiver_fiber_num = form["spot_receiver_fiber_num"],
+                    distance_between_transfer_to_spot = form["distance_between_transfer_to_spot"],
+                    unit = form["unit"],
+                    //start_date = date,//DateTime.Parse(form["start_date"]),
+                    signal_type = form["signal_type"],
+                    type = form["type"],
+                    remark = form["remark"],
+                    contact = form["contact"],
+                    output_power = form["output_power"]
+
 
                 };
+                if (form["start_date"].Length > 0)
+                {
+                    cmts.start_date = DateTime.Parse(form["start_date"]);
+                }
                 dc.CMTS.InsertOnSubmit(cmts);
             }
             else 
             {
                 var cmts = new CMTS
                 {
-                    device_code = device_code,
-                    belong_to = belong_to,
-                    room_id = Convert.ToInt32(room_id),
+                    device_code = form["device_code"],
+                    belong_to = form["belong_to"],
+                    room_id = Convert.ToInt32(form["room_id"]),
+                    distance_to_transfer = form["distance_to_transfer"],
+                    transfer_code = form["transfer_code"],
+                    transfer_fiber_num = form["transfer_fiber_num"],
+                    older_num = form["older_num"],
+                    distance_between_transfer_to_room = form["distance_between_transfer_to_room"],
+                    code_between_transfer_to_room = form["code_between_transfer_to_room"],
+                    room_fiber = form["room_fiber"],
+                    onu = form["onu"],
+                    switcher_code = form["switcher_code"],
+                    gigabit_alloc_port = form["gigabit_alloc_port"],
+                    wave_length = form["wave_length"],
+                    splitter_code = form["splitter_code"],
+                    spot_code = form["spot_code"],
+                    spot_name = form["spot_name"],
+                    spot_receiver_fiber_num = form["spot_receiver_fiber_num"],
+                    distance_between_transfer_to_spot = form["distance_between_transfer_to_spot"],
+                    unit = form["unit"],
+                    //start_date = DateTime.Parse(form["start_date"]),
+                    signal_type = form["signal_type"],
+                    type = form["type"],
+                    remark = form["remark"],
+                    contact = form["contact"],
+                    output_power = form["output_power"]
                 };
+
+                if (form["start_date"].Length > 0)
+                {
+                    cmts.start_date = DateTime.Parse(form["start_date"]);
+                }
+
                 dc.CMTS.InsertOnSubmit(cmts);
             }
             
