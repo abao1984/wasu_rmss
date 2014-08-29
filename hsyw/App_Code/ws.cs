@@ -501,25 +501,42 @@ public class ws : System.Web.Services.WebService {
     [WebMethod]
     public void get_config_list()
     {
-        var list = dc.ExecuteQuery<IP_Bussiness>("select *,num=CAST((Bussiness_code) as int) from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 order by num desc");
+        Regex reNum = new Regex(@"^\d+$");
+        //var list=dc.IP_Bussiness.Where(c=>reNum.Match(c.Bussiness_code).Success);
+        var list = from a in dc.IP_Bussiness.AsEnumerable()
+                   where reNum.IsMatch(a.Bussiness_code)
+                   select a;
+
+        //var list = dc.ExecuteQuery<IP_Bussiness>("select *,num=CAST((Bussiness_code) as int) from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 order by num desc");
         var form = HttpContext.Current.Request.Form;
         string bussiness_code = form["bussiness_code"];
         string client = form["client"];
         string device_info = form["device_info"];
-        if (bussiness_code.Trim().Length > 0)
+        if (bussiness_code!=null)
         {
-            list = list.Where(c => c.Bussiness_code.Contains(bussiness_code)).OrderBy(c=>c.ID);
+            list = list.Where(c => c.Bussiness_code.Contains(bussiness_code));
         }
-        if (client.Trim().Length > 0)
+        if (client!=null)
         {
-            list = list.Where(c => c.khmc.Contains(client)).OrderBy(c => c.ID);
+            list = list.Where(c => c.khmc.Contains(client));
         }
 
-        if (device_info.Trim().Length > 0)
+        if (device_info!=null)
         {
-            list = list.Where(c => c.sbpzxx.Contains(device_info)).OrderBy(c => c.ID);
+            list = list.Where(c => c.sbpzxx.Contains(device_info));
         }
-        writeJSONResponse(list.Take(100));
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        int skip_count = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
+        int count = list.Count();
+        list = list.Skip(skip_count).Take(display_length);
+        string json_str = jsonString(list);
+        
+        dict.Add("aaData", list);
+        dict.Add("iTotalRecodes", count);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("iTotalDisplayRecords", count);
+        writeJSONResponse(dict);
     }
 
     [WebMethod]
@@ -1167,14 +1184,23 @@ select count(zbguid) from {1} where trunc(gzsdsj)=trunc(sysdate) and fdzzt='ÈÅóÂ
         Context.Response.End();
         
     }
-  
+
+    private string jsonString(Object o)
+    {
+
+        Encoding encode = System.Text.Encoding.GetEncoding("Unicode");
+        //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+        var serializerSettings = new JsonSerializerSettings { ReferenceLoopHandling = ReferenceLoopHandling.Ignore };
+        string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented, serializerSettings);
+        return jsonData;
+    }
+
+
 
     private void writeJSONResponse(Object o)
     {
-        Encoding encode = System.Text.Encoding.GetEncoding("Unicode");
-        //config.Formatters.JsonFormatter.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
-        var serializerSettings = new JsonSerializerSettings {ReferenceLoopHandling = ReferenceLoopHandling.Ignore};
-        string jsonData = JsonConvert.SerializeObject(o, Formatting.Indented,serializerSettings);
+
+        string jsonData = jsonString(o);
         Context.Response.AddHeader("Content-type", "text/html;charset=UTF-8");
         Context.Response.Write(jsonData);
         Context.Response.End();

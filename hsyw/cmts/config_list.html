@@ -8,10 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
-<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
 <script src="/hsyw/bootstrap/notify.min.js"></script>
 <style>
 body {
@@ -20,6 +21,60 @@ body {
 </style>
 <script>
     $(function () {
+		
+		var dataTable = $('#id_configure_table').dataTable({
+			'bProcessing':true,
+			'bServerSide':true,
+			'bLengthChange':false,
+			'bFilter':false,
+			'iDisplayLength':25,
+			'language':{
+				url:'/hsyw/bootstrap/datatables/Chinese.json'
+			},
+			//'aLlengthMenu':[[100]],
+			'columnDefs':[{
+				'targets':0,
+				'data':'ID',
+				'render':function(data,type,full,meta){
+					var  a = data;
+					return '<input name="check[]" type="checkbox" data-id="'+ full.ID +'">';
+					}
+				},
+				{
+					'targets':1,
+					'data':'Bussiness_code',
+					'render':function(data,type,full,meta)
+					{
+						return '<a href="/hsyw/cmts/config_detail.html?id='+full.ID+'">'+ full.Bussiness_code +'</a>'
+					}
+				}
+			],
+			'columns':[
+				{'data':null},
+				{'data':'Bussiness_code'},
+				{'data':'sbpzxx'},
+				{'data':'khmc'}
+			],
+			'sAjaxSource':'/hsyw/ws.asmx/get_config_list',
+			'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+				var post_dict = {};
+				aoData.push({'name':'bussiness_code','value':$('#id_code').val()});
+				aoData.push({'name':'client','value':$('#id_client').val()});
+				aoData.push({'name':'device_info','value':$('#id_device_info').val()});
+				
+				oSettings.jqXHR = $.ajax({
+					'dataType':'json',
+					'type':'POST',
+					'url':sSource,
+					'data':aoData,
+					'success':fnCallback
+				});
+			},
+		});
+		
+		//dataTable.fnDraw();		
+		
+		
 		function searchConfigList(bussiness_code,client,device_info)
 		{
 			var post_dict = {};
@@ -62,9 +117,11 @@ body {
 			searchConfigList(bcode, client,device_info);
 		}
 		
-		doSearch();
+		//doSearch();
 		$('#id_search').click(function(){
-			doSearch();
+			var table = dataTable.DataTable();
+			//table.clear().draw();
+			table.ajax.reload();
 		});
 		
 		$('#id_add_config').click(function(){
@@ -201,13 +258,17 @@ body {
 <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-import"></span>&nbsp;导入</button>
 </form>
 <p></p>
-<table id="id_configure_table" class="table table-hover">
+<table id="id_configure_table" class="table table-striped table-bordered">
+<thead>
 <tr>
 <th>选择</th>
 <th>业务编码</th>
 <th>设备配置信息</th>
 <th>客户名称</th>
 </tr>
+<thead>
+<tbody>
+</tbody>
 </table>
 </div>
 </div>
