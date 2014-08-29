@@ -615,13 +615,28 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void get_available_cmts_list(string device_code)
+    public void get_available_cmts_list()
     {
+        var form = HttpContext.Current.Request.Form;
+        string device_code = form["device_code"];
         var li = dc.CMTS.Where(c => c.bussiness_id == null).OrderBy(c => c.id);
         if (device_code.Length > 0)
         {
             li = li.Where(c => c.device_code.Contains(device_code)).OrderBy(c => c.id);
         }
+
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        int skip_count = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
+        int count = li.Count();
+        li = li.Skip(skip_count).Take(display_length).OrderBy(c=>c.id);
+        string json_str = jsonString(li);
+
+        dict.Add("aaData", li);
+        dict.Add("iTotalRecodes", count);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("iTotalDisplayRecords", count);
+        writeJSONResponse(dict);
 
         writeJSONResponse(li);
     
