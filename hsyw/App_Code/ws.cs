@@ -372,9 +372,24 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void search_room_by_room_id(string room_id)
+    public void search_room_by_room_id()
     {
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        var form = HttpContext.Current.Request.Form;
+        string room_id = form["room_id"];
         var entities = dc.MachineRoom.Where(c => c.mac_id.Contains(room_id.Trim())).OrderBy(c => c.ID);
+
+        int skip_count = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
+        int count = entities.Count();
+        entities = entities.Skip(skip_count).Take(display_length).OrderBy(c=>c.ID);
+
+        dict.Add("aaData", entities);
+        dict.Add("iTotalRecodes", count);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("iTotalDisplayRecords", count);
+        writeJSONResponse(dict);
+
         writeJSONResponse(entities.Take(100));
     }
 

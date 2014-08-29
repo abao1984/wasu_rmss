@@ -8,13 +8,54 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
 <link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
 <script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
 <script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
 $(function(){
+	
+	var dataTable = $('#id_table_machine_room').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'pagingType':'full',
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'ID',
+				'render':function(data,type,full,meta){
+					return '<input type="radio" name="radio[]" data-id="'+ full.ID +'">';
+				}
+			}
+		],
+		'columns':[
+			{'data':null},
+			{'data':'mac_id'},
+			{'data':'mac_name'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/search_room_by_room_id',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'room_id','value':$('#id_room_id').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
+
 	$.post('/hsyw/ws.asmx/get_last_config_bussiness_id')
 	.done(function(result){
 		var json = JSON.parse(result);
@@ -107,17 +148,18 @@ $(function(){
 			{
 				var client  = json_obj['client'];
 				$('#id_client_helper').remove();
-				$('#id_client_code').text(client.CUSTOMER_NO);
-				$('#id_unit').text(client.DESCRIPTION);
-				$('#id_address').text(client.ADDRESS);
-				$('#id_client_sales').text(client.SALE_NAME);
-				$('#id_contact_person').text(client.LINKMAN);
-				$('#id_mobile').text(client.MOBILE_NO);
-				$('#id_client_phone').text(client.PHONE_NO);
-				$('#id_client_type').text(client.CUSTTYPE);
+				$('#id_client_code').val(client.CUSTOMER_NO);
+				$('#id_unit').val(client.DESCRIPTION);
+				$('#id_address').val(client.ADDRESS);
+				$('#id_client_sales').val(client.SALE_NAME);
+				$('#id_contact_person').val(client.LINKMAN);
+				$('#id_mobile').val(client.MOBILE_NO);
+				$('#id_client_phone').val(client.PHONE_NO);
+				$('#id_client_type').val(client.CUSTTYPE);
 			}
 			else
 			{
+				$('#id_client_helper').remove();
 				var help_html = '<span class="help-block" id="id_client_helper">没有找到相关客户信息</span>';
 				$('#id_bussiness_code').parent().append(help_html);
 			}
@@ -131,6 +173,9 @@ $(function(){
 		todayHighlight:true
 	});
 	$('#id_room_search').click(function(){
+		var table = $('#id_table_machine_room').DataTable();
+		table.ajax.reload();
+		/*
 		var post_dict = {};
 		var room_id = $('#id_room_id').val();
 		post_dict['room_id'] = room_id;
@@ -151,6 +196,7 @@ $(function(){
 				$('#search_field').append(li_html);
 			});
 		});
+		*/
 	});
 	
 	$('#id_button_select').click(function(){
@@ -158,9 +204,12 @@ $(function(){
 		if(object !== null)
 		{
 			var id = object.attr('data-id');
-			var room_name = $(object.parent().parent()).text();
+			var room_id_td = $(object.parent().parent()).find('td')[1];
+			var room_id = $(room_id_td).text();
+			var room_name_td = $(object.parent().parent()).find('td')[2];
+			var room_name = $(room_name_td).text();
 			$('#id_machine_room').val(id);
-			$('#id_room_name').val(room_name);
+			$('#id_room_name').val('['+room_id+']:'+room_name);
 			$('#roomModal').modal('hide');
 		}
 		
@@ -173,7 +222,7 @@ $(function(){
 <div class="row">
 <div class="col-xs-12">
 <p></p>
-<form role="form">
+<form role="form" class="form-horizontal">
 <div class="panel panel-primary">
 <div class="panel-heading">
 业务信息
@@ -184,84 +233,147 @@ $(function(){
 <label for="id_id" class="sr-only">id</label>
 <input type="hidden" name="id" id="id_id">
 </div>
-<div class="form-group">
-	<label for="id_bussiness_code">业务编码</label>
-	<input  type="text" name="bussines_code" id="id_bussiness_code" class="form-control">
-</div>
-<div class="form-group">
-	<label for="id_device_info">设备配置信息</label>
-	<input type="text" name="device_info" id="id_device_info" class="form-control">
-</div>
-<div class="form-group">
-	<label for="id_client_name">客户名称</label>
-	<input type="text" name="client_name" id="id_client_name" class="form-control">
-</div>
-<div class="form-group">
-	<label for="id_config_person">配置人</label>
-	<input type="text" name="config_person" id="id_config_person" class="form-control">
-</div>
-<div class="form-group">
-	<label for="id_config_date">配置时间</label>
-	<div class="input-group date">
-	<input type="text" name="config_date" id="id_config_date" class="form-control">
-	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+<div class="row">
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+	<label for="id_bussiness_code" class="control-label col-xs-3">业务编码</label>
+	<div class="col-xs-4">
+		<input  type="text" name="bussines_code" id="id_bussiness_code" class="form-control input-sm">
 	</div>
 </div>
-<div class="form-group">
-	<label for="id_line_code">线路编码</label>
-	<input type="text" name="line_code" id="id_line_code" class="form-control">
+<div class="form-group form-group-sm">
+	<label class="col-sm-3 control-label" for="id_device_info">设备配置信息</label>
+	<div class="col-sm-4">
+		<input type="text" name="device_info" id="id_device_info" class="form-control input-sm">
+	</div>
 </div>
-<div class="form-group">
-	<label for="id_device_type">接入设备</label>
-	<select class="form-control" name="device_type" id="id_device_type">
+<div class="form-group form-group-sm">
+	<label for="id_client_name" class="control-label col-sm-3">客户名称</label>
+	<div class="col-sm-4">
+	<input type="text" name="client_name" id="id_client_name" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_config_person" class="col-sm-3 control-label">配置人</label>
+	<div class="col-sm-4">
+		<input type="text" name="config_person" id="id_config_person" class="form-control input-sm">
+	</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+	<label for="id_config_date" class="col-sm-3 control-label">配置时间</label>
+	<div class="col-sm-4">
+	<div class="input-group date">
+	<input type="text" name="config_date" id="id_config_date" class="form-control input-sm">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	</div>
+	</div>
+	
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_line_code" class="col-sm-3 control-label">线路编码</label>
+	<div class="col-sm-4">
+		<input type="text" name="line_code" id="id_line_code" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_device_type" class="col-sm-3 control-label">接入设备</label>
+	<div class="col-sm-4">
+	<select class="form-control input-sm" name="device_type" id="id_device_type">
 	<option value="EPON">EPON</option>
 	<option value="光机">光机</option>
 	<option value="CMTS">CMTS</option>
 	</select>
-</div>
-<div class="form-group">
-	<label for="id_room_name">机房</label>
-	<input type="hidden" name="room_id" id="id_machine_room">
-	<div class="input-group">
-	<input class="form-control" type="text" readonly="readonly" name="room_name"  id="id_room_name" >
-	<span class="input-group-btn">
-	<button class="btn btn-default" type="button" data-toggle="modal" data-target="#roomModal">选择</button>
-	</span>
 	</div>
 </div>
+<div class="form-group form-group-sm">
+	<label for="id_room_name" class="control-label col-sm-3">机房</label>
+	<div class="col-sm-4">
+		<input type="hidden" name="room_id" id="id_machine_room">
+		<div class="input-group">
+		<input class="form-control input-sm" type="text" readonly="readonly" name="room_name"  id="id_room_name" >
+		<span class="input-group-btn">
+		<button class="btn btn-default btn-sm" type="button" data-toggle="modal" data-target="#roomModal">选择</button>
+		</span>
+		</div>
+	</div>
+</div>
+
+</div>
+
+</div>
+
+
 </div>
 </div>
 
 <div class="panel panel-info">
 <div class="panel-heading">客户信息</div>
 <div class="panel-body">
-<dl class="dl-horizontal">
-<dt >客户编号<dt>
-<dd id="id_client_code"><dd>
-<dt>用户类型<dt>
-<dd id="id_client_type"><dd>
-<dt >接入单位<dt>
-<dd id="id_unit"><dd>
-<dt>销售员<dt>
-<dd id="id_client_sales"><dd>
-<dt>用户负责人<dt>
-<dd id="id_contact_person"><dd>
-<dt>座机<dt>
-<dd id="id_client_phone"><dd>
-<dt>手机<dt>
-<dd id="id_mobile"><dd>
-<dt>Email<dt>
-<dd id="id_email"><dd>
-<dt>用户地址<dt>
-<dd id="id_address"><dd>
-</dl>
+<fieldset disabled>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+<label for="id_client_code" class="control-label col-sm-3">客户编号</label>
+<div class="col-sm-4">
+<input id="id_client_code" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_type" class="control-label col-sm-3">用户类型</label>
+<div class="col-sm-4">
+<input id="id_client_type" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_unit" class="control-label col-sm-3">接入单位</label>
+<div class="col-sm-4">
+<input id="id_unit" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_sales" class="control-label col-sm-3">销售员</label>
+<div class="col-sm-4">
+<input id="id_client_sales" class="form-control input-sm" type="text">
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+<label for="id_contact_person" class="control-label col-sm-3">用户负责人</label>
+<div class="col-sm-4">
+<input id="id_contact_person" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_phone" class="control-label col-sm-3">座机</label>
+<div class="col-sm-4">
+<input id="id_client_phone" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_mobile" class="control-label col-sm-3">手机</label>
+<div class="col-sm-4">
+<input id="id_mobile" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_address" class="control-label col-sm-3">用户地址</label>
+<div class="col-sm-4">
+<input id="id_address" class="form-control input-sm" type="text">
+</div>
+</div>
+</div>
+</div>
+</fieldset>
 </div>
 </div>
 
 </form>
-
-
-
 </div>
 
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -283,9 +395,19 @@ $(function(){
 <button type="button" id="id_room_search" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>
 查询
 </button>
-<p></p>
+<hr>
+<table id="id_table_machine_room" class="table table-striped table-bordered">
+<thead>
+<th>选择</th>
+<th>机房ID</th>
+<th>机房名称</th>
+</thead>
+<tbody></tbody>
+</table>
+<!--
 <div id="search_field" class="list-group">
 </div>
+-->
 </form>
 </div>
 <div class="modal-footer">
