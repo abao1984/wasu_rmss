@@ -8,11 +8,67 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
+<script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
+<script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
+<style>
+body {
+  padding-top: 50px;
+}
+</style>
+
 <script>
 $(function(){
 
+	var dataTable = $('#id_table_machine_room').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'pagingType':'full',
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'ID',
+				'render':function(data,type,full,meta){
+					return '<input type="radio" name="radio[]" data-id="'+ full.ID +'">';
+				}
+			}
+		],
+		'columns':[
+			{'data':null},
+			{'data':'mac_id'},
+			{'data':'mac_name'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/search_room_by_room_id',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'room_id','value':$('#id_room_id').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
+	
+	$('.input-group.date').datepicker({
+		format:'yyyy-mm-dd',
+		todayBtn:'linked',
+		language: 'zh-CN',
+		autoclose:true,
+		todayHighlight:true
+	});
 	var url = document.URL;
 	var query_dict = getQueryDict(url);
 	//var id = query_dict['id'];
@@ -162,36 +218,21 @@ $(function(){
 	}
 	
 	$('#id_room_search').click(function(){
-		var post_dict = {};
-		var room_id = $('#id_room_id').val();
-		post_dict['room_id'] = room_id;
-		$('#search_field li').remove();
-		$.post('/hsyw/ws.asmx/search_room_by_room_id', post_dict)
-		.done(function(result){
-			var json = JSON.parse(result);
-			$.each(json,function(i,v){
-				var id = v['ID'];
-				var room_id = v['mac_id'];
-				var name = v['mac_name'];
-				var li_html = '<li class="list-group-item">'+
-					'<div class="row">'+
-					'<div class="col-md-1"><input type="radio" name="radio[]" data-id="'+ id +'"></div>'+
-					'<div>['+ room_id +'] '+ name +'</div>'+
-					'</div>'+
-					'</li>';
-				$('#search_field').append(li_html);
-			});
-		});
+		var table = $('#id_table_machine_room').DataTable();
+		table.ajax.reload();
 	});
 
 	$('#id_button_select').click(function(){
 		var object = $('input[type="radio"]:checked');
-		if(object !== null)
+		if(object.length>0)
 		{
 			var id = object.attr('data-id');
-			var room_name = $(object.parent().parent()).text();
+			var room_id_td = $(object.parent().parent()).find('td')[1];
+			var room_id = $(room_id_td).text();
+			var room_name_td = $(object.parent().parent()).find('td')[2];
+			var room_name = $(room_name_td).text();
 			$('#id_machine_room').val(id);
-			$('#id_room_name').val(room_name);
+			$('#id_room_name').val('['+room_id+']:'+room_name);
 			$('#roomModal').modal('hide');
 		}
 		
@@ -206,71 +247,108 @@ $(function(){
 <div class="col-xs-12">
 <form id="form1" role="form">
 <fieldset>
-<div class="form-group">
-<label for="id_cmts_id" class="sr-only">cmts_id</label>
+<div class="row">
+
+<div class="col-md-3">
+
+<div style="display:none">
 <input type="hidden" id="id_cmts_id" name="id" value="">
+<input type="hidden" id="id_bussiness_id" name="bussiness_id" value="">
 </div>
-<div class="form-group">
-<label for="id_device_code">设备编码</label>
-<input type="text" class="form-control" name="device_code" id="id_device_code">
+
+<div class="form-group form-group-sm">
+<label for="id_device_code" class="control-label">设备编码</label>
+
+<input type="text" class="form-control input-sm" name="device_code" id="id_device_code">
+
 </div>
-<div class="form-group">
-<label for="id_belong_to">所属分公司</label>
-<input type="text" name="belong_to" class="form-control" id="id_belong_to">
+<div class="form-group form-group-sm">
+<label for="id_belong_to" class="control-label">所属分公司</label>
+<input type="text" name="belong_to" class="form-control input-sm" id="id_belong_to">
 </div>
-<div class="form-group">
-<label for="id_machine_room">所属机房</label>
-<input type="hidden" name="room_id" id="id_machine_room" class="form-control">
+<div class="form-group form-group-sm">
+<label for="id_machine_room" class="control-label">所属机房</label>
+
+<input type="hidden" name="room_id" id="id_machine_room" class="form-control input-sm">
 <div class="input-group">
-<input type="text" name="room_name" id="id_room_name" readonly="readonly" class="form-control">
+<input type="text" name="room_name" id="id_room_name" readonly="readonly" class="form-control input-sm">
 <span class="input-group-btn">
-<button type="button" class="btn btn-default" data-toggle="modal" data-target="#roomModal">选择</button>
+<button type="button" class="btn btn-default btn-sm" data-toggle="modal" data-target="#roomModal">选择</button>
 </span>
 </div>
+
 </div>
-<div class="form-group">
-<label for="id_distance_to_transfer">机房至交接箱距离</label>
-<input id="id_distance_to_transfer" type="text" class="form-control" name="distance_to_transfer">
+<div class="form-group form-group-sm">
+<label for="id_distance_to_transfer" class="control-label">机房至交接箱距离</label>
+
+<input id="id_distance_to_transfer" type="text" class="form-control input-sm" name="distance_to_transfer">
+
 </div>
-<div class="form-group">
-<label for="id_transfer_code">交接箱编号</label>
-<input type="text" class="form-control" name="transfer_code" id="id_transfer_code">
+<div class="form-group form-group-sm">
+<label for="id_transfer_code" class="control-label">交接箱编号</label>
+
+<input type="text" class="form-control input-sm" name="transfer_code" id="id_transfer_code">
+
 </div>
-<div class="form-group">
-<label for="id_transfer_fiber_num">交接箱配纤号</label>
-<input type="text" class="form-control" name="transfer_fiber_num" id="id_transfer_fiber_num">
+<div class="form-group form-group-sm">
+<label for="id_transfer_fiber_num" class="control-label">交接箱配纤号</label>
+
+<input type="text" class="form-control input-sm" name="transfer_fiber_num" id="id_transfer_fiber_num">
+
 </div>
-<div class="form-group">
-<label for="id_older_num">新老沟通纤号</label>
-<input type="text" class="form-control" id="id_older_num"  name="older_num">
+<div class="form-group form-group-sm">
+<label for="id_older_num" class="control-label">新老沟通纤号</label>
+
+<input type="text" class="form-control input-sm" id="id_older_num"  name="older_num">
+
 </div>
-<div class="form-group">
-<label for="id_distance_between_transfer_to_room">交接箱至小区机房距离</label>
-<input type="text" class="form-control" id="id_distance_between_transfer_to_room" name="distance_between_transfer_to_room">
+<div class="form-group form-group-sm">
+<label for="id_distance_between_transfer_to_room" class="control-label ">交接箱至小区机房距离</label>
+
+<input type="text" class="form-control input-sm" id="id_distance_between_transfer_to_room" name="distance_between_transfer_to_room">
+
 </div>
-<div class="form-group">
-<label for="id_code_between_transfer_to_room">交接箱至小区机房编号</label>
-<input type="text" class="form-control" id="id_code_between_transfer_to_room" name="code_between_transfer_to_room">
+<div class="form-group form-group-sm">
+<label for="id_code_between_transfer_to_room" class="control-label ">交接箱至小区机房编号</label>
+
+<input type="text" class="form-control input-sm" id="id_code_between_transfer_to_room" name="code_between_transfer_to_room">
+
 </div>
-<div class="form-group">
-<label for="id_room_fiber">小区机房配纤</label>
-<input class="form-control" type="text" id="id_room_fiber" name="room_fiber">
+
+
+
 </div>
-<div class="form-group">
-<label for="id_onu">ONU型号</label>
-<input class="form-control" type="text" id="id_onu" name="onu">
+
+<div class="col-md-3">
+<div class="form-group form-group-sm">
+<label for="id_room_fiber" class="control-label">小区机房配纤</label>
+
+<input class="form-control input-sm" type="text" id="id_room_fiber" name="room_fiber">
+
 </div>
-<div class="form-group">
-<label for="id_switcher_code">交换机编号</label>
-<input class="form-control" type="text" name="switcher_code" id="id_switcher_code">
+<div class="form-group form-group-sm">
+<label for="id_onu" class="control-label">ONU型号</label>
+
+<input class="form-control input-sm" type="text" id="id_onu" name="onu">
+
 </div>
-<div class="form-group">
-<label for="id_gigabit_alloc_port">千兆分配端口号</label>
-<input class="form-control" type="text" id="id_gigabit_alloc_port" name="gigabit_alloc_port">
+<div class="form-group form-group-sm">
+<label for="id_switcher_code" class="control-label">交换机编号</label>
+
+<input class="form-control input-sm" type="text" name="switcher_code" id="id_switcher_code">
+
 </div>
-<div class="form-group">
-<label for="id_wave_length">接入端口波长</label>
-<select id="id_wave_length" class="form-control">
+<div class="form-group form-group-sm">
+<label for="id_gigabit_alloc_port" class="control-label">千兆分配端口号</label>
+
+<input class="form-control input-sm" type="text" id="id_gigabit_alloc_port" name="gigabit_alloc_port">
+
+</div>
+
+<div class="form-group form-group-sm">
+<label for="id_wave_length" class="control-label">接入端口波长</label>
+
+<select id="id_wave_length" class="form-control input-sm">
 <option value="1270">1270</option>
 <option value="1290">1290</option>
 <option value="1310">1310</option>
@@ -288,68 +366,97 @@ $(function(){
 <option value="1590">1590</option>
 <option value="1610">1610</option>
 </select>
+
 <!--<input class="form-control" type="text" id="id_wave_length" name="wave_length"> -->
 </div>
-<div class="form-group">
-<label for="id_splitter_code">分路器编号（型号）</label>
-<input class="form-control" type="text" id="id_splitter_code" name="splitter_code">
+<div class="form-group form-group-sm">
+<label for="id_splitter_code" class="control-label">分路器编号（型号）</label>
+
+<input class="form-control input-sm" type="text" id="id_splitter_code" name="splitter_code">
+
 </div>
-<div class="form-group">
-<label for="id_spot_code">光点编号</label>
-<input class="form-control" type="text" id="id_spot_code" name="spot_code">
+<div class="form-group form-group-sm">
+<label for="id_spot_code" class="control-label">光点编号</label>
+
+<input class="form-control input-sm" type="text" id="id_spot_code" name="spot_code">
+
 </div>
-<div class="form-group">
-<label for="id_spot_name">光点名称</label>
-<input class="form-control" type="text" id="id_spot_name" name="spot_name">
+<div class="form-group form-group-sm">
+<label for="id_spot_name" class="control-label">光点名称</label>
+
+<input class="form-control input-sm" type="text" id="id_spot_name" name="spot_name">
+
 </div>
-<div class="form-group">
-<label for="id_spot_receiver_fiber_num">光收机纤号
+<div class="form-group form-group-sm">
+<label for="id_spot_receiver_fiber_num" class="control-label">光收机纤号
 </label>
-<input class="form-control" type="text" id="id_spot_receiver_fiber_num" name="spot_receiver_fiber_num">
+
+<input class="form-control input-sm" type="text" id="id_spot_receiver_fiber_num" name="spot_receiver_fiber_num">
+
 </div>
-<div class="form-group">
-<label for="id_distance_between_transfer_to_spot">交接箱至光点距离</label>
-<input class="form-control" type="text" id="id_distance_between_transfer_to_spot" name="distance_between_transfer_to_spot">
+
+
 </div>
-<div class="form-group">
-<label for="id_output_power">输出功率</label>
-<input class="form-control" type="text" id="id_output_power" name="output_power">
+
+<div class="col-md-3">
+<div class="form-group form-group-sm">
+<label for="id_signal_type" class="control-label">信号类别</label>
+
+<input class="form-control input-sm" type="text" id="id_signal_type" name="signal_type">
+
 </div>
-<div class="form-group">
-<label for="id_unit">施工单位
+<div class="form-group form-group-sm">
+<label for="id_type" class="control-label">类型
 </label>
-<input class="form-control" type="text" id="id_unit" name="unit">
+
+<input class="form-control input-sm" type="text" id="id_type" name="type">
+
 </div>
-<div class="form-group">
-<label for="id_start_date">开通时间
+<div class="form-group form-group-sm">
+<label for="id_remark" class="control-label">备注
 </label>
-<input class="form-control" type="text" id="id_start_date" name="start_date">
+
+<input class="form-control input-sm" type="text" id="id_remark" name="remark">
 </div>
-<div class="form-group">
-<label for="id_signal_type">信号类别</label>
-<input class="form-control" type="text" id="id_signal_type" name="signal_type">
-</div>
-<div class="form-group">
-<label for="id_type">类型
+<div class="form-group form-group-sm">
+<label for="id_contact" class="control-label">酒店联系人
 </label>
-<input class="form-control" type="text" id="id_type" name="type">
+<input class="form-control input-sm" type="text" id="id_contact" name="contact">
 </div>
-<div class="form-group">
-<label for="id_remark">备注
-</label>
-<input class="form-control" type="text" id="id_remark" name="remark">
+<div class="form-group form-group-sm">
+<label for="id_distance_between_transfer_to_spot" class="control-label">交接箱至光点距离</label>
+
+<input class="form-control input-sm" type="text" id="id_distance_between_transfer_to_spot" name="distance_between_transfer_to_spot">
+
 </div>
-<div class="form-group">
-<label for="id_contact">酒店联系人
-</label>
-<input class="form-control" type="text" id="id_contact" name="contact">
+<div class="form-group form-group-sm">
+<label for="id_output_power"class="control-label">输出功率</label>
+
+<input class="form-control input-sm" type="text" id="id_output_power" name="output_power">
+
+</div>
+<div class="form-group form-group-sm">
+<label for="id_unit" class="control-label">施工单位</label>
+<input class="form-control input-sm" type="text" id="id_unit" name="unit">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_start_date" class="control-label" >开通时间</label>
+<div class="input-group date">
+	<input type="text" name="start_date" readonly="readonly" id="id_start_date" class="form-control input-sm">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+</div>
+<!--<input class="form-control input-sm" type="text" id="id_start_date" name="start_date">-->
+</div>
+</div>
+
 </div>
 
 <hr>
 <div class="form-group">
-<button class="btn btn-danger" data-toggle="modal" data-target="#myModal" type="button" id="id_button_delete_confirm"><span class="glyphicon glyphicon-remove"></span> 删除</button>
 <button class="btn btn-primary" type="button" id="id_button_save"><span class="glyphicon glyphicon-save"></span> 保存</button>
+<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"></span> 删除</button>
 </div>
+
 </fieldset>
 </form>
 
@@ -395,9 +502,15 @@ $(function(){
 <button type="button" id="id_room_search" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>
 查询
 </button>
-<p></p>
-<div id="search_field" class="list-group">
-</div>
+<hr>
+<table id="id_table_machine_room" class="table table-striped table-bordered">
+<thead>
+<th>选择</th>
+<th>机房ID</th>
+<th>机房名称</th>
+</thead>
+<tbody></tbody>
+</table>
 </form>
 </div>
 <div class="modal-footer">
