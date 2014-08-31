@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RMSS20140825" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS20140825;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSS20140825ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS20140825;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="RMSS20140825ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.IP_Bussiness" Member="IP_Bussiness">
     <Type Name="IP_Bussiness">
       <Column Name="ID" Type="System.Int64" DbType="BigInt NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -341,7 +341,7 @@
   </Table>
   <Table Name="dbo.CMTS" Member="CMTS">
     <Type Name="CMTS">
-      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="device_code" Type="System.String" DbType="VarChar(100) NOT NULL" CanBeNull="false" />
       <Column Name="belong_to" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
       <Column Name="room_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
