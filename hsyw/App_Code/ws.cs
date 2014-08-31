@@ -271,20 +271,32 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
-    public void get_cmts_list(string device_code, string belong_to)
+    public void get_cmts_list()
     {
+        var form = HttpContext.Current.Request.Form;
+        string device_code = form["device_code"];
+        string belong_to = form["belong_to"];
+        
+        int skip_count = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
         var list = dc.CMTS.OrderBy(c=>c.id);
-        if (device_code.Trim().Length > 0)
+        if (device_code!= null)
         {
             list = list.Where(c => c.device_code.Contains(device_code)).OrderBy(c => c.id);
         }
 
-        if (belong_to.Trim().Length > 0)
+        if (belong_to!=null)
         {
             list = list.Where(c => c.belong_to.Contains(belong_to)
                 ).OrderBy(c => c.id);
         }
-        writeJSONResponse(list);
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        int count = list.Count();
+        dict.Add("aaData", list);
+        dict.Add("iTotalRecodes", count);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("iTotalDisplayRecords", count);
+        writeJSONResponse(dict);
     }
 
     [WebMethod]
@@ -517,10 +529,11 @@ public class ws : System.Web.Services.WebService {
     public void get_config_list()
     {
         Regex reNum = new Regex(@"^\d+$");
-        //var list=dc.IP_Bussiness.Where(c=>reNum.Match(c.Bussiness_code).Success);
+        /*var list=dc.IP_Bussiness.Where(c=>reNum.Match(c.Bussiness_code).Success);
         var list = from a in dc.IP_Bussiness.AsEnumerable()
                    where reNum.IsMatch(a.Bussiness_code)
-                   select a;
+                   select a;*/
+        string sql = "select row_number() over(order by id asc) as rownum,* from IP_Bussiness where 1=1";
 
         //var list = dc.ExecuteQuery<IP_Bussiness>("select *,num=CAST((Bussiness_code) as int) from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 order by num desc");
         var form = HttpContext.Current.Request.Form;
@@ -529,24 +542,39 @@ public class ws : System.Web.Services.WebService {
         string device_info = form["device_info"];
         if (bussiness_code!=null)
         {
-            list = list.Where(c => c.Bussiness_code.Contains(bussiness_code));
+            sql += String.Format(" and Bussiness_code like '%{0}%'",bussiness_code);
+            //list = list.Where(c => c.Bussiness_code.Contains(bussiness_code));
         }
         if (client!=null)
         {
-            list = list.Where(c => c.khmc.Contains(client));
+            sql += String.Format(" and khmc like '%{0}%'", client);
+            //list = list.Where(c => c.khmc.Contains(client));
         }
 
         if (device_info!=null)
         {
-            list = list.Where(c => c.sbpzxx.Contains(device_info));
+            sql += String.Format(" and sbpzxx like '%{0}%'", device_info);
+            //list = list.Where(c => c.sbpzxx.Contains(device_info));
         }
-        Dictionary<string, object> dict = new Dictionary<string, object>();
+
         int skip_count = Convert.ToInt32(form["iDisplayStart"]);
         int display_length = Convert.ToInt32(form["iDisplayLength"]);
-        int count = list.Count();
-        list = list.Skip(skip_count).Take(display_length);
-        string json_str = jsonString(list);
+
+        sql += String.Format(" and ISNUMERIC(Bussiness_code)=1");
+        sql = String.Format("select * from ({0}) as D where rownum between {1} and {2} order by id asc", sql, skip_count, skip_count + display_length);
+        /*
+ select * from ( select row_number() over(order by id asc) as rownum,* from IP_Bussiness where ISNUMERIC(Bussiness_code)=1 ) as D
+where rownum BETWEEN 0 and 25 
+ORDER BY id ASC
+ */
         
+        //sql += String.Format(" and ISNUMERIC(Bussiness_code)=1 and row_num >{0} and row_num<={1} ",skip_count,skip_count+display_length);
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        var list = dc.ExecuteQuery<IP_Bussiness>(sql).ToList();
+        int count = list.Count();
+        //list = list.Skip(skip_count).Take(display_length);
+        //string json_str = jsonString(list);
+
         dict.Add("aaData", list);
         dict.Add("iTotalRecodes", count);
         dict.Add("sEcho", form["sEcho"]);

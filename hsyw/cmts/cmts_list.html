@@ -8,8 +8,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
 <script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
 <script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
 <script src="/hsyw/bootstrap/notify.min.js"></script>
 <style>
 body {
@@ -18,8 +21,63 @@ body {
 </style>
 <script>
 $(function(){
+	
+	var dataTable = $('#table-list').dataTable({
+			'bProcessing':true,
+			'bServerSide':true,
+			'bLengthChange':false,
+			'bFilter':false,
+			'iDisplayLength':25,
+			'language':{
+				url:'/hsyw/bootstrap/datatables/Chinese.json'
+			},
+			//'aLlengthMenu':[[100]],
+			'columnDefs':[{
+				'targets':0,
+				'data':'id',
+				'render':function(data,type,full,meta){
+					var  a = data;
+					return '<input name="check[]" type="checkbox" data-id="'+ full.id +'">';
+					}
+				},
+				{
+					'targets':1,
+					'data':'device_code',
+					'render':function(data,type,full,meta)
+					{
+						return '<a href="/hsyw/cmts/cmts_detail.html?id='+full.id+'">'+ full.device_code +'</a>'
+					}
+				}
+			],
+			'columns':[
+				{'data':null},
+				{'data':'device_code'},
+				{'data':'belong_to'},
+				
+			],
+			'sAjaxSource':'/hsyw/ws.asmx/get_cmts_list',
+			'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+				var post_dict = {};
+				aoData.push({'name':'device_code','value':$('#id_device_code').val()});
+				aoData.push({'name':'belong_to','value':$('#id_belong_to').val()});
+				aoData.push({'name':'room_id','value':$('#id_room_id').val()});
+				
+				oSettings.jqXHR = $.ajax({
+					'dataType':'json',
+					'type':'POST',
+					'url':sSource,
+					'data':aoData,
+					'success':fnCallback
+				});
+			},
+		});
+
 	function searchData()
 	{
+		var table = dataTable.DataTable();
+			//table.clear().draw();
+		table.ajax.reload();
+		/*
 		var device_code = $('#id_device_code').val();
 		var belong_to = $('#id_belong_to').val()
 		var post_data = {}
@@ -45,11 +103,14 @@ $(function(){
 					'</tr>';
 				$('#table-list').append(html);
 			});
-		});
+		});*/
 	}
-	var res = searchData();
+	//var res = searchData();
 	$('#id_search').click(function(){
-		var res = searchData();
+		var table = dataTable.DataTable();
+			//table.clear().draw();
+		table.ajax.reload();
+		//var res = searchData();
 	});
 	
 	$('#id_button_confirm').click(function(){
@@ -163,10 +224,12 @@ $(function(){
 <label class="sr-only" for="id_code">所属分公司</label>
 <input class="form-control" type="text" placeholder="所属分公司" name="belong_to" id="id_belong_to">
 </div>
+<!--
 <div class="form-group">
 <label class="sr-only" for="id_room_id">所属机房</label>
 <input class="form-control" type="text" placeholder="所属机房" name="room_id" id="id_room_id">
 </div>
+-->
 <button type="button" class="btn btn-primary" id="id_search"><span class="glyphicon glyphicon-search"></span>&nbsp;查询</button>
 <hr>
 
@@ -177,6 +240,12 @@ $(function(){
 </form>
 <p></p>
 <table class="table table-hover" id="table-list">
+<thead>
+<th>选择</th>
+<th>设备编号</th>
+<th>所属分公司</th>
+</thead>
+<tbody></tbody>
 </table>
 </div>
 </div>

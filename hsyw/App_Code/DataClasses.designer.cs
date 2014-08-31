@@ -21,7 +21,7 @@ using System.Reflection;
 
 
 
-[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="RMSS")]
+[global::System.Data.Linq.Mapping.DatabaseAttribute(Name="RMSS20140825")]
 public partial class DataClassesDataContext : System.Data.Linq.DataContext
 {
 	
@@ -62,13 +62,10 @@ public partial class DataClassesDataContext : System.Data.Linq.DataContext
   partial void InsertIP_Free_Info(IP_Free_Info instance);
   partial void UpdateIP_Free_Info(IP_Free_Info instance);
   partial void DeleteIP_Free_Info(IP_Free_Info instance);
-  partial void InsertCMTS(CMTS instance);
-  partial void UpdateCMTS(CMTS instance);
-  partial void DeleteCMTS(CMTS instance);
   #endregion
 	
 	public DataClassesDataContext() : 
-			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["RMSSConnectionString"].ConnectionString, mappingSource)
+			base(global::System.Configuration.ConfigurationManager.ConnectionStrings["RMSS20140825ConnectionString"].ConnectionString, mappingSource)
 	{
 		OnCreated();
 	}
@@ -378,8 +375,6 @@ public partial class IP_Bussiness : INotifyPropertyChanging, INotifyPropertyChan
 	
 	private string _glYwONULsh;
 	
-	private EntitySet<CMTS> _CMTS;
-	
     #region 可扩展性方法定义
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -526,7 +521,6 @@ public partial class IP_Bussiness : INotifyPropertyChanging, INotifyPropertyChan
 	
 	public IP_Bussiness()
 	{
-		this._CMTS = new EntitySet<CMTS>(new Action<CMTS>(this.attach_CMTS), new Action<CMTS>(this.detach_CMTS));
 		OnCreated();
 	}
 	
@@ -1910,19 +1904,6 @@ public partial class IP_Bussiness : INotifyPropertyChanging, INotifyPropertyChan
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IP_Bussiness_CMTS", Storage="_CMTS", ThisKey="ID", OtherKey="bussiness_id")]
-	public EntitySet<CMTS> CMTS
-	{
-		get
-		{
-			return this._CMTS;
-		}
-		set
-		{
-			this._CMTS.Assign(value);
-		}
-	}
-	
 	public event PropertyChangingEventHandler PropertyChanging;
 	
 	public event PropertyChangedEventHandler PropertyChanged;
@@ -1941,18 +1922,6 @@ public partial class IP_Bussiness : INotifyPropertyChanging, INotifyPropertyChan
 		{
 			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
-	}
-	
-	private void attach_CMTS(CMTS entity)
-	{
-		this.SendPropertyChanging();
-		entity.IP_Bussiness = this;
-	}
-	
-	private void detach_CMTS(CMTS entity)
-	{
-		this.SendPropertyChanging();
-		entity.IP_Bussiness = null;
 	}
 }
 
@@ -6696,10 +6665,8 @@ public partial class ClientTypeA
 }
 
 [global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CMTS")]
-public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
+public partial class CMTS
 {
-	
-	private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 	
 	private int _id;
 	
@@ -6757,77 +6724,11 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 	
 	private string _output_power;
 	
-	private EntityRef<IP_Bussiness> _IP_Bussiness;
-	
-    #region 可扩展性方法定义
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnidChanging(int value);
-    partial void OnidChanged();
-    partial void Ondevice_codeChanging(string value);
-    partial void Ondevice_codeChanged();
-    partial void Onbelong_toChanging(string value);
-    partial void Onbelong_toChanged();
-    partial void Onroom_idChanging(System.Nullable<int> value);
-    partial void Onroom_idChanged();
-    partial void Onbussiness_idChanging(System.Nullable<long> value);
-    partial void Onbussiness_idChanged();
-    partial void Ondistance_to_transferChanging(string value);
-    partial void Ondistance_to_transferChanged();
-    partial void Ontransfer_codeChanging(string value);
-    partial void Ontransfer_codeChanged();
-    partial void Ontransfer_fiber_numChanging(string value);
-    partial void Ontransfer_fiber_numChanged();
-    partial void Onolder_numChanging(string value);
-    partial void Onolder_numChanged();
-    partial void Ondistance_between_transfer_to_roomChanging(string value);
-    partial void Ondistance_between_transfer_to_roomChanged();
-    partial void Oncode_between_transfer_to_roomChanging(string value);
-    partial void Oncode_between_transfer_to_roomChanged();
-    partial void Onroom_fiberChanging(string value);
-    partial void Onroom_fiberChanged();
-    partial void OnonuChanging(string value);
-    partial void OnonuChanged();
-    partial void Onswitcher_codeChanging(string value);
-    partial void Onswitcher_codeChanged();
-    partial void Ongigabit_alloc_portChanging(string value);
-    partial void Ongigabit_alloc_portChanged();
-    partial void Onwave_lengthChanging(string value);
-    partial void Onwave_lengthChanged();
-    partial void Onsplitter_codeChanging(string value);
-    partial void Onsplitter_codeChanged();
-    partial void Onspot_codeChanging(string value);
-    partial void Onspot_codeChanged();
-    partial void Onspot_nameChanging(string value);
-    partial void Onspot_nameChanged();
-    partial void Onspot_receiver_fiber_numChanging(string value);
-    partial void Onspot_receiver_fiber_numChanged();
-    partial void Ondistance_between_transfer_to_spotChanging(string value);
-    partial void Ondistance_between_transfer_to_spotChanged();
-    partial void OnunitChanging(string value);
-    partial void OnunitChanged();
-    partial void Onstart_dateChanging(System.Nullable<System.DateTime> value);
-    partial void Onstart_dateChanged();
-    partial void Onsignal_typeChanging(string value);
-    partial void Onsignal_typeChanged();
-    partial void OntypeChanging(string value);
-    partial void OntypeChanged();
-    partial void OnremarkChanging(string value);
-    partial void OnremarkChanged();
-    partial void OncontactChanging(string value);
-    partial void OncontactChanged();
-    partial void Onoutput_powerChanging(string value);
-    partial void Onoutput_powerChanged();
-    #endregion
-	
 	public CMTS()
 	{
-		this._IP_Bussiness = default(EntityRef<IP_Bussiness>);
-		OnCreated();
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_id", AutoSync=AutoSync.Always, DbType="Int NOT NULL IDENTITY", IsDbGenerated=true)]
 	public int id
 	{
 		get
@@ -6838,11 +6739,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._id != value))
 			{
-				this.OnidChanging(value);
-				this.SendPropertyChanging();
 				this._id = value;
-				this.SendPropertyChanged("id");
-				this.OnidChanged();
 			}
 		}
 	}
@@ -6858,11 +6755,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._device_code != value))
 			{
-				this.Ondevice_codeChanging(value);
-				this.SendPropertyChanging();
 				this._device_code = value;
-				this.SendPropertyChanged("device_code");
-				this.Ondevice_codeChanged();
 			}
 		}
 	}
@@ -6878,11 +6771,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._belong_to != value))
 			{
-				this.Onbelong_toChanging(value);
-				this.SendPropertyChanging();
 				this._belong_to = value;
-				this.SendPropertyChanged("belong_to");
-				this.Onbelong_toChanged();
 			}
 		}
 	}
@@ -6898,11 +6787,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._room_id != value))
 			{
-				this.Onroom_idChanging(value);
-				this.SendPropertyChanging();
 				this._room_id = value;
-				this.SendPropertyChanged("room_id");
-				this.Onroom_idChanged();
 			}
 		}
 	}
@@ -6918,15 +6803,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._bussiness_id != value))
 			{
-				if (this._IP_Bussiness.HasLoadedOrAssignedValue)
-				{
-					throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-				}
-				this.Onbussiness_idChanging(value);
-				this.SendPropertyChanging();
 				this._bussiness_id = value;
-				this.SendPropertyChanged("bussiness_id");
-				this.Onbussiness_idChanged();
 			}
 		}
 	}
@@ -6942,11 +6819,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._distance_to_transfer != value))
 			{
-				this.Ondistance_to_transferChanging(value);
-				this.SendPropertyChanging();
 				this._distance_to_transfer = value;
-				this.SendPropertyChanged("distance_to_transfer");
-				this.Ondistance_to_transferChanged();
 			}
 		}
 	}
@@ -6962,11 +6835,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._transfer_code != value))
 			{
-				this.Ontransfer_codeChanging(value);
-				this.SendPropertyChanging();
 				this._transfer_code = value;
-				this.SendPropertyChanged("transfer_code");
-				this.Ontransfer_codeChanged();
 			}
 		}
 	}
@@ -6982,11 +6851,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._transfer_fiber_num != value))
 			{
-				this.Ontransfer_fiber_numChanging(value);
-				this.SendPropertyChanging();
 				this._transfer_fiber_num = value;
-				this.SendPropertyChanged("transfer_fiber_num");
-				this.Ontransfer_fiber_numChanged();
 			}
 		}
 	}
@@ -7002,11 +6867,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._older_num != value))
 			{
-				this.Onolder_numChanging(value);
-				this.SendPropertyChanging();
 				this._older_num = value;
-				this.SendPropertyChanged("older_num");
-				this.Onolder_numChanged();
 			}
 		}
 	}
@@ -7022,11 +6883,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._distance_between_transfer_to_room != value))
 			{
-				this.Ondistance_between_transfer_to_roomChanging(value);
-				this.SendPropertyChanging();
 				this._distance_between_transfer_to_room = value;
-				this.SendPropertyChanged("distance_between_transfer_to_room");
-				this.Ondistance_between_transfer_to_roomChanged();
 			}
 		}
 	}
@@ -7042,11 +6899,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._code_between_transfer_to_room != value))
 			{
-				this.Oncode_between_transfer_to_roomChanging(value);
-				this.SendPropertyChanging();
 				this._code_between_transfer_to_room = value;
-				this.SendPropertyChanged("code_between_transfer_to_room");
-				this.Oncode_between_transfer_to_roomChanged();
 			}
 		}
 	}
@@ -7062,11 +6915,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._room_fiber != value))
 			{
-				this.Onroom_fiberChanging(value);
-				this.SendPropertyChanging();
 				this._room_fiber = value;
-				this.SendPropertyChanged("room_fiber");
-				this.Onroom_fiberChanged();
 			}
 		}
 	}
@@ -7082,11 +6931,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._onu != value))
 			{
-				this.OnonuChanging(value);
-				this.SendPropertyChanging();
 				this._onu = value;
-				this.SendPropertyChanged("onu");
-				this.OnonuChanged();
 			}
 		}
 	}
@@ -7102,11 +6947,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._switcher_code != value))
 			{
-				this.Onswitcher_codeChanging(value);
-				this.SendPropertyChanging();
 				this._switcher_code = value;
-				this.SendPropertyChanged("switcher_code");
-				this.Onswitcher_codeChanged();
 			}
 		}
 	}
@@ -7122,11 +6963,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._gigabit_alloc_port != value))
 			{
-				this.Ongigabit_alloc_portChanging(value);
-				this.SendPropertyChanging();
 				this._gigabit_alloc_port = value;
-				this.SendPropertyChanged("gigabit_alloc_port");
-				this.Ongigabit_alloc_portChanged();
 			}
 		}
 	}
@@ -7142,11 +6979,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._wave_length != value))
 			{
-				this.Onwave_lengthChanging(value);
-				this.SendPropertyChanging();
 				this._wave_length = value;
-				this.SendPropertyChanged("wave_length");
-				this.Onwave_lengthChanged();
 			}
 		}
 	}
@@ -7162,11 +6995,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._splitter_code != value))
 			{
-				this.Onsplitter_codeChanging(value);
-				this.SendPropertyChanging();
 				this._splitter_code = value;
-				this.SendPropertyChanged("splitter_code");
-				this.Onsplitter_codeChanged();
 			}
 		}
 	}
@@ -7182,11 +7011,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._spot_code != value))
 			{
-				this.Onspot_codeChanging(value);
-				this.SendPropertyChanging();
 				this._spot_code = value;
-				this.SendPropertyChanged("spot_code");
-				this.Onspot_codeChanged();
 			}
 		}
 	}
@@ -7202,11 +7027,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._spot_name != value))
 			{
-				this.Onspot_nameChanging(value);
-				this.SendPropertyChanging();
 				this._spot_name = value;
-				this.SendPropertyChanged("spot_name");
-				this.Onspot_nameChanged();
 			}
 		}
 	}
@@ -7222,11 +7043,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._spot_receiver_fiber_num != value))
 			{
-				this.Onspot_receiver_fiber_numChanging(value);
-				this.SendPropertyChanging();
 				this._spot_receiver_fiber_num = value;
-				this.SendPropertyChanged("spot_receiver_fiber_num");
-				this.Onspot_receiver_fiber_numChanged();
 			}
 		}
 	}
@@ -7242,11 +7059,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._distance_between_transfer_to_spot != value))
 			{
-				this.Ondistance_between_transfer_to_spotChanging(value);
-				this.SendPropertyChanging();
 				this._distance_between_transfer_to_spot = value;
-				this.SendPropertyChanged("distance_between_transfer_to_spot");
-				this.Ondistance_between_transfer_to_spotChanged();
 			}
 		}
 	}
@@ -7262,16 +7075,12 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._unit != value))
 			{
-				this.OnunitChanging(value);
-				this.SendPropertyChanging();
 				this._unit = value;
-				this.SendPropertyChanged("unit");
-				this.OnunitChanged();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_date", DbType="Date")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_start_date", DbType="DateTime")]
 	public System.Nullable<System.DateTime> start_date
 	{
 		get
@@ -7282,11 +7091,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._start_date != value))
 			{
-				this.Onstart_dateChanging(value);
-				this.SendPropertyChanging();
 				this._start_date = value;
-				this.SendPropertyChanged("start_date");
-				this.Onstart_dateChanged();
 			}
 		}
 	}
@@ -7302,11 +7107,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._signal_type != value))
 			{
-				this.Onsignal_typeChanging(value);
-				this.SendPropertyChanging();
 				this._signal_type = value;
-				this.SendPropertyChanged("signal_type");
-				this.Onsignal_typeChanged();
 			}
 		}
 	}
@@ -7322,11 +7123,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._type != value))
 			{
-				this.OntypeChanging(value);
-				this.SendPropertyChanging();
 				this._type = value;
-				this.SendPropertyChanged("type");
-				this.OntypeChanged();
 			}
 		}
 	}
@@ -7342,16 +7139,12 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._remark != value))
 			{
-				this.OnremarkChanging(value);
-				this.SendPropertyChanging();
 				this._remark = value;
-				this.SendPropertyChanged("remark");
-				this.OnremarkChanged();
 			}
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_contact", DbType="NChar(10)")]
+	[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_contact", DbType="VarChar(50)")]
 	public string contact
 	{
 		get
@@ -7362,11 +7155,7 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._contact != value))
 			{
-				this.OncontactChanging(value);
-				this.SendPropertyChanging();
 				this._contact = value;
-				this.SendPropertyChanged("contact");
-				this.OncontactChanged();
 			}
 		}
 	}
@@ -7382,66 +7171,8 @@ public partial class CMTS : INotifyPropertyChanging, INotifyPropertyChanged
 		{
 			if ((this._output_power != value))
 			{
-				this.Onoutput_powerChanging(value);
-				this.SendPropertyChanging();
 				this._output_power = value;
-				this.SendPropertyChanged("output_power");
-				this.Onoutput_powerChanged();
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.AssociationAttribute(Name="IP_Bussiness_CMTS", Storage="_IP_Bussiness", ThisKey="bussiness_id", OtherKey="ID", IsForeignKey=true)]
-	public IP_Bussiness IP_Bussiness
-	{
-		get
-		{
-			return this._IP_Bussiness.Entity;
-		}
-		set
-		{
-			IP_Bussiness previousValue = this._IP_Bussiness.Entity;
-			if (((previousValue != value) 
-						|| (this._IP_Bussiness.HasLoadedOrAssignedValue == false)))
-			{
-				this.SendPropertyChanging();
-				if ((previousValue != null))
-				{
-					this._IP_Bussiness.Entity = null;
-					previousValue.CMTS.Remove(this);
-				}
-				this._IP_Bussiness.Entity = value;
-				if ((value != null))
-				{
-					value.CMTS.Add(this);
-					this._bussiness_id = value.ID;
-				}
-				else
-				{
-					this._bussiness_id = default(Nullable<long>);
-				}
-				this.SendPropertyChanged("IP_Bussiness");
-			}
-		}
-	}
-	
-	public event PropertyChangingEventHandler PropertyChanging;
-	
-	public event PropertyChangedEventHandler PropertyChanged;
-	
-	protected virtual void SendPropertyChanging()
-	{
-		if ((this.PropertyChanging != null))
-		{
-			this.PropertyChanging(this, emptyChangingEventArgs);
-		}
-	}
-	
-	protected virtual void SendPropertyChanged(String propertyName)
-	{
-		if ((this.PropertyChanged != null))
-		{
-			this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }
