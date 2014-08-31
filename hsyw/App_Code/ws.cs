@@ -15,7 +15,7 @@ using System.Web.Script.Services;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
-//using HSYWContext;
+using HSYWContext;
 
 
 
@@ -30,7 +30,7 @@ using System.Collections.Specialized;
 // [System.Web.Script.Services.ScriptService]
 public class ws : System.Web.Services.WebService {
     private static Random random = new Random((int)DateTime.Now.Ticks);
-    //private HSYWDataContext ctx = new HSYWDataContext();
+    private HSYWDataContext ctx = new HSYWDataContext();
     DataClassesDataContext dc = new DataClassesDataContext();
 
  
