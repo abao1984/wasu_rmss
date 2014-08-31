@@ -571,12 +571,12 @@ ORDER BY id ASC
         //sql += String.Format(" and ISNUMERIC(Bussiness_code)=1 and row_num >{0} and row_num<={1} ",skip_count,skip_count+display_length);
         Dictionary<string, object> dict = new Dictionary<string, object>();
         var list = dc.ExecuteQuery<IP_Bussiness>(sql).ToList();
-        int count = list.Count();
+        int count = dc.ExecuteQuery<Int32>("select count(id) from ip_bussiness where isnumeric(Bussiness_code)=1").FirstOrDefault();
         //list = list.Skip(skip_count).Take(display_length);
         //string json_str = jsonString(list);
 
         dict.Add("aaData", list);
-        dict.Add("iTotalRecodes", count);
+        dict.Add("iTotalRecordes", count);
         dict.Add("sEcho", form["sEcho"]);
         dict.Add("iTotalDisplayRecords", count);
         writeJSONResponse(dict);
