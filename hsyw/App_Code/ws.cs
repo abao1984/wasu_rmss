@@ -15,7 +15,7 @@ using System.Web.Script.Services;
 using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Collections.Specialized;
-using HSYWContext;
+//using HSYWContext;
 
 
 
@@ -30,7 +30,7 @@ using HSYWContext;
 // [System.Web.Script.Services.ScriptService]
 public class ws : System.Web.Services.WebService {
     private static Random random = new Random((int)DateTime.Now.Ticks);
-    private HSYWDataContext ctx = new HSYWDataContext();
+    //private HSYWDataContext ctx = new HSYWDataContext();
     DataClassesDataContext dc = new DataClassesDataContext();
 
  
@@ -212,6 +212,64 @@ public class ws : System.Web.Services.WebService {
     #region CMTS webservice APIs
 
     [WebMethod]
+    public void save_client_info(string bussiness_code)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            var form = HttpContext.Current.Request.Form;
+            var a = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == bussiness_code);
+            //search data from table which is from oracle boss system
+            if (a.Count() == 0)
+            {
+                var b = dc.ClientTypeALocal.Where(c => c.SUBSCRIBERNO == bussiness_code);
+
+                if (b.Count() == 0)
+                {
+                    var c = new ClientTypeALocal
+                    {
+                        SUBSCRIBERNO = bussiness_code,
+                        CUSTOMER_NO = form["client_code"],
+                        DESCRIPTION = form["unit"],
+                        ADDRESS = form["address"],
+                        LINKMAN = form["contact_person"],
+                        SALE_NAME = form["client_sales"],
+                        MOBILE_NO = form["mobile"],
+                        CUSTTYPE = form["client_type"],
+                        PHONE_NO = form["client_phone"],
+
+                    };
+                    dc.ClientTypeALocal.InsertOnSubmit(c);
+                }
+                else
+                {
+                    var c = b.SingleOrDefault();
+                    c.CUSTOMER_NO = form["client_code"];
+                    c.DESCRIPTION = form["unit"];
+                    c.ADDRESS = form["address"];
+                    c.LINKMAN = form["contact_person"];
+                    c.SALE_NAME = form["client_sales"];
+                    c.MOBILE_NO = form["mobile"];
+                    c.CUSTTYPE = form["client_type"];
+                    c.PHONE_NO = form["client_phone"];
+                }
+                dc.SubmitChanges();
+                dict.Add("result", "0");
+            }
+            else
+            {
+                dict.Add("result","1");
+                dict.Add("msg","无法修改BOSS系统中的客户数据");
+            }
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+        }
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
     public void delete_config(string config_id_list)
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -247,10 +305,19 @@ public class ws : System.Web.Services.WebService {
         Dictionary<string, object> dict = new Dictionary<string, object>();
         var entity = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == bussiness_code).FirstOrDefault();
         dict.Add("result", "-1");
-        if (entity!=null)
+        if (entity != null)
         {
+
             dict["result"] = "0";
             dict.Add("client", entity);
+        }
+        else {
+            var aClient = dc.ClientTypeALocal.Where(c => c.SUBSCRIBERNO == bussiness_code).SingleOrDefault();
+            if (aClient != null)
+            {
+                dict["result"] = "0";
+                dict.Add("client", aClient);
+            }
         }
         writeJSONResponse(dict);
 
@@ -268,6 +335,176 @@ public class ws : System.Web.Services.WebService {
     {
         var resource_list = dc.IP_Bussiness.OrderBy(c => c.Bussiness_code).Take(100);
         writeJSONResponse(resource_list);
+    }
+
+    [WebMethod]
+    public void update_client()
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try {
+            var form = HttpContext.Current.Request.Form;
+            string subscriberno = form["SUBSCRIBERNO"];
+            var client = dc.ClientTypeALocal.Where(c => c.SUBSCRIBERNO == subscriberno).SingleOrDefault();
+            client.DESCRIPTION = form["DESCRIPTION"];
+            client.CUSTOMER_NO = form["CUSTOMER_NO"];
+            client.CUSTTYPE = form["CUSTTYPE"];
+            client.LINKMAN = form["LINKMAN"];
+            client.EMAIL = form["EMAIL"];
+            client.MOBILE_NO = form["MOBILE_NO"];
+            client.PHONE_NO = form["PHONE_NO"];
+            client.FAX_NO = form["FAX_NO"];
+            client.ZIP_CODE = form["ZIP_CODE"];
+            client.ADDRESS = form["ADDRESS"];
+            client.TYPE = form["TYPE"];
+            client.REMARK = form["REMARK"];
+            int level = 0;
+            if (Int32.TryParse(form["CUSTOMER_LEVEL"], out level))
+            {
+
+                client.CUSTOMER_LEVEL = level;
+
+            }
+
+
+            client.SALE_NAME = form["SALE_NAME"];
+
+            dc.SubmitChanges();
+            dict.Add("result", "0");
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg",ex.Message);
+
+        }
+
+        writeJSONResponse(dict);
+
+
+    }
+
+    [WebMethod]
+    public void get_client_by_subscriberno(string subscriberno)
+    {
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        dict.Add("result", "0");
+        var data = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == subscriberno);
+        if (data.Count() != 0)
+        {
+            var client = data.SingleOrDefault();
+            dict.Add("client", client);
+            dict.Add("isBossData", true);
+        }
+        else {
+            var anotherData = dc.ClientTypeALocal.Where(c => c.SUBSCRIBERNO == subscriberno);
+            if (anotherData.Count() != 0)
+            {
+                var client = anotherData.SingleOrDefault();
+                dict.Add("client", client);
+                dict.Add("isBossData", false);
+            }
+            else {
+                dict["result"] = "-1";
+            }
+
+        }
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
+    public void get_local_client_list()
+    {
+        var form = HttpContext.Current.Request.Form;
+        string subscriberno = form["subscriberno"];
+        string description = form["description"];
+        string customer_no = form["customer_no"];
+        string customer_level = form["customer_level"];
+        string address = form["address"];
+
+        int skip_cout = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
+        var list = dc.ClientTypeALocal.OrderBy(c => c.SUBSCRIBERNO);
+        if (subscriberno != null)
+        {
+            list = list.Where(c => c.SUBSCRIBERNO.Contains(subscriberno)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        if (description != null)
+        {
+            list = list.Where(c => c.DESCRIPTION.Contains(description)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        if (customer_no != null)
+        {
+            list = list.Where(c => c.CUSTOMER_NO.Contains(customer_no)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        int level = 0;
+        if (Int32.TryParse(customer_level, out level))
+        {
+            list = list.Where(c => c.CUSTOMER_LEVEL == level).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        if (address != null)
+        {
+            list = list.Where(c => c.ADDRESS.Contains(address)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        int count = list.Count();
+        dict.Add("iTotalRecords", count);
+        dict.Add("iTotalDisplayRecords", count);
+
+        list = list.Skip(skip_cout).Take(display_length).OrderBy(c => c.SUBSCRIBERNO);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("aaData", list);
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
+    public void get_remote_client_list()
+    {
+        var form = HttpContext.Current.Request.Form;
+        string subscriberno = form["subscriberno"];
+        string description = form["description"];
+        string customer_no = form["customer_no"];
+        string customer_level = form["customer_level"];
+        string address = form["address"];
+
+
+        
+
+        int skip_cout = Convert.ToInt32(form["iDisplayStart"]);
+        int display_length = Convert.ToInt32(form["iDisplayLength"]);
+        var list = dc.ClientTypeA.OrderBy(c=>c.SUBSCRIBERNO);
+        if (subscriberno != null)
+        {
+            list = list.Where(c => c.SUBSCRIBERNO.Contains(subscriberno)).OrderBy(c=>c.SUBSCRIBERNO);
+        }
+        if (description!=null)
+        {
+            list = list.Where(c => c.DESCRIPTION.Contains(description)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        if (customer_no != null)
+        {
+            list = list.Where(c => c.CUSTOMER_NO.Contains(customer_no)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+
+        int level = 0;
+        if (Int32.TryParse(customer_level, out level))
+        {
+            list = list.Where(c => c.CUSTOMER_LEVEL == level).OrderBy(c => c.SUBSCRIBERNO);
+        }
+
+        if (address != null)
+        {
+            list = list.Where(c => c.ADDRESS.Contains(address)).OrderBy(c => c.SUBSCRIBERNO);
+        }
+        Dictionary<string, object> dict = new Dictionary<string, object>();
+        int count = list.Count();
+        dict.Add("iTotalRecords", count);
+        dict.Add("iTotalDisplayRecords", count);
+        
+        list = list.Skip(skip_cout).Take(display_length).OrderBy(c=>c.SUBSCRIBERNO);
+        dict.Add("sEcho", form["sEcho"]);
+        dict.Add("aaData", list);
+        writeJSONResponse(dict);
+
     }
 
     [WebMethod]
@@ -293,7 +530,7 @@ public class ws : System.Web.Services.WebService {
         Dictionary<string, object> dict = new Dictionary<string, object>();
         int count = list.Count();
         dict.Add("aaData", list);
-        dict.Add("iTotalRecodes", count);
+        dict.Add("iTotalRecordes", count);
         dict.Add("sEcho", form["sEcho"]);
         dict.Add("iTotalDisplayRecords", count);
         writeJSONResponse(dict);
@@ -626,16 +863,27 @@ ORDER BY id ASC
     [WebMethod]
     public void get_config_detail(string id)
     {
+        Dictionary<string, object> dict = new Dictionary<string, object>();
         var e = dc.IP_Bussiness.Where(c => c.ID == Convert.ToInt32(id)).FirstOrDefault();
         var cmts_list = dc.CMTS.Where(c => c.bussiness_id == Convert.ToInt32(id)).OrderBy(c => c.id);
         var bussiness_type = dc.Jrlx_List.Where(c => c.nodeid == e.ywlx).FirstOrDefault();
         //var client = dc.ts_kh.Where(c => c.ywbm == e.Bussiness_code).FirstOrDefault();
-        var client = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == e.Bussiness_code.ToString()).FirstOrDefault();
-        Dictionary<string, object> dict = new Dictionary<string, object>();
+        var client_list = dc.ClientTypeA.Where(c => c.SUBSCRIBERNO == e.Bussiness_code.ToString());
+        if (client_list.Count() != 0)
+        {
+            var client = client_list.SingleOrDefault();
+            dict.Add("client", client);
+        }
+        else
+        {
+            var aClient = dc.ClientTypeALocal.Where(c => c.SUBSCRIBERNO == e.Bussiness_code.ToString()).SingleOrDefault();
+            dict.Add("client", aClient);
+        }
+        
         dict.Add("bussiness", e);
         dict.Add("cmts_list", cmts_list);
         dict.Add("bussiness_type", bussiness_type);
-        dict.Add("client", client);
+        
 
         writeJSONResponse(dict);
 

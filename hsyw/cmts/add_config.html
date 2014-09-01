@@ -99,10 +99,34 @@ $(function(){
 			var json_obj = JSON.parse(result);
 			if(json_obj['result']==='0')
 			{
-				var host =location.hostname;
-				var port =location.port;
-				var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_detail.html?id='+json_obj['id'];
-				location.replace(url);
+			
+				var post = {};
+				post['bussiness_code'] = bussiness_code;
+				post['client_code'] = $('#id_client_code').val();
+				post['unit'] = $('#id_unit').val();
+				post['address'] = $('#id_address').val();
+				post['contact_person'] = $('#id_contact_person').val();
+				post['client_sales'] = $('#id_client_sales').val();
+				post['mobile'] = $('#id_mobile').val();
+				post['client_type'] = $('#id_client_type').val();
+				post['client_phone'] = $('#id_client_phone').val();
+		
+				$.post('/hsyw/ws.asmx/save_client_info',post)
+				.done(function(result){
+					var json = JSON.parse(result);
+					if (json["result"]!=='0')
+					{
+						alert (json['msg']);
+					}
+					else
+					{
+						var host =location.hostname;
+						var port =location.port;
+						var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_detail.html?id='+json_obj['id'];
+						location.replace(url);
+					}
+				});
+				
 			}
 			else{
 				alert(json_obj['msg']);
@@ -168,6 +192,9 @@ $(function(){
 				$('#id_client_helper').remove();
 				var help_html = '<span class="help-block" id="id_client_helper">没有找到相关客户信息</span>';
 				$('#id_bussiness_code').parent().append(help_html);
+				$('fieldset input').each(function(){
+					$(this).val('');
+				});
 			}
 		});
 	});
@@ -319,7 +346,7 @@ $(function(){
 <div class="panel panel-info">
 <div class="panel-heading">客户信息</div>
 <div class="panel-body">
-<fieldset disabled>
+<fieldset>
 <div class="row">
 <div class="col-md-6">
 <div class="form-group form-group-sm">

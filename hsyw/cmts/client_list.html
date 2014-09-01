@@ -1,0 +1,193 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
+<script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
+<script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
+<script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
+<style>
+body {
+  padding-top: 50px;
+}
+</style>
+<script>
+$(function(){
+	
+	$('#id_search').click(function(){
+		var remote = remotTable.DataTable();
+		var local = localTable.DataTable();
+		remote.ajax.reload();
+		local.ajax.reload();
+	});
+
+	var localTable = $('#id_local_table').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'SUBSCRIBERNO',
+				'render':function(data,type,full,meta){
+					return '<a href="/hsyw/cmts/client_detail.html?subscriberno='+ full.SUBSCRIBERNO +'">'+ full.SUBSCRIBERNO +'</a>';
+				}
+			}
+		],
+		'columns':[
+			{'data':'SUBSCRIBERNO'},
+			{'data':'CUSTOMER_NO'},
+			{'data':'DESCRIPTION'},
+			{'data':'CUSTOMER_LEVEL'},
+			{'data':'ADDRESS'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/get_local_client_list',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'subscriberno','value':$('#id_bussiness_code').val()});
+			aoData.push({'name':'description','value':$('#id_client_name').val()});
+			aoData.push({'name':'customer_no','value':$('#id_client_code').val()});
+			aoData.push({'name':'customer_level','value':$('#id_client_level').val()});
+			aoData.push({'name':'address','value':$('#id_client_address').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	
+	});
+	var remotTable = $('#id_remote_table').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'SUBSCRIBERNO',
+				'render':function(data,type,full,meta){
+					return '<a href="/hsyw/cmts/client_detail.html?subscriberno='+ full.SUBSCRIBERNO +'">'+ full.SUBSCRIBERNO +'</a>';
+				}
+			}
+		],
+		'columns':[
+			{'data':'SUBSCRIBERNO'},
+			{'data':'CUSTOMER_NO'},
+			{'data':'DESCRIPTION'},
+			{'data':'CUSTOMER_LEVEL'},
+			{'data':'ADDRESS'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/get_remote_client_list',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'subscriberno','value':$('#id_bussiness_code').val()});
+			aoData.push({'name':'description','value':$('#id_client_name').val()});
+			aoData.push({'name':'customer_no','value':$('#id_client_code').val()});
+			aoData.push({'name':'customer_level','value':$('#id_client_level').val()});
+			aoData.push({'name':'address','value':$('#id_client_address').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
+});
+</script>
+</head>
+<body>
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+
+<div>
+<form role="form" class="form-inline">
+<div class="form-group">
+<label class="sr-only" for="id_bussiness_code">业务编码</label>
+<input class="form-control input-sm" type="text" placeholder="业务编码" name="bussiness_code" id="id_bussiness_code">
+</div>
+<div class="form-group">
+<label class="sr-only" for="id_client_code">客户编码</label>
+<input class="form-control input-sm" type="text" placeholder="客户编码" name="client_code" id="id_client_code">
+</div>
+<div class="form-group">
+<label class="sr-only" for="id_client_name">客户名称</label>
+<input class="form-control input-sm" type="text" placeholder="客户名称" name="client_name" id="id_client_name">
+</div>
+<div class="form-group">
+<label class="sr-only" for="id_client_level">客户等级</label>
+<input class="form-control input-sm" type="text" placeholder="客户等级" name="client_level" id="id_client_level">
+</div>
+<div class="form-group">
+<label class="sr-only" for="id_client_address">客户地址</label>
+<input class="form-control input-sm" type="text" placeholder="客户地址" name="client_address" id="id_client_address">
+</div>
+<button type="button" class="btn btn-primary btn-sm" id="id_search"><span class="glyphicon glyphicon-search"></span>&nbsp;查询</button>
+</form>
+</div>
+<p></p>
+<div class="panel panel-default">
+<div class="panel-heading">
+BOSS客户数据
+</div>
+<div class="panel-body">
+<table id="id_remote_table" class="table table-striped table-bordered" >
+<thead>
+<th>业务编码</th>
+<th>客户编码</th>
+<th>客户名称</th>
+<th>客户等级</th>
+<th>客户地址</th>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">
+本地客户数据
+</div>
+<div class="panel-body">
+<table id="id_local_table" class="table table-striped table-bordered">
+<thead>
+<th>业务编码</th>
+<th>客户编码</th>
+<th>客户名称</th>
+<th>客户等级</th>
+<th>客户地址</th>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+</div>
+
+
+</div>
+</div>
+</div>
+
+
+</body>
+</html>

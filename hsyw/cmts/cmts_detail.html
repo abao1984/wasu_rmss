@@ -244,7 +244,31 @@ $(function(){
 <body>
 <div class="container">
 <div class="row">
-<div class="col-xs-12">
+<div class="col-md-10">
+<div class="panel panel-default">
+<div class="panel-heading">
+编辑CMTS
+<div class="dropdown pull-right">
+<button class="btn btn-default dropdown-toggle btn-xs" type="button" id="dropdownMenu1" data-toggle="dropdown">
+操作
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<li role="presentation">
+<a role="menuitem" href="#" id="id_button_save"><span class="glyphicon glyphicon-save"></span> 保存</a>
+</li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" href="#" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"></span> 删除</a>
+</li>
+</ul>
+
+
+</div>
+
+</div>
+<div class="panel-body">
+
 <form id="form1" role="form">
 <fieldset>
 <div class="row">
@@ -257,7 +281,7 @@ $(function(){
 </div>
 
 <div class="form-group form-group-sm">
-<label for="id_device_code" class="control-label">设备编码</label>
+<label for="id_device_code" class="control-label">设备编码 *</label>
 
 <input type="text" class="form-control input-sm" name="device_code" id="id_device_code">
 
@@ -267,7 +291,7 @@ $(function(){
 <input type="text" name="belong_to" class="form-control input-sm" id="id_belong_to">
 </div>
 <div class="form-group form-group-sm">
-<label for="id_machine_room" class="control-label">所属机房</label>
+<label for="id_machine_room" class="control-label">所属机房 *</label>
 
 <input type="hidden" name="room_id" id="id_machine_room" class="form-control input-sm">
 <div class="input-group">
@@ -450,15 +474,15 @@ $(function(){
 </div>
 
 </div>
-
-<hr>
-<div class="form-group">
-<button class="btn btn-primary" type="button" id="id_button_save"><span class="glyphicon glyphicon-save"></span> 保存</button>
-<button class="btn btn-danger" type="button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"></span> 删除</button>
-</div>
-
 </fieldset>
 </form>
+
+</div>
+
+</div>
+
+
+
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 <div class="modal-dialog">

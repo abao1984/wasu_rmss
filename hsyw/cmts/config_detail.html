@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
 <script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
 <script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/hsyw/bootstrap/notify.min.js"></script>
 <script>
 $(function(){
 
@@ -146,12 +147,16 @@ $(function(){
 		$.post('/hsyw/ws.asmx/machine_room_detail_by_room_id',{room_id:room_id})
 		.done(function(result){
 			var json = JSON.parse(result);
-			var id = json['ID'];
-			var room_id = json['mac_id'];
-			var room_name = json['mac_name'];
-			var value = '['+ room_id +']' + room_name;
-			$('#id_machine_room').val(id);
-			$('#id_room_name').val(value);
+			if (json!==null)
+			{
+				var id = json['ID'];
+				var room_id = json['mac_id'];
+				var room_name = json['mac_name'];
+				var value = '['+ room_id +']' + room_name;
+				$('#id_machine_room').val(id);
+				$('#id_room_name').val(value);
+			}
+			
 		});
 		
 		$('#id_id').val(bussiness.ID);
@@ -169,14 +174,14 @@ $(function(){
 			var contact_person = client.LINKMAN;
 			var client_sales = client.SALE_NAME;
 			var mobile = client.MOBILE_NO;
-			$('#id_client_code').text(client_code);
-			$('#id_unit').text (unit);
-			$('#id_address').text(address);
-			$('#id_contact_person').text(contact_person);
-			$('#id_client_sales').text(client_sales);
-			$('#id_mobile').text(mobile);
-			$('#id_client_phone').text(client.PHONE_NO);
-			$('#id_client_type').text(client.CUSTTYPE);
+			$('#id_client_code').val(client_code);
+			$('#id_unit').val (unit);
+			$('#id_address').val(address);
+			$('#id_contact_person').val(contact_person);
+			$('#id_client_sales').val(client_sales);
+			$('#id_mobile').val(mobile);
+			$('#id_client_phone').val(client.PHONE_NO);
+			$('#id_client_type').val(client.CUSTTYPE);
 		}
 		
 		
@@ -207,10 +212,43 @@ $(function(){
 		$.post('/hsyw/ws.asmx/edit_config',post_dict)
 		.done(function(result){
 			var json_obj = JSON.parse(result);
-			var host =location.hostname;
-			var port =location.port;
-			var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=0';
-			window.location = url;
+			if(json_obj['result']==='0')
+			{
+				var post = {};
+				post['bussiness_code'] = bussiness_code;
+				post['client_code'] = $('#id_client_code').val();
+				post['unit'] = $('#id_unit').val();
+				post['address'] = $('#id_address').val();
+				post['contact_person'] = $('#id_contact_person').val();
+				post['client_sales'] = $('#id_client_sales').val();
+				post['mobile'] = $('#id_mobile').val();
+				post['client_type'] = $('#id_client_type').val();
+				post['client_phone'] = $('#id_client_phone').val();
+		
+				$.post('/hsyw/ws.asmx/save_client_info',post)
+				.done(function(result){
+					var json = JSON.parse(result);
+					if (json["result"]!=='0')
+					{
+						//alert (json['msg']);
+						var host =location.hostname;
+						var port =location.port;
+						var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html';
+						var html = json['msg']+' 要返回列表页面，请<a href="'+url+'">点击这里</a>';
+						$('#id_warning_message').html(html);
+						$('#id_messageModal').modal('show');
+						
+					}
+					else
+					{
+						var host =location.hostname;
+						var port =location.port;
+						var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=0';
+						location.replace(url);
+					}
+				});
+			}
+
 		});	
 	});
 	$('#id_delete_cmts').click(function(){
@@ -295,6 +333,38 @@ $(function(){
 		})
 		
 		
+	});
+	
+	$('#id_bussiness_code').change(function(){
+		var bussiness_code = $('#id_bussiness_code').val();
+		var post_dict ={};
+		post_dict["bussiness_code"]= bussiness_code;
+		$.post('/hsyw/ws.asmx/get_client_by_bussiness_code', post_dict)
+		.done(function(result){
+			var json_obj = JSON.parse(result);
+			if (json_obj['result']==='0')
+			{
+				var client  = json_obj['client'];
+				$('#id_client_helper').remove();
+				$('#id_client_code').val(client.CUSTOMER_NO);
+				$('#id_unit').val(client.DESCRIPTION);
+				$('#id_address').val(client.ADDRESS);
+				$('#id_client_sales').val(client.SALE_NAME);
+				$('#id_contact_person').val(client.LINKMAN);
+				$('#id_mobile').val(client.MOBILE_NO);
+				$('#id_client_phone').val(client.PHONE_NO);
+				$('#id_client_type').val(client.CUSTTYPE);
+			}
+			else
+			{
+				$('#id_client_helper').remove();
+				var help_html = '<span class="help-block" id="id_client_helper">没有找到相关客户信息</span>';
+				$('#id_bussiness_code').parent().append(help_html);
+				$('fieldset input').each(function(){
+					$(this).val('');
+				});
+			}
+		});
 	});
 	
 	$('.input-group.date').datepicker({
@@ -425,7 +495,7 @@ $(function(){
 	</div>
 </div>
 <div class="form-group form-group-sm">
-	<label for="id_room_name" class="control-label col-sm-3">机房</label>
+	<label for="id_room_name" class="control-label col-sm-3">机房 *</label>
 	<div class="col-sm-4">
 		<input type="hidden" name="room_id" id="id_machine_room">
 		<div class="input-group">
@@ -449,7 +519,7 @@ $(function(){
 <div class="panel panel-info">
 <div class="panel-heading">客户信息</div>
 <div class="panel-body">
-<fieldset disabled>
+<fieldset>
 <div class="row">
 <div class="col-md-6">
 <div class="form-group form-group-sm">
@@ -519,10 +589,7 @@ $(function(){
 </button>
 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
 <li role="presentation">
-<a role="menuitem" tabindex="-1" href="" id="id_add_cmts">直接创建</a>
-</li>
-<li role="presentation">
-<a role="menuitem" tabindex="-1" href="" id="id_select_cmts" data-toggle="modal" data-target="#myModal">列表选择</a>
+<a role="menuitem" tabindex="-1" href="" id="id_select_cmts" data-toggle="modal" data-target="#myModal">选择</a>
 </li>
 <li class="divider" role="presentation"></li>
 <li role="presentation">
@@ -547,6 +614,26 @@ $(function(){
 
 
 
+</div>
+</div>
+
+<div class="modal fade" id="id_messageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>警告</h4>
+</div>
+<div class="modal-body">
+<div id="id_warning_message" class="alert alert-warning" role="alert"></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+</div>
+</div>
 </div>
 </div>
 

@@ -1,0 +1,222 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
+<script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
+<script src="/hsyw/bootstrap/notify.min.js"></script>
+<style>
+body {
+  padding-top: 50px;
+}
+</style>
+<script>
+$(function(){
+	$('#id_save_button').click(function(){
+		var post = {};
+		post['SUBSCRIBERNO'] =$('#id_subscriberno').val();
+		post['DESCRIPTION'] =$('#id_description').val();
+		post['CUSTOMER_NO'] =$('#id_customer_no').val();
+		post['CUSTTYPE'] =$('#id_custtype').val();
+		post['LINKMAN'] =$('#id_linkman').val();
+		post['EMAIL'] =$('#id_email').val();
+		post['MOBILE_NO'] =$('#id_mobile_no').val();
+		post['PHONE_NO'] =$('#id_phone_no').val();
+		post['FAX_NO'] =$('#id_fax_no').val();
+		post['ZIP_CODE'] =$('#id_zip_code').val();
+		post['ADDRESS'] =$('#id_address').val();
+		post['TYPE'] =$('#id_type').val();
+		post['REMARK'] =$('#id_remark').val();
+		post['CUSTOMER_LEVEL'] =$('#id_customer_level').val();
+		post['SALE_NAME'] =$('#id_sale_name').val();
+		
+		$.post('/hsyw/ws.asmx/update_client',post)
+		.done(function(result){
+			var json = JSON.parse(result);
+			if(json['result']==='0')
+			{
+				$.notify('数据保存成功。',
+				{
+					position:'top center',
+					className:'info'
+				});
+			}
+			else
+			{
+				alert(json['msg']);
+			}
+		});
+		
+		
+	})
+
+	var url = document.URL;
+	var query_dict = getQueryDict(url);
+	
+	$.post('/hsyw/ws.asmx/get_client_by_subscriberno',query_dict)
+	.done(function(result){
+		var json = JSON.parse(result);
+		if (json['result']==='0')
+		{
+			if (json['isBossData'])
+			{
+				$('#id_fieldset').attr("readonly",'readonly');
+				$('[role="presentation"]').attr('class','disabled');
+			}
+			
+			$('#id_subscriberno').val(json['client']['SUBSCRIBERNO']);
+			$('#id_description').val(json['client']['DESCRIPTION']);
+			$('#id_customer_no').val(json['client']['CUSTOMER_NO']);
+			$('#id_custtype').val(json['client']['CUSTTYPE']);
+			$('#id_linkman').val(json['client']['LINKMAN']);
+			$('#id_email').val(json['client']['EMAIL']);
+			$('#id_mobile_no').val(json['client']['MOBILE_NO']);
+			$('#id_phone_no').val(json['client']['PHONE_NO']);
+			$('#id_fax_no').val(json['client']['FAX_NO']);
+			$('#id_zip_code').val(json['client']['ZIP_CODE']);
+			$('#id_address').val(json['client']['ADDRESS']);
+			$('#id_type').val(json['client']['TYPE']);
+			$('#id_remark').val(json['client']['REMARK']);
+			$('#id_customer_level').val(json['client']['CUSTOMER_LEVEL']);
+			$('#id_sale_name').val(json['client']['SALE_NAME']);
+			
+		}
+	});
+	
+	function getQueryDict(url)
+	{
+		var query = url.split('?')[1];
+		var params = query.split('&');
+		var data_dict = {}
+		for (var i=0;i<params.length;i++)
+		{
+			var data = params[i];
+			var key = data.split('=')[0];
+			var value = data.split('=')[1];
+			data_dict[key] = value;
+		}
+		return data_dict;
+	}
+})
+</script>
+</head>
+<body>
+<div class="container">
+
+<div class="col-xs-12">
+<div class="panel panel-default">
+<div class="panel-heading">
+客户详情
+<div class="dropdown pull-right">
+<button class="btn btn-default dropdown-toggle btn-xs"
+ type="button" id="dropdownMenu1" data-toggle="dropdown">
+ 操作 
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<li role="presentation">
+<a role="menuitem" href="#" id="id_save_button" ><span class="glyphicon glyphicon-save"></span> 保存</a>
+</li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="#" id="id_delete_button" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-remove"></span> 删除</a>
+</li>
+
+</ul>
+</div>
+</div>
+<div class="panel-body">
+<div class="row">
+<form role="form">
+<fieldset id="id_fieldset">
+<div class="col-xs-4">
+<div class="form-group form-group-sm">
+<label for="id_subscriberno" class="control-label">业务编码 *</label>
+<input type="text" class="form-control input-sm" id="id_subscriberno">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_description" class="control-label">客户名称</label>
+<input type="text" class="form-control input-sm" id="id_description">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_customer_no" class="control-label">客户编码</label>
+<input type="text" class="form-control input-sm" id="id_customer_no">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_custtype" class="control-label">客户类型</label>
+<input type="text" class="form-control input-sm" id="id_custtype">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_linkman" class="control-label">联络人</label>
+<input type="text" class="form-control input-sm" id="id_linkman">
+</div>
+</div>
+
+<div class="col-xs-4">
+<div class="form-group form-group-sm">
+<label for="id_email" class="control-label">Email</label>
+<input type="text" class="form-control input-sm" id="id_email">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_mobile_no" class="control-label">手机</label>
+<input type="text" class="form-control input-sm" id="id_mobile_no">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_phone_no" class="control-label">座机</label>
+<input type="text" class="form-control input-sm" id="id_phone_no">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_fax_no" class="control-label">传真</label>
+<input type="text" class="form-control input-sm" id="id_fax_no">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_zip_code" class="control-label">邮编</label>
+<input type="text" class="form-control input-sm" id="id_zip_code">
+</div>
+</div>
+
+<div class="col-xs-4">
+<div class="form-group form-group-sm">
+<label for="id_address" class="control-label">地址</label>
+<input type="text" class="form-control input-sm" id="id_address">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_type" class="control-label">类别</label>
+<input type="text" class="form-control input-sm" id="id_type">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_remark" class="control-label">备注</label>
+<input type="text" class="form-control input-sm" id="id_remark">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_customer_level" class="control-label">客户等级</label>
+<input type="text" class="form-control input-sm" id="id_customer_level">
+</div>
+<div class="form-group form-group-sm">
+<label for="id_sale_name" class="control-label">销售员</label>
+<input type="text" class="form-control input-sm" id="id_sale_name">
+</div>
+</div>
+
+</fieldset>
+</form>
+</div>
+</div>
+
+</div>
+
+
+
+</div>
+</div>
+</body>
+</html>
