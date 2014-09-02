@@ -18,6 +18,81 @@
 <script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
 <script>
 $(function(){
+	$('#id_select_ok').click(function(){
+		var check_list=  $('input[type="checkbox"][name="select_check[]"]:checked');
+		$.each(check_list,function(data){
+			var device_code_td = $(this).parent().parent().find('td')[1]
+			var item_name = $(device_code_td).text();
+			var item_id = $(this).attr('data-id');
+			var html = '<li class="list-group-item"><div class="checkbox"><label><input type="checkbox" name="check[]" data-id="'+item_id+'"><a href="/hsyw/cmts/cmts_detail.html?id='+ item_id +'" >'+ item_name+'</a></label></div></li>';
+			$('#id_cmts_list').append(html);
+		});
+		
+		$('#myModal').modal('hide');
+		
+	});
+	
+	$('#id_delete_cmts').click(function(){
+		var checked_checkboxes = $('input[type="checkbox"]:checked');
+		var data_id_list =[];
+		for (var i=0;i<checked_checkboxes.length;i++)
+		{
+			var node_id = $(checked_checkboxes[i]).attr('data-id');
+			data_id_list.push(node_id);
+		}
+		var id_list = data_id_list.join(',');
+		if (id_list.length===0)
+		{
+			alert('请选择一条cmts记录！');
+			return;
+		}
+		
+		$.each(checked_checkboxes,function(data){
+			 $(this).parent().parent().parent().remove();
+		});
+	});
+
+	$('#id_cmts_seach').click(function(){
+		var table = cmtsTable.DataTable();
+		table.ajax.reload();
+	});
+	
+	var cmtsTable = $('#id_table_cmts').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'pagingType':'full',
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'id',
+				'render':function(data,type,full,meta){
+					return '<input type="checkbox" name="select_check[]" data-id="'+ full.id +'">';
+				}
+			}
+		],
+		'columns':[
+			{'data':null},
+			{'data':'device_code'},
+			{'data':'belong_to'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/get_available_cmts_list',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'device_code','value':$('#id_device_code').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
 	
 	var dataTable = $('#id_table_machine_room').dataTable({
 		'bProcessing':true,
@@ -99,9 +174,34 @@ $(function(){
 			var json_obj = JSON.parse(result);
 			if(json_obj['result']==='0')
 			{
-			
+				
+				
 				var post = {};
 				post['bussiness_code'] = bussiness_code;
+				
+				//add bussiness_code to cmts list
+				var check_list=  $('input[type="checkbox"][name="check[]"]');
+				data_list  = [];
+				for (var i=0;i<check_list.length;i++)
+				{
+					var data_id = $(check_list[i]).attr('data-id');
+					data_list.push(data_id);
+				}
+				var bussiness_id = json_obj['id'];
+				var post_dict = {};
+				post_dict['bussiness_id'] = bussiness_id;
+				post_dict['cmts_id_list'] = data_list.join(',');
+				$.post('/hsyw/ws.asmx/update_cmts_bussiness_id_in_list', post_dict)
+				.done(function(result){
+					var json = JSON.parse(result);
+					if(json['result']==='0')
+					{
+					}
+					else{
+						alert (json['msg']);
+					}
+				});
+				
 				post['client_code'] = $('#id_client_code').val();
 				post['unit'] = $('#id_unit').val();
 				post['address'] = $('#id_address').val();
@@ -133,35 +233,6 @@ $(function(){
 			}
 		});	
 	});
-	
-	$('#id_delete_cmts').click(function(){
-		var checked_checkboxes = $('input[type="checkbox"]:checked');
-		var data_id_list =[];
-		for (var i=0;i<checked_checkboxes.length;i++)
-		{
-			var node_id = $(checked_checkboxes[i]).attr('data-id');
-			data_id_list.push(node_id);
-		}
-		var id_list = data_id_list.join(',');
-		var post_data = {};
-		post_data.id_list = id_list;
-		$.post('/hsyw/ws.asmx/delete_cmts_list', post_data)
-		.done(function(result){
-			var data = JSON.parse(result);
-			if (data.result ==='0')
-			{
-				alert ('删除成功');
-				location.reload();
-			}
-			else
-			{
-				alert('操作失败：'+data.msg);
-			}
-			var res = searchData();
-		});
-	});
-	
-	//var bussiness_id = query_dict['id'];
 	
 	$('#id_add_cmts').click(function(){
 		window.location='/hsyw/cmts/add_cmts.html';
@@ -206,30 +277,8 @@ $(function(){
 		todayHighlight:true
 	});
 	$('#id_room_search').click(function(){
-		var table = $('#id_table_machine_room').DataTable();
+		var table = dataTable.DataTable();
 		table.ajax.reload();
-		/*
-		var post_dict = {};
-		var room_id = $('#id_room_id').val();
-		post_dict['room_id'] = room_id;
-		$('#search_field li').remove();
-		$.post('/hsyw/ws.asmx/search_room_by_room_id', post_dict)
-		.done(function(result){
-			var json = JSON.parse(result);
-			$.each(json,function(i,v){
-				var id = v['ID'];
-				var room_id = v['mac_id'];
-				var name = v['mac_name'];
-				var li_html = '<li class="list-group-item">'+
-					'<div class="row">'+
-					'<div class="col-md-1"><input type="radio" name="radio[]" data-id="'+ id +'"></div>'+
-					'<div>['+ room_id +'] '+ name +'</div>'+
-					'</div>'+
-					'</li>';
-				$('#search_field').append(li_html);
-			});
-		});
-		*/
 	});
 	
 	$('#id_button_select').click(function(){
@@ -266,6 +315,16 @@ $(function(){
 <label for="id_id" class="sr-only">id</label>
 <input type="hidden" name="id" id="id_id">
 </div>
+
+<div class="row">
+<div class="col-md-9">
+<p class="">
+注意：带{*}号的是<strong>必填项</strong>
+</p>
+
+</div>
+</div>
+
 <div class="row">
 
 <div class="col-md-6">
@@ -406,7 +465,78 @@ $(function(){
 </div>
 </div>
 
+<div class="panel panel-default">
+<div class="panel-heading">cmts
+<div class="dropdown pull-right">
+<button class="btn btn-default dropdown-toggle btn-xs"
+ type="button" id="dropdownMenu1" data-toggle="dropdown">
+ 操作 
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="#" id="id_select_cmts" data-toggle="modal" data-target="#myModal">选择</a>
+</li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="#" id="id_delete_cmts">删除</a>
+</li>
+
+</ul>
+</div>
+
+</div>
+<div class="panel-body list-group" id="id_cmts_list">
+
+
+</div>
+</div>
+
 </form>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>
+请选择要加入的cmts
+</h4>
+
+</div>
+
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+	<label class="sr-only" for="id_device_code">device_code</label>
+	<input type="text" class="form-control" id="id_device_code" placeholder="请输入设备编码">
+</div>
+<button type="button" id="id_cmts_seach" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>查询</button>
+</form>
+<p></p>
+<table id="id_table_cmts" class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>选择</th>
+<th>设备编号</th>
+<th>所属分公司</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+<button type="button" class="btn btn-primary" id="id_select_ok">确定</button>
+</div>
+
+</div>
+</div>
 </div>
 
 <div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">

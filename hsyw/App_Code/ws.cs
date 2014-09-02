@@ -666,6 +666,35 @@ public class ws : System.Web.Services.WebService {
     }
 
     [WebMethod]
+    public void clear_cmts_bussiness_id_list(string id_list)
+    {
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        try
+        {
+            List<string> cmts_id_list = id_list.Split(',').ToList();
+
+            foreach (string id in cmts_id_list)
+            {
+                int pk = Convert.ToInt32(id);
+                var e = dc.CMTS.Where(c => c.id == pk).FirstOrDefault();
+                e.bussiness_id = null;
+                //dc.CMTS.DeleteOnSubmit(e);
+            }
+            dc.SubmitChanges();
+
+            dict.Add("result", "0");
+
+        }
+        catch (Exception ex)
+        {
+            dict.Add("result", "-1");
+            dict.Add("msg", ex.Message);
+        }
+
+        writeJSONResponse(dict);
+    }
+
+    [WebMethod]
     public void delete_cmts_list(string id_list)
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -676,6 +705,7 @@ public class ws : System.Web.Services.WebService {
             {
                 int pk = Convert.ToInt32(id);
                 var e = dc.CMTS.Where(c => c.id == pk).FirstOrDefault();
+                //e.bussiness_id = null;
                 dc.CMTS.DeleteOnSubmit(e);
             }
             dc.SubmitChanges();
@@ -745,6 +775,7 @@ public class ws : System.Web.Services.WebService {
             dc.SubmitChanges();
             dict.Add("result", "0");
             dict.Add("id", e.ID.ToString());
+
         }
         catch (Exception ex)
         {

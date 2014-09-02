@@ -102,11 +102,19 @@ $(function(){
 
 	$('#id_button_save').click(function(){
 		var device_code = $('#id_device_code').val();
+		var room_name = $('#id_room_name').val();
 		if (device_code.length === 0)
 		{
 			alert("请输入设备编码");
 			return;
 		}
+		if (room_name.length ===0)
+		{
+			alert('请输入所属机房');
+			return;
+		}
+		
+		
 		var post_dict = {};
 		post_dict['device_code'] = device_code;
 		//post_dict['belong_to'] = belong_to;
@@ -196,7 +204,19 @@ $(function(){
 
 <form id="form1" role="form">
 <fieldset>
+
 <div class="row">
+<div class="col-md-9">
+<p class="">
+注意：带{*}号的是<strong>必填项</strong>
+</p>
+
+</div>
+</div>
+
+<div class="row">
+
+
 
 <div class="col-md-3">
 

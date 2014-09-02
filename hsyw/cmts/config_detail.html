@@ -192,6 +192,7 @@ $(function(){
 			$('#id_cmts_list').append(html);
 		});
 		
+		
 	});
 	
 	$('#id_save').click(function(){
@@ -291,20 +292,8 @@ $(function(){
 	});
 	
 	$('#id_cmts_seach').click(function(){
-		var device_code = $('#id_device_code').val();
-		var post_dict = {};
-		post_dict['device_code'] = device_code;
-		$('#id_search_field li').remove();
-		$.post('/hsyw/ws.asmx/get_available_cmts_list',post_dict)
-		.done(function(result){
-			var json = JSON.parse(result);
-			$.each(json, function(i,v){
-				var cmts_id = v['id'];
-				var code = v['device_code'];
-				var li_html = '<li class="list-group-item"><div class="checkbox"><input type="checkbox" name="select_check[]" data-id="'+cmts_id+'">'+code+'</div></li>';
-				$('#id_search_field').append(li_html);
-			})
-		});
+		var table = cmtsTable.DataTable();
+		table.ajax.reload();
 	});
 	
 	$('#id_select_ok').click(function(){
@@ -330,7 +319,7 @@ $(function(){
 			else{
 				alert (json['msg']);
 			}
-		})
+		});
 		
 		
 	});
@@ -438,6 +427,16 @@ $(function(){
 <label for="id_id" class="sr-only">id</label>
 <input type="hidden" name="id" id="id_id">
 </div>
+
+<div class="row">
+<div class="col-md-9">
+<p class="">
+注意：带{*}号的是<strong>必填项</strong>
+</p>
+
+</div>
+</div>
+
 <div class="row">
 
 <div class="col-md-6">
@@ -598,12 +597,7 @@ $(function(){
 
 </ul>
 </div>
-<!--
-<div class="pull-right btn-group">
-<button type="button" class="btn btn-default btn-xs" id="id_add_cmts">添加</button>
-<button type="button" class="btn btn-danger btn-xs" id="id_delete_cmts">删除</button>
-</div>
--->
+
 </div>
 <div class="panel-body list-group" id="id_cmts_list">
 
