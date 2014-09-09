@@ -1,0 +1,3 @@
+D:\wasu_rmss\ConsoleApplication1\bin\Release\ConsoleApplication1.exe
+D:\wasu_rmss\ConsoleApplication1\obj\Release\ResolveAssemblyReference.cache
+D:\wasu_rmss\ConsoleApplication1\obj\Release\ConsoleApplication1.exe

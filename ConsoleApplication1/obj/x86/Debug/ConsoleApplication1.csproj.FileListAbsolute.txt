@@ -1,0 +1,5 @@
+D:\wasu_rmss\ConsoleApplication1\bin\Debug\ConsoleApplication1.exe
+D:\wasu_rmss\ConsoleApplication1\bin\Debug\ConsoleApplication1.pdb
+D:\wasu_rmss\ConsoleApplication1\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\wasu_rmss\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.exe
+D:\wasu_rmss\ConsoleApplication1\obj\x86\Debug\ConsoleApplication1.pdb

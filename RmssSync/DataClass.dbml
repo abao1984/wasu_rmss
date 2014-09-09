@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="RMSS20140825" Class="DataClassDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=125.210.208.56,1639;Initial Catalog=RMSS20140825;Persist Security Info=True;User ID=sa" SettingsObjectName="RmssSync.Properties.Settings" SettingsPropertyName="RMSS20140825ConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.ClientTypeA" Member="ClientTypeA">
+    <Type Name="ClientTypeA">
+      <Column Name="SUBSCRIBERNO" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="DESCRIPTION" Type="System.String" DbType="VarChar(256)" CanBeNull="true" />
+      <Column Name="CUSTOMER_NO" Type="System.String" DbType="VarChar(63) NOT NULL" CanBeNull="false" />
+      <Column Name="CUSTTYPE" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="LINKMAN" Type="System.String" DbType="VarChar(63)" CanBeNull="true" />
+      <Column Name="EMAIL" Type="System.String" DbType="VarChar(30)" CanBeNull="true" />
+      <Column Name="MOBILE_NO" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="PHONE_NO" Type="System.String" DbType="VarChar(129)" CanBeNull="true" />
+      <Column Name="FAX_NO" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+      <Column Name="ZIP_CODE" Type="System.String" DbType="VarChar(6)" CanBeNull="true" />
+      <Column Name="ADDRESS" Type="System.String" DbType="VarChar(704)" CanBeNull="true" />
+      <Column Name="TYPE" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="REMARK" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="CUSTOMER_LEVEL" Type="System.Decimal" DbType="Decimal(2,0)" CanBeNull="true" />
+      <Column Name="SALE_NAME" Type="System.String" DbType="VarChar(64)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

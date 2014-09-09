@@ -1,0 +1,6 @@
+D:\wasu_rmss\RmssSync\bin\Release\RmssSync.exe.config
+D:\wasu_rmss\RmssSync\bin\Release\RmssSync.exe
+D:\wasu_rmss\RmssSync\bin\Release\RmssSync.pdb
+D:\wasu_rmss\RmssSync\obj\x86\Release\ResolveAssemblyReference.cache
+D:\wasu_rmss\RmssSync\obj\x86\Release\RmssSync.exe
+D:\wasu_rmss\RmssSync\obj\x86\Release\RmssSync.pdb
