@@ -541,13 +541,14 @@ public partial class Web_GZCL_GZBB_LiShiJiLuChaXun : System.Web.UI.Page
                     workbook.Worksheets[0].Cells[1 + i, 20].PutValue(dr["XFRY"].ToString());
                     workbook.Worksheets[0].Cells[1 + i, 21].PutValue(dr["GZMS"].ToString());
                     workbook.Worksheets[0].Cells[1 + i, 22].PutValue(dr["CUSTOMER_LEVEL"].ToString());
-                    workbook.Worksheets[0].Cells[2 + i, 23].PutValue(dr["gzdj"].ToString());
-                    workbook.Worksheets[0].Cells[2 + i, 24].PutValue(dr["khqy"].ToString());
+                    workbook.Worksheets[0].Cells[1 + i, 23].PutValue(dr["khqy"].ToString());
+                    workbook.Worksheets[0].Cells[1 + i, 24].PutValue(dr["gzdj"].ToString());
+                    
                     DateTime jdsj = (DateTime)dr["jdsj"];
                     DateTime tssj = (DateTime)dr["tssj"];
                     TimeSpan time_span = jdsj.Subtract(tssj);
                     string span = String.Format("{0:F2}", time_span.TotalMinutes);
-                    workbook.Worksheets[0].Cells[2 + i, 26].PutValue(span);
+                    workbook.Worksheets[0].Cells[1 + i, 25].PutValue(span);
 
                 }
                 designer1.Save(System.Web.HttpUtility.UrlEncode("历史记录查询1.xls"), Aspose.Cells.SaveType.OpenInExcel, FileFormatType.Default, Response);

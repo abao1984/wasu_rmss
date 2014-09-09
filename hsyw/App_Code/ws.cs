@@ -212,6 +212,131 @@ public class ws : System.Web.Services.WebService {
     #region CMTS webservice APIs
 
     [WebMethod]
+    public void cmts_execl_upload()
+    {
+        HttpContext post = HttpContext.Current;
+        HttpFileCollection files = post.Request.Files;
+        if (files.Count == 0)
+        {
+            return;
+        }
+        HttpPostedFile target = files[0];
+        string fileName = target.FileName;
+        if (target.ContentLength == 0)
+        {
+            return;
+        }
+
+        byte[] binaryArray = new byte[target.InputStream.Length];
+        target.InputStream.Read(binaryArray, 0, (int)target.InputStream.Length);
+        var appData = Server.MapPath("~/upload_temp");
+        var file = Path.Combine(appData, Path.GetFileName(fileName));
+        FileStream fs = new FileStream(file, FileMode.Create, FileAccess.ReadWrite);
+        fs.Write(binaryArray, 0, binaryArray.Length);
+        fs.Close();
+        Dictionary<string, string> dict = new Dictionary<string, string>();
+        dict.Add("message", "ok");
+        try
+        {
+            //string result = "";
+            string result = query_cmts(file);
+            if (result.Length != 0)
+            {
+                dict["message"] = result;
+            }
+        }
+        catch (Exception ex)
+        {
+            dict["message"] = ex.Message;
+        }
+        writeJSONResponse(dict);
+        
+    }
+
+    private string query_cmts(string file)
+    {
+        string result = "";
+        var excel = new ExcelQueryFactory(file);
+        var sheet = excel.Worksheet(0);
+        var rows = from c in sheet
+                   select c;
+
+        foreach (var row in rows)
+        {
+            if (row["机房编号"].ToString().Length == 0)
+            {
+                continue;
+            }
+
+            var room_list = dc.MachineRoom.Where(c => c.mac_name==row["机房编号"]);
+
+            if (room_list.Count() != 1)
+            {
+                result = String.Format("{0}：{1}:没有找到相关记录",row["序号"], row["机房编号"]);
+                return result;
+            }
+
+            var room = room_list.SingleOrDefault();
+
+            var entity = dc.CMTS.Where(c=>c.device_code == row["序号"]);
+
+            if (entity.Count()>0)
+            {
+                result = String.Format("{0}:设备编号已存在", row["序号"]);
+            }
+
+            DateTime start_date;
+
+            try
+            {
+                start_date = DateTime.Parse(row["开通时间"]);
+            }
+            catch 
+            {
+                result = String.Format("{0}:日期格式不正确", row["序号"]);
+                return result;
+            }
+
+           
+            var cmts = new CMTS
+            {
+                device_code = row["序号"],
+                belong_to   = row["所属分公司"],
+                room_id     = room.ID,
+                distance_to_transfer = row["机房至交接箱距离"],
+                transfer_code = row["交接箱编号"],
+                transfer_fiber_num = row["交接箱配纤号"],
+                older_num =row["新老沟通纤号"],
+                distance_between_transfer_to_room = row["交接箱至小区机房距离"],
+                code_between_transfer_to_room = row["接箱至小区机房编号"],
+                room_fiber = row["小区机房配纤"],
+                onu = row["ONU型号"],
+                switcher_code = row["交换机编号"],
+                gigabit_alloc_port = row["千兆分配端口号"],
+                wave_length = row["接入端口波长"],
+                splitter_code = row["分路器编号（型号）"],
+                spot_code = row["光点编号"],
+                spot_name = row["光点名称"],
+                spot_receiver_fiber_num = row["光收机纤号"],
+                distance_between_transfer_to_spot = row["交接箱至光点距离"],
+                unit = row["施工单位"],
+                start_date = start_date,
+                signal_type = row["信号类别"],
+                type = row["类型"],
+                remark = row["备注"],
+                contact = row["酒店联系人"],
+                output_power = row["输出功率"]
+
+            };
+
+            dc.CMTS.InsertOnSubmit(cmts);
+        }
+        dc.SubmitChanges();
+
+        return result;
+    }
+
+    [WebMethod]
     public void save_client_info(string bussiness_code)
     {
         Dictionary<string, string> dict = new Dictionary<string, string>();
@@ -485,12 +610,14 @@ public class ws : System.Web.Services.WebService {
             list = list.Where(c => c.CUSTOMER_NO.Contains(customer_no)).OrderBy(c => c.SUBSCRIBERNO);
         }
 
-        int level = 0;
-        if (Int32.TryParse(customer_level, out level))
+        if (customer_level != null)
         {
-            list = list.Where(c => c.CUSTOMER_LEVEL == level).OrderBy(c => c.SUBSCRIBERNO);
+            if (customer_level.Length != 0)
+            {
+                list = list.Where(c => c.CUSTOMER_LEVEL == customer_level).OrderBy(c => c.SUBSCRIBERNO);
+            }
         }
-
+        
         if (address != null)
         {
             list = list.Where(c => c.ADDRESS.Contains(address)).OrderBy(c => c.SUBSCRIBERNO);
@@ -529,10 +656,13 @@ public class ws : System.Web.Services.WebService {
         }
         Dictionary<string, object> dict = new Dictionary<string, object>();
         int count = list.Count();
-        dict.Add("aaData", list);
         dict.Add("iTotalRecordes", count);
         dict.Add("sEcho", form["sEcho"]);
         dict.Add("iTotalDisplayRecords", count);
+
+        list = list.Skip(skip_count).Take(display_length).OrderBy(c=>c.id);
+        dict.Add("aaData", list);
+        
         writeJSONResponse(dict);
     }
 

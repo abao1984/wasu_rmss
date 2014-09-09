@@ -1,0 +1,677 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html lang="zh-cn" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="/hsyw/bootstrap/datatables/dataTables.bootstrap.css">
+<script src="/hsyw/jquery-ui/jquery-1.10.2.js"></script>
+<script src="/hsyw/bootstrap/js/bootstrap.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
+<script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
+<link rel="stylesheet" href="/hsyw/bootstrap/css/datepicker3.css">
+<script src="/hsyw/bootstrap/js/bootstrap-datepicker.js"></script>
+<script src="/hsyw/bootstrap/js/locales/bootstrap-datepicker.zh-CN.js" charset="UTF-8"></script>
+<script src="/hsyw/bootstrap/notify.min.js"></script>
+<script>
+$(function(){
+
+	$('#id_button_select').click(function(){
+		var object = $('input[type="radio"]:checked');
+		if(object !== null)
+		{
+			var id = object.attr('data-id');
+			var room_id_td = $(object.parent().parent()).find('td')[1];
+			var room_id = $(room_id_td).text();
+			var room_name_td = $(object.parent().parent()).find('td')[2];
+			var room_name = $(room_name_td).text();
+			$('#id_machine_room').val(id);
+			$('#id_room_name').val('['+room_id+']:'+room_name);
+			$('#roomModal').modal('hide');
+		}
+		
+	});
+	
+	$('#id_room_search').click(function(){
+		var table = $('#id_table_machine_room').DataTable();
+		table.ajax.reload();
+	});
+	var cmtsTable = $('#id_table_cmts').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'pagingType':'full',
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'id',
+				'render':function(data,type,full,meta){
+					return '<input type="checkbox" name="select_check[]" data-id="'+ full.id +'">';
+				}
+			}
+		],
+		'columns':[
+			{'data':null},
+			{'data':'device_code'},
+			{'data':'belong_to'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/get_available_cmts_list',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'device_code','value':$('#id_device_code').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
+	
+	var dataTable = $('#id_table_machine_room').dataTable({
+		'bProcessing':true,
+		'bServerSide':true,
+		'bLengthChange':false,
+		'bFilter':false,
+		'iDisplayLength':10,
+		'pagingType':'full',
+		'language':{
+			url:'/hsyw/bootstrap/datatables/Chinese.json'
+		},
+		'columnDefs':[
+			{
+				'targets':0,
+				'data':'ID',
+				'render':function(data,type,full,meta){
+					return '<input type="radio" name="radio[]" data-id="'+ full.ID +'">';
+				}
+			}
+		],
+		'columns':[
+			{'data':null},
+			{'data':'mac_id'},
+			{'data':'mac_name'},
+		],
+		'sAjaxSource':'/hsyw/ws.asmx/search_room_by_room_id',
+		'fnServerData':function(sSource,aoData,fnCallback,oSettings){
+			aoData.push({'name':'room_id','value':$('#id_room_id').val()});
+			oSettings.jqXHR = $.ajax({
+				'dataType':'json',
+				'type':'POST',
+				'url':sSource,
+				'data':aoData,
+				'success':fnCallback
+			});
+		}
+	});
+	var url = document.URL;
+	var query_dict = getQueryDict(url);
+	function getQueryDict(url)
+	{
+		var query = url.split('?')[1];
+		var params = query.split('&');
+		var data_dict = {}
+		for (var i=0;i<params.length;i++)
+		{
+			var data = params[i];
+			var key = data.split('=')[0];
+			var value = data.split('=')[1];
+			data_dict[key] = value;
+		}
+		return data_dict;
+	}
+	
+	$.post('/hsyw/ws.asmx/get_config_detail',query_dict)
+	.done(function(result){
+		var json_obj = JSON.parse(result);
+		var bussiness = json_obj['bussiness'];
+		var cmts_list = json_obj['cmts_list'];
+		var bussiness_type = json_obj['bussiness_type'];
+		var client = json_obj['client'];
+		
+		var config_person  = bussiness.pzr;
+		var config_date = bussiness.pzsj;
+		var line_code = bussiness.Line_code;
+		var device_type = bussiness.sbmc;
+		var room_id = bussiness.macid;
+		
+		$.post('/hsyw/ws.asmx/machine_room_detail_by_room_id',{room_id:room_id})
+		.done(function(result){
+			var json = JSON.parse(result);
+			if (json!==null)
+			{
+				var id = json['ID'];
+				var room_id = json['mac_id'];
+				var room_name = json['mac_name'];
+				var value = '['+ room_id +']' + room_name;
+				$('#id_machine_room').val(id);
+				$('#id_room_name').val(value);
+			}
+			
+		});
+		
+		$('#id_id').val(bussiness.ID);
+		$('#id_bussiness_code').val(bussiness.Bussiness_code);
+		$('#id_device_info').val(bussiness.sbpzxx);
+		$('#id_client_name').val(bussiness.khmc);
+		$('#id_config_date').val(config_date);
+		$('#id_config_person').val(config_person);
+		$('#id_line_code').val(line_code);
+		if (client!==null)
+		{
+			var client_code = client.CUSTOMER_NO
+			var unit = client.DESCRIPTION;
+			var address= client.ADDRESS;
+			var contact_person = client.LINKMAN;
+			var client_sales = client.SALE_NAME;
+			var mobile = client.MOBILE_NO;
+			$('#id_client_code').val(client_code);
+			$('#id_unit').val (unit);
+			$('#id_address').val(address);
+			$('#id_contact_person').val(contact_person);
+			$('#id_client_sales').val(client_sales);
+			$('#id_mobile').val(mobile);
+			$('#id_client_phone').val(client.PHONE_NO);
+			$('#id_client_type').val(client.CUSTTYPE);
+		}
+		
+		
+		$.each(bussiness.CMTS,function(i,v){
+			var item_id = v.id;
+			var item_name = v.device_code;
+			var html = '<li class="list-group-item"><div class="checkbox"><label><input type="checkbox" name="check[]" data-id="'+item_id+'"><a href="/hsyw/cmts/cmts_detail.html?id='+ item_id +'" >'+ item_name+'</a></label></div></li>';
+			$('#id_cmts_list').append(html);
+		});
+		
+		
+	});
+	
+	$('#id_save').click(function(){
+		var id=$('#id_id').val();
+		var bussiness_code = $('#id_bussiness_code').val();
+		var device_info = $('#id_device_info').val();
+		var client_name = $('#id_client_name').val();
+		var config_date = $('#id_config_date').val();
+		var config_person = $('#id_config_person').val();
+		var post_dict = {};
+		post_dict['id'] = id;
+		post_dict['bussiness_code'] = bussiness_code;
+		post_dict['device_info'] = device_info;
+		post_dict['client_name'] = client_name;
+		post_dict['config_person'] = config_person;
+		post_dict['config_date'] = config_date;
+		
+		$.post('/hsyw/ws.asmx/edit_config',post_dict)
+		.done(function(result){
+			var json_obj = JSON.parse(result);
+			if(json_obj['result']==='0')
+			{
+				var post = {};
+				post['bussiness_code'] = bussiness_code;
+				post['client_code'] = $('#id_client_code').val();
+				post['unit'] = $('#id_unit').val();
+				post['address'] = $('#id_address').val();
+				post['contact_person'] = $('#id_contact_person').val();
+				post['client_sales'] = $('#id_client_sales').val();
+				post['mobile'] = $('#id_mobile').val();
+				post['client_type'] = $('#id_client_type').val();
+				post['client_phone'] = $('#id_client_phone').val();
+		
+				$.post('/hsyw/ws.asmx/save_client_info',post)
+				.done(function(result){
+					var json = JSON.parse(result);
+					if (json["result"]!=='0')
+					{
+						//alert (json['msg']);
+						var host =location.hostname;
+						var port =location.port;
+						var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html';
+						var html = json['msg']+' 要返回列表页面，请<a href="'+url+'">点击这里</a>';
+						$('#id_warning_message').html(html);
+						$('#id_messageModal').modal('show');
+						
+					}
+					else
+					{
+						var host =location.hostname;
+						var port =location.port;
+						var url = 'http://'+ host + ':' + port + '/hsyw/cmts/config_list.html?result=0';
+						location.replace(url);
+					}
+				});
+			}
+
+		});	
+	});
+	$('#id_delete_cmts').click(function(){
+		var checked_checkboxes = $('input[type="checkbox"]:checked');
+		var data_id_list =[];
+		for (var i=0;i<checked_checkboxes.length;i++)
+		{
+			var node_id = $(checked_checkboxes[i]).attr('data-id');
+			data_id_list.push(node_id);
+		}
+		var id_list = data_id_list.join(',');
+		if (id_list.length===0)
+		{
+			alert('请选择一条cmts记录！');
+			return;
+		}
+		var post_data = {};
+		post_data.id_list = id_list;
+		$.post('/hsyw/ws.asmx/clear_cmts_list_bussiness_id', post_data)
+		.done(function(result){
+			var data = JSON.parse(result);
+			if (data.result ==='0')
+			{
+				alert ('删除成功');
+				location.reload();
+			}
+			else
+			{
+				alert('操作失败：'+data.msg);
+			}
+			var res = searchData();
+		});
+	});
+	var bussiness_id = query_dict['id'];
+	$('#id_add_cmts').click(function(){
+		var host =location.hostname;
+		var port =location.port;
+		var url = 'http://'+ host + ':' + port + '/hsyw/cmts/add_cmts.html?bussiness_id='+ bussiness_id;
+		window.open(url,'_blank');
+	});
+	
+	$('#id_cmts_seach').click(function(){
+		var table = cmtsTable.DataTable();
+		table.ajax.reload();
+	});
+	
+	$('#id_select_ok').click(function(){
+		var check_list=  $('input[type="checkbox"][name="select_check[]"]:checked');
+		data_list  = [];
+		for (var i=0;i<check_list.length;i++)
+		{
+			var data_id = $(check_list[i]).attr('data-id');
+			data_list.push(data_id);
+		}
+		var bussiness_id = $('#id_id').val();
+		var post_dict = {};
+		post_dict['bussiness_id'] = bussiness_id;
+		post_dict['cmts_id_list'] = data_list.join(',');
+		$.post('/hsyw/ws.asmx/update_cmts_bussiness_id_in_list', post_dict)
+		.done(function(result){
+			var json = JSON.parse(result);
+			if(json['result']==='0')
+			{
+				location.reload();
+				//$('#myModal').modal('hide');
+			}
+			else{
+				alert (json['msg']);
+			}
+		});
+		
+		
+	});
+	
+	$('#id_bussiness_code').change(function(){
+		var bussiness_code = $('#id_bussiness_code').val();
+		var post_dict ={};
+		post_dict["bussiness_code"]= bussiness_code;
+		$.post('/hsyw/ws.asmx/get_client_by_bussiness_code', post_dict)
+		.done(function(result){
+			var json_obj = JSON.parse(result);
+			if (json_obj['result']==='0')
+			{
+				var client  = json_obj['client'];
+				$('#id_client_helper').remove();
+				$('#id_client_code').val(client.CUSTOMER_NO);
+				$('#id_unit').val(client.DESCRIPTION);
+				$('#id_address').val(client.ADDRESS);
+				$('#id_client_sales').val(client.SALE_NAME);
+				$('#id_contact_person').val(client.LINKMAN);
+				$('#id_mobile').val(client.MOBILE_NO);
+				$('#id_client_phone').val(client.PHONE_NO);
+				$('#id_client_type').val(client.CUSTTYPE);
+			}
+			else
+			{
+				$('#id_client_helper').remove();
+				var help_html = '<span class="help-block" id="id_client_helper">没有找到相关客户信息</span>';
+				$('#id_bussiness_code').parent().append(help_html);
+				$('fieldset input').each(function(){
+					$(this).val('');
+				});
+			}
+		});
+	});
+	
+	$('.input-group.date').datepicker({
+		format:'yyyy-mm-dd',
+		todayBtn:'linked',
+		language: 'zh-CN',
+		autoclose:true,
+		todayHighlight:true
+	});
+	
+});
+</script>
+</head>
+<body>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>
+请选择要加入的cmts
+</h4>
+
+</div>
+
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+	<label class="sr-only" for="id_device_code">device_code</label>
+	<input type="text" class="form-control" id="id_device_code" placeholder="请输入设备编码">
+</div>
+<button type="button" id="id_cmts_seach" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>查询</button>
+</form>
+<p></p>
+<table id="id_table_cmts" class="table table-bordered table-striped">
+<thead>
+<tr>
+<th>选择</th>
+<th>设备编号</th>
+<th>所属分公司</th>
+</tr>
+</thead>
+<tbody></tbody>
+</table>
+</div>
+
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+<button type="button" class="btn btn-primary" id="id_select_ok">确定</button>
+</div>
+
+</div>
+</div>
+</div>
+
+<div class="container">
+<div class="row">
+<div class="col-xs-12">
+<p></p>
+<form role="form" class="form-horizontal">
+<div class="panel panel-primary">
+<div class="panel-heading">
+业务信息
+<button class="btn btn-default btn-xs pull-right" type="button" id="id_save">保存</button>
+</div>
+<div class="panel-body">
+<div class="form-group">
+<label for="id_id" class="sr-only">id</label>
+<input type="hidden" name="id" id="id_id">
+</div>
+
+<div class="row">
+<div class="col-md-9">
+<p class="">
+注意：带{*}号的是<strong>必填项</strong>
+</p>
+
+</div>
+</div>
+
+<div class="row">
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+	<label for="id_bussiness_code" class="control-label col-xs-3">业务编码</label>
+	<div class="col-xs-4">
+		<input  type="text" name="bussines_code" id="id_bussiness_code" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label class="col-sm-3 control-label" for="id_device_info">设备配置信息</label>
+	<div class="col-sm-4">
+		<input type="text" name="device_info" id="id_device_info" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_client_name" class="control-label col-sm-3">客户名称</label>
+	<div class="col-sm-4">
+	<input type="text" name="client_name" id="id_client_name" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_config_person" class="col-sm-3 control-label">配置人</label>
+	<div class="col-sm-4">
+		<input type="text" name="config_person" id="id_config_person" class="form-control input-sm">
+	</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+	<label for="id_config_date" class="col-sm-3 control-label">配置时间</label>
+	<div class="col-sm-4">
+	<div class="input-group date">
+	<input type="text" name="config_date" id="id_config_date" class="form-control input-sm">
+	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+	</div>
+	</div>
+	
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_line_code" class="col-sm-3 control-label">线路编码</label>
+	<div class="col-sm-4">
+		<input type="text" name="line_code" id="id_line_code" class="form-control input-sm">
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_device_type" class="col-sm-3 control-label">接入设备</label>
+	<div class="col-sm-4">
+	<select class="form-control input-sm" name="device_type" id="id_device_type">
+	<option value="EPON">EPON</option>
+	<option value="光机">光机</option>
+	<option value="CMTS">CMTS</option>
+	</select>
+	</div>
+</div>
+<div class="form-group form-group-sm">
+	<label for="id_room_name" class="control-label col-sm-3">机房 *</label>
+	<div class="col-sm-4">
+		<input type="hidden" name="room_id" id="id_machine_room">
+		<div class="input-group">
+		<input class="form-control input-sm" type="text" readonly="readonly" name="room_name"  id="id_room_name" >
+		<span class="input-group-btn">
+		<button class="btn btn-default btn-sm" type="button" data-toggle="modal" data-target="#roomModal">选择</button>
+		</span>
+		</div>
+	</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+
+
+
+<div class="panel panel-info">
+<div class="panel-heading">客户信息</div>
+<div class="panel-body">
+<fieldset>
+<div class="row">
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+<label for="id_client_code" class="control-label col-sm-3">客户编号</label>
+<div class="col-sm-4">
+<input id="id_client_code" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_type" class="control-label col-sm-3">用户类型</label>
+<div class="col-sm-4">
+<input id="id_client_type" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_unit" class="control-label col-sm-3">接入单位</label>
+<div class="col-sm-4">
+<input id="id_unit" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_sales" class="control-label col-sm-3">销售员</label>
+<div class="col-sm-4">
+<input id="id_client_sales" class="form-control input-sm" type="text">
+</div>
+</div>
+</div>
+
+<div class="col-md-6">
+<div class="form-group form-group-sm">
+<label for="id_contact_person" class="control-label col-sm-3">用户负责人</label>
+<div class="col-sm-4">
+<input id="id_contact_person" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_client_phone" class="control-label col-sm-3">座机</label>
+<div class="col-sm-4">
+<input id="id_client_phone" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_mobile" class="control-label col-sm-3">手机</label>
+<div class="col-sm-4">
+<input id="id_mobile" class="form-control input-sm" type="text">
+</div>
+</div>
+<div class="form-group form-group-sm">
+<label for="id_address" class="control-label col-sm-3">用户地址</label>
+<div class="col-sm-4">
+<input id="id_address" class="form-control input-sm" type="text">
+</div>
+</div>
+</div>
+</div>
+</fieldset>
+</div>
+</div>
+
+<div class="panel panel-default">
+<div class="panel-heading">cmts
+<div class="dropdown pull-right">
+<button class="btn btn-default dropdown-toggle btn-xs"
+ type="button" id="dropdownMenu1" data-toggle="dropdown">
+ 数据操作 
+<span class="caret"></span>
+</button>
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="" id="id_select_cmts" data-toggle="modal" data-target="#myModal">选择</a>
+</li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" tabindex="-1" href="" id="id_delete_cmts">删除</a>
+</li>
+
+</ul>
+</div>
+
+</div>
+<div class="panel-body list-group" id="id_cmts_list">
+
+
+</div>
+</div>
+</form>
+
+
+
+</div>
+</div>
+
+<div class="modal fade" id="id_messageModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>警告</h4>
+</div>
+<div class="modal-body">
+<div id="id_warning_message" class="alert alert-warning" role="alert"></div>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="roomModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>请选择所属机房...</h4>
+</div>
+<div class="modal-body">
+<form role="form" class="form-inline">
+<div class="form-group">
+<label class="sr-only" for="id_room_id">room_id</label>
+<input type="text" class="form-control" id="id_room_id" placeholder="请输入机房ID">
+</div>
+<button type="button" id="id_room_search" class="btn btn-info"><span class="glyphicon glyphicon-search"></span>
+查询
+</button>
+<hr>
+<table id="id_table_machine_room" class="table table-striped table-bordered">
+<thead>
+<th>选择</th>
+<th>机房ID</th>
+<th>机房名称</th>
+</thead>
+<tbody></tbody>
+</table>
+<!--
+<div id="search_field" class="list-group">
+</div>
+-->
+</form>
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<button type="button" class="btn btn-primary" id="id_button_select">确定</button>
+</div>
+</div>
+</div>
+</div>
+
+</body>
+</html>

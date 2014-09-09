@@ -14,6 +14,7 @@
 <script src="/hsyw/bootstrap/datatables/jquery.dataTables.min.js"></script>
 <script src="/hsyw/bootstrap/datatables/dataTables.bootstrap.js"></script>
 <script src="/hsyw/bootstrap/notify.min.js"></script>
+<script src="http://malsup.github.com/jquery.form.js"></script>
 <style>
 body {
   padding-top: 50px;
@@ -21,6 +22,38 @@ body {
 </style>
 <script>
 $(function(){
+	
+
+	var showLoading = function(){
+		$('div.message').html('数据上传中,请稍候..<img src="/hsyw/loading.gif">');
+	}
+	var showResult = function(result){
+		var json = JSON.parse(result);
+		$('#id_file').val('');
+		var res = '';
+		if (json['message'] === 'ok')
+		{
+			res  = '数据导入成功';
+		}
+		else
+		{
+			res = json['message'];
+		}
+		$('div.message').html(res);
+	};
+	
+	/*
+	$('#id_import_form').ajaxForm(function(){
+		alert ('submit');
+	});*/
+	
+		
+	var options = {
+		beforeSubmit:showLoading,
+		success:showResult
+	}; 
+	
+	$('#id_import_form').ajaxForm(options);
 	
 	var dataTable = $('#table-list').dataTable({
 			'bProcessing':true,
@@ -259,6 +292,10 @@ CMTS
 <li role="presentation">
 <a role="menuitem" href="#" data-toggle="modal" data-target="#myModal" id="id_button_confirm"><span class="glyphicon glyphicon-remove"></span> 删除</a>
 </li>
+<li class="divider" role="presentation"></li>
+<li role="presentation">
+<a role="menuitem" href="#" data-toggle="modal" data-target="#importModal" id="id_button_import"><span class="glyphicon glyphicon-import"></span> 数据导入</a>
+</li>
 </ul>
 
 
@@ -281,6 +318,36 @@ CMTS
 </div>
 
 
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="importModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal">
+<span aria-hidden="true">&times;</span>
+<span class="sr-only">close</span>
+</button>
+<h4>数据导入</h4>
+</div>
+<form id="id_import_form" method="post" enctype="multipart/form-data" action="/hsyw/ws.asmx/cmts_execl_upload" role="form">
+<div class="modal-body">
+
+<div class="message"></div>
+<div class="form-group">
+<label for="id_file">上传文件</label>
+<input type="file" id="id_file" name="file">
+<p class="help-block">请上传cmts的excel文件</p>
+</div>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+<input type="submit"  value="确定" name="submit" class="btn btn-primary" id="id_button_import_submit">
+</div>
+</form>
 </div>
 </div>
 </div>
